@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS budgetplus;
+CREATE DATABASE budgetplus;
