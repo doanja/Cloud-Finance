@@ -20,9 +20,8 @@ form {
 }
 
 .vertical-center {
-  min-height: 100%; /* Fallback for browsers do NOT support vh unit */
-  min-height: 100vh; /* These two lines are counted as one :-)       */
-
+  min-height: 100%; /* for browsers that don't support vh */
+  min-height: 100vh;
   display: flex;
   align-items: center;
 }
