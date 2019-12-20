@@ -10,21 +10,19 @@ const renderConfirmationModal = (title, callback) => {
   const modalDiaglogue = $("<div>", { class: "modal-dialog" });
   const modalContent = $("<div>", { class: "modal-content" });
   const modalHeader = $("<div>", { class: "modal-header" });
-  const modalTitle = $("<h5>", { class: "modal-title text-primary" }).text(
-    title
-  );
+  const modalTitle = $("<h5>", { class: "modal-title text-dark" }).text(title);
   const modalprefooter = $("<div>", { class: "modal-footer" });
   const button = $("<button>", {
-    class: "btn btn-primary",
+    class: "btn btn-dark",
     id: "modal-button"
   }).text("Cancel");
   const submit = $("<button>", {
-    class: "btn btn-primary",
+    class: "btn btn-dark",
     id: "modal-submit"
   }).text("Confirm");
 
   // append and render the elements
-  $("#main").prepend(modalFade);
+  $("#main-container").prepend(modalFade);
   modalFade.append(modalDiaglogue);
   modalDiaglogue.append(modalContent);
   modalContent.append(modalHeader, modalprefooter);
@@ -42,18 +40,20 @@ const renderConfirmationModal = (title, callback) => {
 
 // function to create a cateogry
 const createCategory = () => {
-  const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
-  );
+  // const userId = parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  const userId = 1;
 
   renderModal("Create Category", userId);
 };
 
 // function to create an expense
 const createExpense = () => {
-  const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
-  );
+  // const userId = parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  const userId = 1;
 
   renderModal("Create Expense", userId);
 };
@@ -80,7 +80,7 @@ const renderDropdownCategories = (text, elementId) => {
 const renderDropdown = elementId => {
   // create the element
   return $("<select>", {
-    class: "form-control w-100 mt-3 bg-primary text-white",
+    class: "form-control w-100 mt-3 bg-dark text-white",
     id: elementId
   });
 };
@@ -121,21 +121,19 @@ const renderModal = (title, userId, obj) => {
   const modalContent = $("<div>", { class: "modal-content" });
   const modalHeader = $("<div>", { class: "modal-header" });
   const modalBody = $("<div>", { class: "modal-body" });
-  const modalTitle = $("<h5>", { class: "modal-title text-primary" }).text(
-    title
-  );
+  const modalTitle = $("<h5>", { class: "modal-title text-dark" }).text(title);
   const modalprefooter = $("<div>", { class: "modal-footer" });
   const button = $("<button>", {
-    class: "btn btn-primary",
+    class: "btn btn-dark",
     id: "modal-button"
   }).text("Cancel");
   const submit = $("<button>", {
-    class: "btn btn-primary",
+    class: "btn btn-dark",
     id: "modal-submit"
   }).text("Submit");
 
   // append and render the elements
-  $("#main").prepend(modalFade);
+  $("#main-container").prepend(modalFade);
   modalFade.append(modalDiaglogue);
   modalDiaglogue.append(modalContent);
   modalContent.append(modalHeader, modalBody, modalprefooter);
@@ -283,9 +281,10 @@ function editExpenseClicked() {
   const editId = parseInt($(this).attr("editId")); // get the edit button id
   const description = $(`.description-${editId}`).text(); // get the description
   const amount = parseFloat($(`.amount-${editId}`).text()); // get the amount
-  const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
-  );
+  // const userId = parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  const userId = 1;
   const categoryValue = $(this).attr("categoryValue"); // get the category text
 
   renderModal("Edit Expense", userId, {
@@ -314,9 +313,10 @@ function editCategoryClicked() {
   const editId = parseInt($(this).attr("editId")); // get the edit button id
   const categoryValue = $(this).attr("categoryValue"); // get the category text
   const goalValue = parseFloat($(this).attr("goalValue")); // get the goal value
-  const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
-  );
+  // const userId = parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  const userId = 1;
 
   renderModal("Edit Category", userId, { categoryValue, goalValue, editId });
 }
@@ -335,9 +335,10 @@ function deleteCategoryClicked() {
 // function to pass current data to a modal
 function editIncomeClicked() {
   const userIncome = parseFloat($(this).attr("userIncome"));
-  const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
-  );
+  // const userId = parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  const userId = 1;
 
   renderModal("Edit Income", userId, { userId, userIncome });
 }

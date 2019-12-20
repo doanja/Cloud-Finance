@@ -17,7 +17,7 @@ body {
 
 .form {
   border-radius: 5px;
-  min-width: 305px;
+  min-width: 350px;
 }
 
 .vertical-center {
@@ -25,4 +25,8 @@ body {
   min-height: 100vh;
   display: flex;
   align-items: center;
+}
+
+#table {
+  max-width: 1000px;
 }

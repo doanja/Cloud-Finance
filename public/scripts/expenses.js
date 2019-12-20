@@ -41,7 +41,7 @@ const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
   const tdTotalExpenseAmount = $("<td>").text(totalExpensesValue);
   const tdTotalExpenseGoal = $("<td>").text(totalExpenseGoal);
 
-  $("#table").append(tr);
+  $("#tbody").append(tr);
   tr.append(tdTotalExpenses, tdTotalExpenseGoal, tdTotalExpenseAmount);
 };
 
@@ -60,17 +60,17 @@ const renderExpenseRow = (expenseData, categoryName) => {
     expenseData.amount
   );
   const editButton = $("<div>", {
-    class: "btn btn-primary mx-1 mt-2 float-right text-white edit-button",
+    class: "btn btn-dark mx-1 mt-2 float-right text-white edit-button",
     editId: expenseData.id,
     categoryValue: categoryName
   }).text("Edit");
   const deleteButton = $("<div>", {
-    class: "btn btn-primary mx-1 mt-2 float-right text-white delete-button",
+    class: "btn btn-dark mx-1 mt-2 float-right text-white delete-button",
     deleteId: expenseData.id
   }).text("Del.");
 
   // append to html
-  $("#table").append(tr);
+  $("#tbody").append(tr);
   tr.append(tdExpenseName, td, tdExpenseAmount, deleteButton, editButton);
 };
 
@@ -81,23 +81,25 @@ const renderExpenseRow = (expenseData, categoryName) => {
  */
 const renderCategoryRow = (categoryData, totalExpenseCat) => {
   const tBody = $("<tbody>");
-  const tr = $("<tr>", { class: "bg-primary text-white" });
+  const tr = $("<tr>", { class: "bg-dark text-white" });
   const tdCategoryName = $("<td>", { class: "bold" }).text(categoryData.name);
   const tdCategoryGoal = $("<td>").text(categoryData.goal);
   const tdCategoryTotal = $("<td>").text(totalExpenseCat);
   const categoryEditButton = $("<div>", {
-    class: "btn btn-white mx-1 mt-2 float-right edit-category-button",
+    class:
+      "btn btn-white text-white mx-1 mt-2 float-right edit-category-button",
     editId: categoryData.id,
     categoryValue: categoryData.name,
     goalValue: categoryData.goal
   }).text("Edit");
   const categoryDeleteButton = $("<div>", {
-    class: "btn btn-white mx-1 mt-2 float-right delete-category-button",
+    class:
+      "btn btn-white text-white mx-1 mt-2 float-right delete-category-button",
     deleteId: categoryData.id
   }).text("Del.");
 
   // append to html
-  $("#table").append(tBody, tr);
+  $("#tbody").append(tBody, tr);
   tr.append(
     tdCategoryName,
     tdCategoryGoal,

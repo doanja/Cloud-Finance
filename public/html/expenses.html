@@ -21,13 +21,13 @@
 
 <body>
     <!-- navbar -->
-    <div class="container" id="main">
+    <div class="container">
         <nav class="navbar navbar-light">
             <a class="navbar-brand" href="#">Fixed top</a>
 
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Sign up</a>
+                    <a class="nav-link" href="signup.html">Sign up</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
@@ -45,47 +45,25 @@
     </div>
 
     <!-- main -->
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0" id="main-container">
         <!-- jumbotron -->
         <div class="jumbotron p-0 mb-0">
             <!-- blur -->
-            <div class="blur vertical-center">
-                <!-- table -->
-                <table class="table bg-white">
+            <div class="blur vertical-center overflow-auto">
+                <table class="table table-sm bg-white mx-auto" id="table">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th>Expenses</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                    <tbody id="tbody">
+
                     </tbody>
                 </table>
 
             </div>
 
         </div>
-
 
 
         <!-- footer -->
@@ -97,6 +75,8 @@
         </footer>
     </div>
 
+
+    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -115,7 +95,7 @@
     <script type="text/javascript" src="../scripts/apiRequests.js"></script>
     <script type="text/javascript" src="../scripts/expenses.js"></script>
     <script type="text/javascript" src="../scripts/modal.js"></script>
-    <!-- <script type="text/javascript" src="../scripts/nav.js"></script> -->
+    <script type="text/javascript" src="../scripts/nav.js"></script>
 </body>
 
 </html>
