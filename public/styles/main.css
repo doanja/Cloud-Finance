@@ -15,8 +15,9 @@ body {
   backdrop-filter: blur(5px);
 }
 
-form {
+.form {
   border-radius: 5px;
+  min-width: 305px;
 }
 
 .vertical-center {
