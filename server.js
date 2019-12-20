@@ -3,8 +3,8 @@ const express = require("express");
 const path = require("path");
 const db = require("./models");
 const app = express();
-const PORT = process.env.PORT || 3000;
-const syncOptions = { force: true };
+const PORT = process.env.PORT || 4000;
+const syncOptions = { force: false };
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
@@ -15,8 +15,12 @@ app.use(express.static("public"));
 app.use(express.static("public"));
 
 // Routes
-app.use("/", require("./routes/api"));
-app.use("/", require("./routes/html"));
+require("./routes/auth")(app);
+require("./routes/users")(app);
+require("./routes/remainder")(app);
+require("./routes/categories")(app);
+require("./routes/expenses")(app);
+require("./routes/html")(app);
 
 // Syncing our sequelize models and then starting our Express app
 db.sequelize.sync(syncOptions).then(() => {

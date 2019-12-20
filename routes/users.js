@@ -1,4 +1,4 @@
-var db = require("../models");
+const db = require("../models");
 
 module.exports = function(app) {
   // get all the user's info passing in the id
@@ -17,13 +17,13 @@ module.exports = function(app) {
 
   // create a single user
   app.post("/api/user", (req, res) => {
-    const { firstName, lastName, username, pwd, email, income } = req.body;
+    const { firstName, lastName, username, password, email, income } = req.body;
 
     db.User.create({
       firstName,
       lastName,
       username,
-      pwd,
+      password,
       email,
       income
     })
@@ -39,10 +39,6 @@ module.exports = function(app) {
   // update a single user
   app.put("/api/user/:id", (req, res) => {
     const { firstName, lastName, email } = req.body;
-
-    console.log("firstName :", firstName);
-    console.log("lastName :", lastName);
-    console.log("email :", email);
 
     // needs validation for updated fields on front end
     db.User.update(

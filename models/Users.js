@@ -1,6 +1,4 @@
-/* Requiring bcrypt for password hashing. Using the bcryptjs version as 
-   the regular bcrypt module sometimes causes errors on Windows machines */
-var bcrypt = require("bcryptjs");
+// var bcrypt = require("bcryptjs");
 
 module.exports = function(sequelize, DataTypes) {
   const User = sequelize.define("User", {
@@ -19,15 +17,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       validate: { len: [1, 20] }
     },
-    userName: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: { len: [1, 20] }
-    },
-    pwd: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: { min: 6 }
+      validate: { min: 10 }
     },
     email: {
       type: DataTypes.STRING,
@@ -41,25 +34,18 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DECIMAL(10, 2),
       defaultValue: 0
     }
-    // last_login: {
-    //   type: DataTypes.DATE
-    // },
-    // status: {
-    //   type: DataTypes.ENUM("active", "inactive"),
-    //   defaultValue: "active"
-    // }
   });
 
   /* Creating a custom method for our User model. 
      This will check if an unhashed password entered by the 
      user can be compared to the hashed password stored in our database */
-  User.prototype.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.pwd);
-  };
+  // User.prototype.validPassword = password => {
+  //   return bcrypt.compareSync(password, this.password);
+  // };
 
-  User.beforeCreate(user => {
-    user.pwd = bcrypt.hashSync(user.pwd, bcrypt.genSaltSync(10), null);
-  });
+  // User.beforeCreate(user => {
+  //   user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+  // });
 
   User.associate = models => {
     User.hasMany(models.Category, {

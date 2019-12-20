@@ -1,10 +1,12 @@
-const express = require("express");
-const router = express.Router();
-var db = require("../models");
+const db = require("../models");
 
-// Render 404 page for any unmatched routes
-router.get("*", function(req, res) {
-  res.send("404");
-});
+module.exports = app => {
+  app.get("/", (req, res) => {
+    res.send("home");
+  });
 
-module.exports = router;
+  // Render 404 page for any unmatched routes
+  app.get("*", (req, res) => {
+    res.send("404");
+  });
+};

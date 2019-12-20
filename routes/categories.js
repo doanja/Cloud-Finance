@@ -1,4 +1,4 @@
-var db = require("../models");
+const db = require("../models");
 
 module.exports = function(app) {
   // get all the Category's (with expenses) belonging to the user's id (from req.params.id)

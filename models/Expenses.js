@@ -11,9 +11,14 @@ module.exports = function(sequelize, DataTypes) {
       validate: { len: [1, 50] }
     },
     amount: {
-      type: DataTypes.DECIMAL(10,2),
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
       defaultValue: 0
+    },
+    date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     }
   });
 
