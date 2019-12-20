@@ -1,7 +1,7 @@
 const db = require("../models");
 
 module.exports = function(app) {
-  // get all the user's info passing in the id
+  // get all the user's info
   app.get("/api/user/:id", (req, res) => {
     db.User.findOne({
       where: { id: req.params.id }
@@ -40,7 +40,7 @@ module.exports = function(app) {
   app.put("/api/user/:id", (req, res) => {
     const { firstName, lastName, email } = req.body;
 
-    // needs validation for updated fields on front end
+    // TODO: needs validation for updated fields on front end
     db.User.update(
       {
         firstName,
@@ -64,7 +64,7 @@ module.exports = function(app) {
   app.put("/api/user/income/:id", (req, res) => {
     const { income } = req.body;
 
-    // needs validation for updated fields on front end
+    // TODO: needs validation for updated fields on front end
     db.User.update(
       {
         income
@@ -82,7 +82,7 @@ module.exports = function(app) {
       });
   });
 
-  // delete a single user by id
+  // delete a single user
   app.delete("/api/user/:id", (req, res) => {
     db.User.destroy({
       where: { id: req.params.id }

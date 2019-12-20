@@ -33,13 +33,14 @@ module.exports = function(app) {
 
   // update a single Expense
   app.put("/api/expense/:id", (req, res) => {
-    let { amount, description, CategoryId } = req.body;
+    let { amount, description, date, CategoryId } = req.body;
     const { id } = req.params;
 
     db.Expense.update(
       {
         amount,
         description,
+        date,
         CategoryId
       },
       {
@@ -55,7 +56,7 @@ module.exports = function(app) {
       });
   });
 
-  // delete a single Category by id
+  // delete a single expense
   app.delete("/api/expense/:id", (req, res) => {
     db.Expense.destroy({
       where: { id: req.params.id }

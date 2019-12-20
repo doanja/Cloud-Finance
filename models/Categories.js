@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       validate: { len: [1, 20] }
     },
     goal: {
-      type: DataTypes.DECIMAL(10,2),
+      type: DataTypes.DECIMAL(10, 2),
       defaultValue: 0
     }
   });
@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
   Category.associate = models => {
     Category.hasMany(models.Expense, {
       onDelete: "cascade"
-    })
+    });
   };
 
   return Category;

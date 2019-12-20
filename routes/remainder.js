@@ -1,6 +1,7 @@
 const db = require("../models");
 
 module.exports = app => {
+  // returns the user's income and remainder (total expenses across all categories)
   app.get("/api/remainder/:id", (req, res) => {
     const { id } = req.params;
 
