@@ -22,7 +22,7 @@ module.exports = app => {
   );
 
   app.get(
-    "/expenses/:userId",
+    "/expenses/",
     /*isAuthenticated,*/ (req, res) => {
       res.sendFile(path.join(__dirname, "../public/html/expenses.html"));
     }
