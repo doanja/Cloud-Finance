@@ -94,7 +94,6 @@ const renderDropdown = elementId => {
  */
 const renderModalFormFields = (type, elementId, text) => {
   // create the elements
-
   const formGroup = $("<div>", { class: "form-group" });
   const label = $("<label>", { for: type }).text(type);
   const input = $("<input>", {
@@ -103,6 +102,7 @@ const renderModalFormFields = (type, elementId, text) => {
     id: elementId
   }).val(text);
 
+  // append elements
   formGroup.append(label, input);
 
   return formGroup;
