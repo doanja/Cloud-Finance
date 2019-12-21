@@ -79,7 +79,7 @@ const renderExpenseRow = (expenseData, categoryName) => {
   });
   const deleteButton = $("<i>", {
     class:
-      "far fa-trash-alt fa-1x font-weight-bold icon-red mx-1 pt-2 delete-button",
+      "fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 delete-button",
     deleteId: expenseData.id
   });
 
@@ -115,7 +115,7 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   });
   const categoryDeleteButton = $("<i>", {
     class:
-      "far fa-trash-alt fa-1x font-weight-bold icon-red mx-1 pt-2 delete-category-button",
+      "fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 delete-category-button",
     deleteId: categoryData.id
   });
 

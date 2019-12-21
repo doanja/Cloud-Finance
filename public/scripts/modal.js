@@ -94,18 +94,18 @@ const renderDropdown = elementId => {
  */
 const renderModalFormFields = (type, elementId, text) => {
   // create the elements
-  const div = $("<div>");
-  const inputGroup = $("<div>", { class: "input-group" });
+
+  const formGroup = $("<div>", { class: "form-group" });
   const label = $("<label>", { for: type }).text(type);
   const input = $("<input>", {
     type: "text",
-    class: "input-group-text text-left",
+    class: "form-control text-left",
     id: elementId
   }).val(text);
-  div.append(inputGroup);
-  inputGroup.append(label, input);
 
-  return div;
+  formGroup.append(label, input);
+
+  return formGroup;
 };
 
 /**
