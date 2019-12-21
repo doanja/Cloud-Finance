@@ -41,8 +41,7 @@ body {
 
 table,
 thead,
-tr,
-th {
+tr {
   border-radius: 5px;
 }
 
@@ -52,24 +51,4 @@ nav {
 
 footer {
   border: 1px solid red;
-}
-
-.table-fixed thead {
-  width: 97%;
-}
-.table-fixed tbody {
-  height: 40rem;
-  overflow-y: auto;
-}
-.table-fixed thead,
-.table-fixed tbody,
-.table-fixed tr,
-.table-fixed td,
-.table-fixed th {
-  /* display: block; */
-}
-.table-fixed tbody td,
-.table-fixed thead > tr > th {
-  /* float: left; */
-  border-bottom-width: 0;
 }
