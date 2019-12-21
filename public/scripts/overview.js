@@ -21,7 +21,7 @@ const updateUserIncome = (userId, income) => {
  */
 const getIncome = userId => {
   axios.get(`/api/user/${userId}`).then(res => {
-    renderIncomeRow(res.data);
+    setIncome(res.data);
   }),
     err => {
       console.log(err);
@@ -89,15 +89,6 @@ const getRemainder = userId => {
 // RENDER FUNCTIONS
 
 /**
- * function to render the user's income
- * @param {object} userData an object that contains the user data from the response
- */
-const renderIncomeRow = userData => {
-  $("#income").val(userData.income);
-  $("#income").attr("value", userData.income);
-};
-
-/**
  * function to render category rows
  * @param {object} categoryData an object that contains the category data from the response
  * @param {number} totalExpenseCat the total expense for the category
@@ -161,10 +152,18 @@ const renderRemainderRow = remainderData => {
   tr.append(tdIncomeLeft, tdBlank0, tdRemainder, tdBlank1, tdBlank2);
 };
 
+/**
+ * function to render the user's income
+ * @param {object} userData an object that contains the user data from the response
+ */
+const setIncome = userData => {
+  $("#income").val(userData.income);
+  $("#income").attr("value", userData.income);
+};
+
 // function to pass current data to a modal
 function updateIncomeClicked() {
   const userIncome = parseFloat($("#income").val());
-  console.log("userIncome :", userIncome);
   // const userId = parseInt(
   //   window.location.href.split("/")[window.location.href.split("/").length - 1]
   // );
