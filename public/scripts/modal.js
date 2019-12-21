@@ -279,8 +279,9 @@ const listenForModalSubmission = (option, userId, obj) => {
 // function to pass current data to a modal
 function editExpenseClicked() {
   const editId = parseInt($(this).attr("editId")); // get the edit button id
-  const description = $(`.description-${editId}`).text(); // get the description
-  const amount = parseFloat($(`.amount-${editId}`).text()); // get the amount
+  const description = $(`.description-${editId}`).attr("value"); // get the description
+  const amount = parseFloat($(`.amount-${editId}`).attr("value")); // get the amount
+  const date = $(`.amount-${editId}`).attr("value"); // get the amount
   // const userId = parseInt(
   //   window.location.href.split("/")[window.location.href.split("/").length - 1]
   // );

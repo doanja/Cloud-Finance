@@ -41,10 +41,10 @@ const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
     "Total of Goals & Expenses:"
   );
   const tdTotalExpenseAmount = $("<td>", { class: "font-weight-bold" }).text(
-    totalExpensesValue
+    `$${totalExpensesValue}`
   );
   const tdTotalExpenseGoal = $("<td>", { class: "font-weight-bold" }).text(
-    totalExpenseGoal
+    `$${totalExpenseGoal}`
   );
 
   $("#tbody").append(tr);
@@ -59,14 +59,17 @@ const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
 const renderExpenseRow = (expenseData, categoryName) => {
   const tr = $("<tr>");
   const tdExpenseName = $("<td>", {
-    class: "pt-3 description-" + expenseData.id
+    class: "pt-3 description-" + expenseData.id,
+    value: expenseData.description
   }).text(expenseData.description);
   const td = $("<td>", { class: "pt-3" }).text("-");
   const tdExpenseAmount = $("<td>", {
-    class: "pt-3 amount-" + expenseData.id
-  }).text(expenseData.amount);
+    class: "pt-3 amount-" + expenseData.id,
+    value: expenseData.amount
+  }).text(`$${expenseData.amount}`);
   const tdDate = $("<td>", {
-    class: "pt-3 date-" + expenseData.id
+    class: "pt-3 date-" + expenseData.id,
+    value: expenseData.date
   }).text(expenseData.date);
   const tdButtons = $("<td>");
   const editButton = $("<i>", {
@@ -95,8 +98,12 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   const tBody = $("<tbody>");
   const tr = $("<tr>", { class: "bg-secondary text-white" });
   const tdCategoryName = $("<td>", { class: "pt-3" }).text(categoryData.name);
-  const tdCategoryGoal = $("<td>", { class: "pt-3" }).text(categoryData.goal);
-  const tdCategoryTotal = $("<td>", { class: "pt-3" }).text(totalExpenseCat);
+  const tdCategoryGoal = $("<td>", { class: "pt-3" }).text(
+    `$${categoryData.goal}`
+  );
+  const tdCategoryTotal = $("<td>", { class: "pt-3" }).text(
+    `$${totalExpenseCat}`
+  );
   const tdBlank = $("<td>", { class: "pt-3" });
   const tdButtons = $("<td>");
   const categoryEditButton = $("<i>", {
