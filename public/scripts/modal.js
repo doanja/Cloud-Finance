@@ -4,7 +4,6 @@
  * @param {function} callback the function to be executed when submit is clicked
  */
 const renderConfirmationModal = (title, callback) => {
-  console.log("render confirmation modal called");
   // create the elements
   const modalFade = $("<div>", { id: "modal" }).css("z-index", 50);
   const modalDiaglogue = $("<div>", { class: "modal-dialog" });
@@ -167,11 +166,7 @@ const renderModalContent = (title, userId, obj, modalBody) => {
 
       // render form fields with prefilled text
       modalBody.append(
-        renderModalFormFields(
-          "Description",
-          "modal-description",
-          obj.description
-        ),
+        renderModalFormFields("Description", "modal-description", obj.description),
         renderModalFormFields("Amount", "modal-amount", obj.amount)
       );
       break;
@@ -199,14 +194,6 @@ const renderModalContent = (title, userId, obj, modalBody) => {
       modalBody.append(
         renderModalFormFields("Description", "modal-description", ""),
         renderModalFormFields("Amount", "modal-amount", "")
-      );
-      break;
-
-    case "Edit Income":
-      // render form fields with prefilled text
-      console.log("obj.userIncome :", obj.userIncome);
-      modalBody.append(
-        renderModalFormFields("Income", "modal-income", obj.userIncome)
       );
       break;
 
@@ -260,16 +247,9 @@ const listenForModalSubmission = (option, userId, obj) => {
       // grab the form fields from the modal
       const expenseDescription = $("#modal-description").val();
       const expenseAmount = parseFloat($("#modal-amount").val());
-      const expenseCategory = $("#categories option:selected").attr(
-        "categoryId"
-      );
+      const expenseCategory = $("#categories option:selected").attr("categoryId");
       postExpense(expenseAmount, expenseDescription, expenseCategory);
       break;
-
-    case "Edit Income":
-      // grab the form fields from the modal
-      const income = parseFloat($("#modal-income").val());
-      updateUserIncome(userId, income);
 
     default:
       break;
@@ -299,12 +279,9 @@ function editExpenseClicked() {
 // function to pass current data to a modal
 function deleteExpenseClicked() {
   const deleteId = parseInt($(this).attr("deleteId"));
-  renderConfirmationModal(
-    "Are you sure you want to delete the Expense?",
-    () => {
-      deleteExpense(deleteId);
-    }
-  );
+  renderConfirmationModal("Are you sure you want to delete the Expense?", () => {
+    deleteExpense(deleteId);
+  });
 
   // deleteExpense(deleteId);
 }
@@ -325,28 +302,14 @@ function editCategoryClicked() {
 // function to pass current data to a modal
 function deleteCategoryClicked() {
   const deleteId = parseInt($(this).attr("deleteId"));
-  renderConfirmationModal(
-    "Are you sure you want to delete the category?",
-    () => {
-      deleteCategory(deleteId);
-    }
-  );
-}
-
-// function to pass current data to a modal
-function editIncomeClicked() {
-  const userIncome = parseFloat($(this).attr("userIncome"));
-  // const userId = parseInt(
-  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
-  // );
-  const userId = 1;
-
-  renderModal("Edit Income", userId, { userId, userIncome });
+  renderConfirmationModal("Are you sure you want to delete the category?", () => {
+    deleteCategory(deleteId);
+  });
 }
 
 $(document).ready(() => {
   console.log("modal.js script loaded");
-  $(document).on("click", ".edit-income-button", editIncomeClicked);
+
   $(document).on("click", ".edit-category-button", editCategoryClicked);
   $(document).on("click", ".delete-category-button", deleteCategoryClicked);
   $(document).on("click", ".edit-button", editExpenseClicked);

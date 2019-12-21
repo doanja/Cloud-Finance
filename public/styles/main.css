@@ -35,7 +35,7 @@ body {
   align-items: center;
 }
 
-#table {
+.budget-data {
   max-width: 800px;
 }
 

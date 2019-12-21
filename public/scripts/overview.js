@@ -93,19 +93,8 @@ const getRemainder = userId => {
  * @param {object} userData an object that contains the user data from the response
  */
 const renderIncomeRow = userData => {
-  const tr = $("<tr>");
-  const tdIncomeHeader = $("<th>").text("Income");
-  const tdIncome = $("<th>").text("$" + userData.income);
-  const thButtons = $("<th>");
-  const editButton = $("<i>", {
-    class: "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 mt-2 pt-3 edit-income-button",
-    userId: userData.id,
-    userIncome: userData.income
-  }).text("Edit");
-
-  $("#income").append(tr);
-  tr.append(tdIncomeHeader, tdIncome, thButtons);
-  thButtons.append(editButton);
+  $("#income").val(userData.income);
+  $("#income").attr("value", userData.income);
 };
 
 /**
@@ -172,9 +161,24 @@ const renderRemainderRow = remainderData => {
   tr.append(tdIncomeLeft, tdBlank0, tdRemainder, tdBlank1, tdBlank2);
 };
 
+// function to pass current data to a modal
+function updateIncomeClicked() {
+  const userIncome = parseFloat($("#income").val());
+  console.log("userIncome :", userIncome);
+  // const userId = parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  const userId = 1;
+
+  renderConfirmationModal("Are you sure you want to update your income?", () => {
+    updateUserIncome(userId, userIncome);
+  });
+}
+
 $(document).ready(() => {
   const userId = 1; //parseInt(window.location.href.split("/")[window.location.href.split("/").length - 1]);
 
   getIncome(userId);
   getBudgetCategories(userId);
+  $(document).on("click", ".update-income-button", updateIncomeClicked);
 });
