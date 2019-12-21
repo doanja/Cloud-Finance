@@ -102,7 +102,7 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   const tdOverUnder = $("<td>", { class: "pt-3" }).text("$" + parseFloat(overUnder).toFixed(2));
   const tdButtons = $("<td>");
   const editButton = $("<i>", {
-    class: "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 mt-2  edit-category-button",
+    class: "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button",
     editId: categoryData.id,
     categoryId: categoryData.id,
     categoryValue: categoryData.name,
