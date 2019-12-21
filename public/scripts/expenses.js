@@ -132,7 +132,6 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
 };
 
 $(document).ready(() => {
-  console.log("expense.js script loaded");
   const userId = parseInt(
     window.location.href.split("/")[window.location.href.split("/").length - 1]
   );

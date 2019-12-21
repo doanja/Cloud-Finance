@@ -33,7 +33,7 @@
 
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="signup.html">Sign up</a>
+                        <a class="nav-link" href="/signup">Sign up</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
@@ -50,11 +50,11 @@
             </nav>
         </div>
 
-
-
-        <div class="jumbotron p-0">
+        <!-- jumbotron -->
+        <div class="jumbotron p-0 mb-0">
             <!-- blur -->
             <div class="blur p-0 table overflow-auto">
+                <!-- expense table -->
                 <table class="table table-bordered table-hover bg-white mx-auto my-5" id="table">
                     <thead class="thead-dark">
                         <tr>
@@ -66,9 +66,10 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
-
+                        <!-- expenses rendered here -->
                     </tbody>
                 </table>
+                <!-- create expense / category buttons -->
                 <div class="text-center my-5">
                     <div class="btn btn-primary text-white create-category"><i class="fas fa-plus fa-1x"></i> Create
                         Category
