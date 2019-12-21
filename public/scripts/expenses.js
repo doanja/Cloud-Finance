@@ -37,9 +37,15 @@ const getCategoriesAll = userId => {
  */
 const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
   const tr = $("<tr>");
-  const tdTotalExpenses = $("<td>").text("Total of Goals & Expenses:");
-  const tdTotalExpenseAmount = $("<td>").text(totalExpensesValue);
-  const tdTotalExpenseGoal = $("<td>").text(totalExpenseGoal);
+  const tdTotalExpenses = $("<td>", { class: "font-weight-bold" }).text(
+    "Total of Goals & Expenses:"
+  );
+  const tdTotalExpenseAmount = $("<td>", { class: "font-weight-bold" }).text(
+    totalExpensesValue
+  );
+  const tdTotalExpenseGoal = $("<td>", { class: "font-weight-bold" }).text(
+    totalExpenseGoal
+  );
 
   $("#tbody").append(tr);
   tr.append(tdTotalExpenses, tdTotalExpenseGoal, tdTotalExpenseAmount);
@@ -59,20 +65,24 @@ const renderExpenseRow = (expenseData, categoryName) => {
   const tdExpenseAmount = $("<td>", {
     class: "pt-3 amount-" + expenseData.id
   }).text(expenseData.amount);
+  const tdDate = $("<td>", {
+    class: "pt-3 date-" + expenseData.id
+  }).text(expenseData.date);
   const tdButtons = $("<td>");
-  const editButton = $("<div>", {
-    class: "btn btn-dark mx-1 p-1 float-right text-white edit-button",
+  const editButton = $("<i>", {
+    class: "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-button",
     editId: expenseData.id,
     categoryValue: categoryName
-  }).text("Edit");
-  const deleteButton = $("<div>", {
-    class: "btn btn-dark mx-1 p-1 float-right text-white delete-button",
+  });
+  const deleteButton = $("<i>", {
+    class:
+      "far fa-trash-alt fa-1x font-weight-bold icon-red mx-1 pt-2 delete-button",
     deleteId: expenseData.id
-  }).text("Del.");
+  });
 
   // append to html
   $("#tbody").append(tr);
-  tr.append(tdExpenseName, td, tdExpenseAmount, tdButtons);
+  tr.append(tdExpenseName, td, tdExpenseAmount, tdDate, tdButtons);
   tdButtons.append(editButton, deleteButton);
 };
 
@@ -87,23 +97,31 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   const tdCategoryName = $("<td>", { class: "pt-3" }).text(categoryData.name);
   const tdCategoryGoal = $("<td>", { class: "pt-3" }).text(categoryData.goal);
   const tdCategoryTotal = $("<td>", { class: "pt-3" }).text(totalExpenseCat);
+  const tdBlank = $("<td>", { class: "pt-3" });
   const tdButtons = $("<td>");
-  const categoryEditButton = $("<div>", {
-    class: "btn btn-dark mx-1 p-1 text-white float-right edit-category-button",
+  const categoryEditButton = $("<i>", {
+    class:
+      "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button",
     editId: categoryData.id,
     categoryValue: categoryData.name,
     goalValue: categoryData.goal
-  }).text("Edit");
-  const categoryDeleteButton = $("<div>", {
+  });
+  const categoryDeleteButton = $("<i>", {
     class:
-      "btn btn-dark mx-1 p-1 text-white float-right delete-category-button",
+      "far fa-trash-alt fa-1x font-weight-bold icon-red mx-1 pt-2 delete-category-button",
     deleteId: categoryData.id
-  }).text("Del");
+  });
 
   // append to html
   $("#tbody").append(tBody, tr);
-  tr.append(tdCategoryName, tdCategoryGoal, tdCategoryTotal, tdButtons);
-  tdButtons.append(categoryDeleteButton, categoryEditButton);
+  tr.append(
+    tdCategoryName,
+    tdCategoryGoal,
+    tdCategoryTotal,
+    tdBlank,
+    tdButtons
+  );
+  tdButtons.append(categoryEditButton, categoryDeleteButton);
 };
 
 $(document).ready(() => {

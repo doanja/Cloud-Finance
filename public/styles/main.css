@@ -39,16 +39,22 @@ body {
   max-width: 1000px;
 }
 
-table,
-thead,
-tr {
-  border-radius: 5px;
+i {
+  cursor: pointer;
 }
 
-nav {
+.icon-blue:hover {
+  color: blue;
+}
+
+.icon-red:hover {
+  color: red;
+}
+
+/* nav {
   border: 1px solid red;
 }
 
 footer {
   border: 1px solid red;
-}
+} */
