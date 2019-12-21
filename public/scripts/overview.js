@@ -95,15 +95,17 @@ const getRemainder = userId => {
 const renderIncomeRow = userData => {
   const tr = $("<tr>");
   const tdIncomeHeader = $("<th>").text("Income");
-  const tdIncome = $("<td>").text("$" + userData.income);
-  const editButton = $("<div>", {
-    class: "btn btn-white text-white mx-1 mt-2 edit-income-button",
+  const tdIncome = $("<th>").text("$" + userData.income);
+  const thButtons = $("<th>");
+  const editButton = $("<i>", {
+    class: "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 mt-2 pt-3 edit-income-button",
     userId: userData.id,
     userIncome: userData.income
   }).text("Edit");
 
   $("#income").append(tr);
-  tr.append(tdIncomeHeader, tdIncome, editButton);
+  tr.append(tdIncomeHeader, tdIncome, thButtons);
+  thButtons.append(editButton);
 };
 
 /**
@@ -114,20 +116,22 @@ const renderIncomeRow = userData => {
 const renderCategoryRow = (categoryData, totalExpenseCat) => {
   const overUnder = categoryData.goal - totalExpenseCat;
   const tr = $("<tr>");
-  const tdCategoryName = $("<td>").text(categoryData.name);
-  const tdCategoryGoal = $("<td>").text("$" + categoryData.goal);
-  const tdCategoryTotal = $("<td>").text("$" + totalExpenseCat);
-  const tdOverUnder = $("<td>").text("$" + parseFloat(overUnder).toFixed(2));
-  const editButton = $("<div>", {
-    class: "btn btn-white mx-1 mt-2 edit-category-button",
+  const tdCategoryName = $("<td>", { class: "pt-3" }).text(categoryData.name);
+  const tdCategoryGoal = $("<td>", { class: "pt-3" }).text("$" + categoryData.goal);
+  const tdCategoryTotal = $("<td>", { class: "pt-3" }).text("$" + totalExpenseCat);
+  const tdOverUnder = $("<td>", { class: "pt-3" }).text("$" + parseFloat(overUnder).toFixed(2));
+  const tdButtons = $("<td>");
+  const editButton = $("<i>", {
+    class: "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 mt-2  edit-category-button",
     editId: categoryData.id,
     categoryId: categoryData.id,
     categoryValue: categoryData.name,
     goalValue: categoryData.goal
-  }).text("Edit");
+  });
 
-  $("#main").append(tr);
-  tr.append(tdCategoryName, tdCategoryGoal, tdCategoryTotal, tdOverUnder, editButton);
+  $("#tbody").append(tr);
+  tr.append(tdCategoryName, tdCategoryGoal, tdCategoryTotal, tdOverUnder, tdButtons);
+  tdButtons.append(editButton);
 };
 
 /**
@@ -144,7 +148,7 @@ const renderTotals = (categoryTotal, expenseTotal) => {
   const tdOverUnder = $("<td>").text("$" + parseFloat(overUnder).toFixed(2));
   const tdBlank = $("<td>").text("");
 
-  $("#main").append(tr);
+  $("#tbody").append(tr);
   tr.append(tdCategoryName, tdCategoryGoalTotal, tdExpenseTotal, tdOverUnder, tdBlank);
 };
 
@@ -164,14 +168,12 @@ const renderRemainderRow = remainderData => {
   const tdBlank1 = $("<td>").text("");
   const tdBlank2 = $("<td>").text("");
 
-  $("#main").append(tr);
+  $("#tbody").append(tr);
   tr.append(tdIncomeLeft, tdBlank0, tdRemainder, tdBlank1, tdBlank2);
 };
 
 $(document).ready(() => {
-  const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
-  );
+  const userId = 1; //parseInt(window.location.href.split("/")[window.location.href.split("/").length - 1]);
 
   getIncome(userId);
   getBudgetCategories(userId);

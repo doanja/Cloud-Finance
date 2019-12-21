@@ -1,5 +1,4 @@
 var path = require("path");
-
 const db = require("../models");
 
 module.exports = app => {
@@ -8,20 +7,23 @@ module.exports = app => {
   });
 
   app.get(
-    "/dashboard/:userId",
+    // TODO: ADD BACK IN USER ID
+    "/dashboard/",
     /*isAuthenticated,*/ (req, res) => {
       res.sendFile(path.join(__dirname, "../public/html/dashboard.html"));
     }
   );
 
   app.get(
-    "/overview/:userId",
+    // TODO: ADD BACK IN USER ID
+    "/overview/",
     /*isAuthenticated,*/ (req, res) => {
       res.sendFile(path.join(__dirname, "../public/html/overview.html"));
     }
   );
 
   app.get(
+    // TODO: ADD BACK IN USER ID
     "/expenses/",
     /*isAuthenticated,*/ (req, res) => {
       res.sendFile(path.join(__dirname, "../public/html/expenses.html"));
@@ -29,7 +31,8 @@ module.exports = app => {
   );
 
   app.get(
-    "/profile/:userId",
+    // TODO: ADD BACK IN USER ID
+    "/profile/",
     /*isAuthenticated,*/ (req, res) => {
       res.sendFile(path.join(__dirname, "../public/html/profile.html"));
     }
