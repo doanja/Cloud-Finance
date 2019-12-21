@@ -1,11 +1,12 @@
 body {
-  background-color: #fff;
+  background-color: white;
 }
 
 .jumbotron {
   background: url("../images/background.jpg");
   background-size: cover;
   background-attachment: fixed;
+  margin-bottom: 0;
 }
 
 .blur {
@@ -13,6 +14,7 @@ body {
   height: 40rem;
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(5px);
+  margin-bottom: 0;
 }
 
 .form {
@@ -27,6 +29,47 @@ body {
   align-items: center;
 }
 
+.table {
+  min-height: 100%; /* for browsers that don't support vh */
+  min-height: 100vh;
+  align-items: center;
+}
+
 #table {
   max-width: 1000px;
+}
+
+table,
+thead,
+tr,
+th {
+  border-radius: 5px;
+}
+
+nav {
+  border: 1px solid red;
+}
+
+footer {
+  border: 1px solid red;
+}
+
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 40rem;
+  overflow-y: auto;
+}
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+  /* display: block; */
+}
+.table-fixed tbody td,
+.table-fixed thead > tr > th {
+  /* float: left; */
+  border-bottom-width: 0;
 }

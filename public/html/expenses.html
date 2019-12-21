@@ -20,40 +20,44 @@
 </head>
 
 <body>
-    <!-- navbar -->
-    <div class="container">
-        <nav class="navbar navbar-light">
-            <a class="navbar-brand" href="#">Fixed top</a>
-
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="signup.html">Sign up</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="true" aria-expanded="false">More</a>
-                    <div class="dropdown-menu dropdown-menu-right" id="menu">
-                        <a class="dropdown-item" href="#">Dashboard</a>
-                        <a class="dropdown-item" href="#">Overview</a>
-                        <a class="dropdown-item" href="#">Expenses</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Profile</a>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </div>
-
     <!-- main -->
     <div class="container-fluid p-0" id="main-container">
-        <!-- jumbotron -->
-        <div class="jumbotron p-0 mb-0">
+        <!-- navbar -->
+        <div class="container">
+            <nav class="navbar navbar-light bg-white">
+                <a class="navbar-brand" href="#">Fixed top</a>
+
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="signup.html">Sign up</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="true" aria-expanded="false">More</a>
+                        <div class="dropdown-menu dropdown-menu-right" id="menu">
+                            <a class="dropdown-item" href="#">Dashboard</a>
+                            <a class="dropdown-item" href="#">Overview</a>
+                            <a class="dropdown-item" href="#">Expenses</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Profile</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+
+
+        <div class="jumbotron p-0">
             <!-- blur -->
-            <div class="blur vertical-center overflow-auto">
-                <table class="table table-sm bg-white mx-auto" id="table">
+            <div class="blur p-0 table overflow-auto">
+                <table class="table table-sm bg-white mx-auto my-5" id="table">
                     <thead>
                         <tr>
-                            <th>Expenses</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Goal</th>
+                            <th scope="col">Actual Spent</th>
+                            <th scope="col">Option</th>
                         </tr>
                     </thead>
                     <tbody id="tbody">
