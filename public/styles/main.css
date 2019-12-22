@@ -7,11 +7,13 @@ body {
   background-size: cover;
   background-attachment: fixed;
   margin-bottom: 0;
+  width: 100vw;
 }
 
 .blur {
   width: 100vw;
   height: 40rem;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 1rem, 0.2);
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(5px);
   margin-bottom: 0;
@@ -21,7 +23,6 @@ body {
 }
 
 .wrap {
-  border-radius: 5px;
   min-width: 350px;
 }
 
