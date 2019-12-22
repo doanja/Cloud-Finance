@@ -2,14 +2,6 @@ body {
   background-color: white;
 }
 
-nav {
-  border: 1px solid red;
-}
-
-footer {
-  border: 1px solid red;
-}
-
 .jumbotron {
   background: url("../images/background.jpg");
   background-size: cover;
@@ -43,7 +35,11 @@ footer {
 
 /* for tables (expenses.html, overview.html) */
 .budget-data {
-  max-width: 800px;
+  max-width: 800px; /* TODO: change to vw */
+}
+
+.test {
+  max-width: 80vw;
 }
 
 /* icons */

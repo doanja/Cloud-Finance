@@ -22,44 +22,77 @@ const getCategoryTotals = userId => {
       arr.push([category.name, parseFloat(categoryTotal.toFixed(2))]);
     });
 
-    renderChart(arr);
+    console.log(arr);
+    // renderChart(arr);
   }),
     err => {
       console.log(err);
     };
 };
 
-/**
- * function to draw the chart using a 2-dimensional array
- * @param {Array.<string[]>} arr an array of arrays containing the rows
- */
-const renderChart = arr => {
-  var data = google.visualization.arrayToDataTable(arr);
-
-  var options = {
-    title: "Total Amount Spent per Category",
-    width: 800,
-    height: 600,
-    vAxis: {
-      title: "Amount Spent"
-    },
-    hAxis: {
-      title: "Category"
-    }
-  };
-
-  var chart = new google.visualization.ColumnChart(document.getElementById("graph"));
-  chart.draw(data, options);
-
-  $("#graph").append(chart);
-};
-
-google.load("visualization", "1", { packages: ["corechart"] });
-
 $(document).ready(() => {
-  const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
-  );
+  const userId = 1;
+  // parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  // TODO: set userId back
 
   getCategoryTotals(userId);
+});
+
+const myChart = $("#myChart")[0].getContext("2d");
+const myChart2 = $("#myChart2")[0].getContext("2d");
+const myChart3 = $("#myChart3")[0].getContext("2d");
+
+const massPopChart = new Chart(myChart, {
+  type: "bar", // the type of char (bar, horizontal bar, pie, line, donut, radar, polarArea)
+  data: {
+    labels: [
+      "boston",
+      "worcester",
+      "springfield",
+      "lowel",
+      "cambridge",
+      "new bedford"
+    ],
+    datasets: [
+      { label: "population", data: [1212, 2134, 1234, 5315, 3462, 2345] }
+    ]
+  },
+  options: {}
+});
+
+const char2 = new Chart(myChart2, {
+  type: "bar", // the type of char (bar, horizontal bar, pie, line, donut, radar, polarArea)
+  data: {
+    labels: [
+      "boston",
+      "worcester",
+      "springfield",
+      "lowel",
+      "cambridge",
+      "new bedford"
+    ],
+    datasets: [
+      { label: "population", data: [1212, 2134, 1234, 5315, 3462, 2345] }
+    ]
+  },
+  options: {}
+});
+const chart3 = new Chart(myChart3, {
+  type: "bar", // the type of char (bar, horizontal bar, pie, line, donut, radar, polarArea)
+  data: {
+    labels: [
+      "boston",
+      "worcester",
+      "springfield",
+      "lowel",
+      "cambridge",
+      "new bedford"
+    ],
+    datasets: [
+      { label: "population", data: [1212, 2134, 1234, 5315, 3462, 2345] }
+    ]
+  },
+  options: {}
 });
