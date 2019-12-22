@@ -276,7 +276,6 @@ function editExpenseClicked() {
   const description = $(`.description-${editId}`).attr("value"); // get the description
   const amount = parseFloat($(`.amount-${editId}`).attr("value")); // get the amount
   const date = $(`.date-${editId}`).attr("value"); // get the amount
-  console.log("date :", date);
   // const userId = parseInt(
   //   window.location.href.split("/")[window.location.href.split("/").length - 1]
   // );
