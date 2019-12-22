@@ -2,6 +2,14 @@ body {
   background-color: white;
 }
 
+nav {
+  border: 1px solid red;
+}
+
+footer {
+  border: 1px solid red;
+}
+
 .jumbotron {
   background: url("../images/background.jpg");
   background-size: cover;
@@ -25,6 +33,7 @@ body {
   min-width: 350px;
 }
 
+/* for content inside the blur that needs centuring */
 .vertical-center {
   min-height: 100%; /* for browsers that don't support vh */
   min-height: 100vh;
@@ -32,10 +41,12 @@ body {
   align-items: center;
 }
 
+/* for tables (expenses.html, overview.html) */
 .budget-data {
   max-width: 800px;
 }
 
+/* icons */
 i {
   cursor: pointer;
 }
@@ -46,14 +57,6 @@ i {
 
 .icon-red:hover {
   color: red;
-}
-
-nav {
-  border: 1px solid red;
-}
-
-footer {
-  border: 1px solid red;
 }
 
 .text-red {
