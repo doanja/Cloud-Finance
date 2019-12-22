@@ -1,3 +1,21 @@
+// API REQUESTS
+
+/**
+ * function to get the user's information
+ * @param {number} userId the user's id
+ */
+const getUserInfo = userId => {
+  axios.get(`/api/user/${userId}`).then(res => {
+    renderFormField("Email", "text", "email", res.data.email);
+    renderFormField("First name", "text", "fname", res.data.firstName);
+    renderFormField("Last name", "text", "lname", res.data.lastName);
+    renderButtons();
+  }),
+    err => {
+      console.log(err);
+    };
+};
+
 /**
  * function to update the user's information
  * @param {number} userId the user's id
@@ -6,6 +24,7 @@
  * @param {string} email the user's email
  */
 const updateUser = (userId, firstName, lastName, email) => {
+  console.log("updateUser()");
   axios.put(`/api/user/${userId}`, { firstName, lastName, email }).then(res => {
     location.reload();
   }),
@@ -14,79 +33,75 @@ const updateUser = (userId, firstName, lastName, email) => {
     };
 };
 
-/**
- * function to get the user's information
- * @param {number} userId the user's id
- */
-const getUserInfo = userId => {
-  axios.get(`/api/user/${userId}`).then(res => {
-    renderFormField("First name:", "text", "fname", res.data.firstName);
-    renderFormField("Last name:", "text", "lname", res.data.lastName);
-    renderFormField("Email:", "text", "email", res.data.email);
-    renderSubmitButton();
-  }),
-    err => {
-      console.log(err);
-    };
+// RENDER FUNCTIONS
+
+// function to render the submit button
+const renderButtons = () => {
+  // create html elements
+  const formGroup = $("<div>", { class: "btn-group w-100" });
+  const resetButton = $("<button>", {
+    class: "btn btn-outline-primary",
+    type: "button",
+    id: "reset-button"
+  }).text("Reset");
+  const saveButton = $("<button>", {
+    class: "btn btn-outline-primary",
+    type: "button",
+    id: "save-button"
+  }).text("Save");
+
+  // append and render html elements
+  $(".form").append(formGroup);
+  formGroup.append(resetButton, saveButton);
+};
+
+const renderFormField = (text, type, elementId, value) => {
+  // create html elements
+  const formGroup = $("<div>", { class: "form-group" });
+  const label = $("<label>", { for: type }).text(text);
+  const input = $("<input>", {
+    class: "form-control",
+    type: type,
+    id: elementId
+  }).val(value);
+
+  // append and render html elements
+  $(".form").append(formGroup);
+  formGroup.append(label, input);
 };
 
 /**
  * function to parse the form and update the uesr's information
  */
 const parseFormData = () => {
-  const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
-  );
-  const firstName = $(".value-for-fname").val();
-  const lastName = $(".value-for-lname").val();
-  const email = $(".value-for-email").val();
+  const userId = 1;
+  // parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  // TODO: set userId back
 
-  renderConfirmationModal('Click "Confirm" to Update', () => {
+  const email = $("#email").val();
+  const firstName = $("#fname").val();
+  const lastName = $("#lname").val();
+
+  renderConfirmationModal('Click "confirm" to Save', () => {
     updateUser(userId, firstName, lastName, email);
   });
 };
 
-// function to render the submit button
-const renderSubmitButton = () => {
-  // create html elements
-  const formGroup = $("<div>", { class: "form-group" });
-  const col = $("<div>", { class: "col-lg-8" });
-  const input = $("<input>", {
-    type: "button",
-    class: "btn btn-primary",
-    value: "Submit",
-    id: "submit-button"
-  });
-
-  // append and render html elements
-  $("#form").append(formGroup);
-  formGroup.append(col);
-  col.append(input);
-};
-
-const renderFormField = (text, type, valueType, value) => {
-  // create html elements
-  const formGroup = $("<div>", { class: "form-group" });
-  const label = $("<label>", { class: "col-lg-3 control-label" }).text(text);
-  const col = $("<div>", { class: "col-lg-8" });
-  const input = $("<input>", { class: "form-control value-for-" + valueType, type: type }).val(
-    value
-  );
-
-  // append and render html elements
-  $("#form").append(formGroup);
-  formGroup.append(label, col);
-  col.append(input);
-};
-
 $(document).ready(function() {
-  const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
-  );
+  const userId = 1;
+  // parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  // TODO: set user ID back
 
   // get the user's information from the url
   getUserInfo(userId);
 
   //  listen for form submission
-  $(document).on("click", "#submit-button", parseFormData);
+  $(document).on("click", "#save-button", parseFormData);
+  $(document).on("click", "#reset-button", () => {
+    location.reload();
+  });
 });

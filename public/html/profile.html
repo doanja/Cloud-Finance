@@ -18,6 +18,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/modal.css">
 
     <title>Budget+</title>
 </head>
@@ -32,7 +33,7 @@
 
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/signup">Sign up</a>
+                        <a class="nav-link" href="signup.html">Sign up</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
@@ -52,34 +53,16 @@
         <!-- jumbotron -->
         <div class="jumbotron p-0 mb-0">
             <!-- blur -->
-            <div class="blur p-0 overflow-auto">
-                <!-- income -->
-                <div class="input-group mx-auto budget-data mt-5 mb-0">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text bg-white text-dark">Income</span>
-                    </div>
-                    <input type="text" class="form-control" id="income">
-                    <div class="input-group-append">
-                        <button class="btn btn-dark update-income-button" type="button">Update Income</button>
-                    </div>
+            <div class="blur vertical-center">
+                <!-- form -->
+                <div class="form bg-white p-3 mx-auto">
+
+                    <!-- <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                    </div> -->
+
                 </div>
-
-                <!-- budget overview -->
-                <table class="table table-bordered table-hover bg-white budget-data mx-auto my-5" id="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Category</th>
-                            <th>Budgeted Amount</th>
-                            <th>Amount Spent</th>
-                            <th>Budget Difference</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody">
-                        <!-- overview data rendered here -->
-
-                    </tbody>
-                </table>
 
             </div>
 
@@ -111,7 +94,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 
     <!-- custom scripts -->
-    <script type="text/javascript" src="../scripts/apiRequests.js"></script>
     <script type="text/javascript" src="../scripts/profile.js"></script>
     <script type="text/javascript" src="../scripts/modal.js"></script>
     <!-- <script type="text/javascript" src="../scripts/nav.js"></script> -->
