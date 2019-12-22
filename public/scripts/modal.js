@@ -88,13 +88,13 @@ const renderDropdown = elementId => {
  * function to render form input with prefilled text
  * @param {string} labelType the label for the input
  * @param {string} elementId the id of the input field
- * @param {string} text the text to be displayed in the input
- * @return {object} the form
+ * @param {string} inputText the text to be displayed in the input
+ * @return {object} the form group
  */
 const renderModalFormFields = (
   labelType,
   elementId,
-  text,
+  inputText,
   inputType = "test"
 ) => {
   // create the elements
@@ -104,7 +104,7 @@ const renderModalFormFields = (
     type: inputType,
     class: "form-control text-left",
     id: elementId
-  }).val(text);
+  }).val(inputText);
 
   // append elements
   formGroup.append(label, input);
@@ -116,9 +116,9 @@ const renderModalFormFields = (
  * function to render the modal
  * @param {string} title the title to go in the modal
  * @param {string} userId the id of the the user
- * @param {object} obj the object containing required fields for preforming crud operations on the table
+ * @param {object} data the object containing fields for the category or expense
  */
-const renderModal = (title, userId, obj) => {
+const renderModal = (title, userId, data) => {
   // create the elements
   const modalFade = $("<div>", { id: "modal" }).css("z-index", 5);
   const modalDiaglogue = $("<div>", { class: "modal-dialog" });
@@ -144,14 +144,14 @@ const renderModal = (title, userId, obj) => {
   modalHeader.append(modalTitle);
   modalprefooter.append(button, submit);
 
-  renderModalContent(title, userId, obj, modalBody);
+  renderModalContent(title, userId, data, modalBody);
 
   // listen when to close the modal
   listenForModalClick();
 
   // listen for form submission
   $("#modal-submit").click(() => {
-    listenForModalSubmission(title, userId, obj);
+    listenForModalSubmission(title, userId, data);
   });
 };
 
@@ -203,7 +203,8 @@ const renderModalContent = (title, userId, obj, modalBody) => {
       // render form fields with prefilled text
       modalBody.append(
         renderModalFormFields("Description", "modal-description", ""),
-        renderModalFormFields("Amount", "modal-amount", "")
+        renderModalFormFields("Amount", "modal-amount", ""),
+        renderModalFormFields("Date", "modal-date", "", "date")
       );
       break;
 
