@@ -65,19 +65,13 @@ const deleteExpense = expenseId => {
  * @param {string} defaultValue the default value for the dropdown
  */
 const getCategories = (userId, parentElement, defaultValue) => {
-  console.log("userId :", userId);
-  console.log("parentElement :", parentElement);
-  console.log("defaultValue :", defaultValue);
-
   // send get request to retrieve all categories
   axios.get(`/api/category/${userId}`).then(res => {
-    console.log("res.data :", res.data);
     // render dropdown button
     const dropdown = renderDropdown("categories");
 
     // for each category, create a dropdown option
     res.data.forEach(row => {
-      console.log("row.name :", row.name);
       dropdown.append(renderDropdownCategories(row.name, row.id));
     });
 
@@ -101,12 +95,13 @@ const getCategories = (userId, parentElement, defaultValue) => {
  * @param {number} amount the amount of the expense
  * @param {number} CategoryId the id of the category
  */
-const updateExpense = (expenseId, description, amount, CategoryId) => {
+const updateExpense = (expenseId, description, amount, date, CategoryId) => {
   // make put request to update a single expense
   axios
-    .put(`/api/expense/${expenseId}`, { description, amount, CategoryId })
+    .put(`/api/expense/${expenseId}`, { description, amount, date, CategoryId })
     .then(res => {
-      location.reload();
+      // location.reload();
+      console.log("updateExpense()");
     }),
     err => {
       console.log(err);

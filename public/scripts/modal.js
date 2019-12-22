@@ -86,17 +86,22 @@ const renderDropdown = elementId => {
 
 /**
  * function to render form input with prefilled text
- * @param {string} type the label for the input
+ * @param {string} labelType the label for the input
  * @param {string} elementId the id of the input field
  * @param {string} text the text to be displayed in the input
  * @return {object} the form
  */
-const renderModalFormFields = (type, elementId, text) => {
+const renderModalFormFields = (
+  labelType,
+  elementId,
+  text,
+  inputType = "test"
+) => {
   // create the elements
   const formGroup = $("<div>", { class: "form-group" });
-  const label = $("<label>", { for: type }).text(type);
+  const label = $("<label>", { for: labelType }).text(labelType);
   const input = $("<input>", {
-    type: "text",
+    type: inputType,
     class: "form-control text-left",
     id: elementId
   }).val(text);
@@ -166,8 +171,13 @@ const renderModalContent = (title, userId, obj, modalBody) => {
 
       // render form fields with prefilled text
       modalBody.append(
-        renderModalFormFields("Description", "modal-description", obj.description),
-        renderModalFormFields("Amount", "modal-amount", obj.amount)
+        renderModalFormFields(
+          "Description",
+          "modal-description",
+          obj.description
+        ),
+        renderModalFormFields("Amount", "modal-amount", obj.amount),
+        renderModalFormFields("Date", "modal-date", obj.date, "date")
       );
       break;
 
@@ -226,8 +236,10 @@ const listenForModalSubmission = (option, userId, obj) => {
       // grab the form fields from the modal
       const description = $("#modal-description").val();
       const amount = parseFloat($("#modal-amount").val());
+      const date = $("#modal-date").val();
       const category = $("#categories option:selected").attr("categoryId");
-      updateExpense(obj.editId, description, amount, category);
+
+      updateExpense(obj.editId, description, amount, date, category);
       break;
 
     case "Edit Category":
@@ -247,7 +259,9 @@ const listenForModalSubmission = (option, userId, obj) => {
       // grab the form fields from the modal
       const expenseDescription = $("#modal-description").val();
       const expenseAmount = parseFloat($("#modal-amount").val());
-      const expenseCategory = $("#categories option:selected").attr("categoryId");
+      const expenseCategory = $("#categories option:selected").attr(
+        "categoryId"
+      );
       postExpense(expenseAmount, expenseDescription, expenseCategory);
       break;
 
@@ -261,7 +275,8 @@ function editExpenseClicked() {
   const editId = parseInt($(this).attr("editId")); // get the edit button id
   const description = $(`.description-${editId}`).attr("value"); // get the description
   const amount = parseFloat($(`.amount-${editId}`).attr("value")); // get the amount
-  const date = $(`.amount-${editId}`).attr("value"); // get the amount
+  const date = $(`.date-${editId}`).attr("value"); // get the amount
+  console.log("date :", date);
   // const userId = parseInt(
   //   window.location.href.split("/")[window.location.href.split("/").length - 1]
   // );
@@ -271,6 +286,7 @@ function editExpenseClicked() {
   renderModal("Edit Expense", userId, {
     description,
     amount,
+    date,
     categoryValue,
     editId
   });
@@ -279,9 +295,12 @@ function editExpenseClicked() {
 // function to pass current data to a modal
 function deleteExpenseClicked() {
   const deleteId = parseInt($(this).attr("deleteId"));
-  renderConfirmationModal("Are you sure you want to delete the Expense?", () => {
-    deleteExpense(deleteId);
-  });
+  renderConfirmationModal(
+    "Are you sure you want to delete the Expense?",
+    () => {
+      deleteExpense(deleteId);
+    }
+  );
 
   // deleteExpense(deleteId);
 }
@@ -302,9 +321,12 @@ function editCategoryClicked() {
 // function to pass current data to a modal
 function deleteCategoryClicked() {
   const deleteId = parseInt($(this).attr("deleteId"));
-  renderConfirmationModal("Are you sure you want to delete the category?", () => {
-    deleteCategory(deleteId);
-  });
+  renderConfirmationModal(
+    "Are you sure you want to delete the category?",
+    () => {
+      deleteCategory(deleteId);
+    }
+  );
 }
 
 $(document).ready(() => {
