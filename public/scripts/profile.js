@@ -51,7 +51,7 @@ const renderButtons = () => {
   }).text("Save");
 
   // append and render html elements
-  $(".form").append(formGroup);
+  $(".wrap").append(formGroup);
   formGroup.append(resetButton, saveButton);
 };
 
@@ -66,7 +66,7 @@ const renderFormField = (text, type, elementId, value) => {
   }).val(value);
 
   // append and render html elements
-  $(".form").append(formGroup);
+  $(".wrap").append(formGroup);
   formGroup.append(label, input);
 };
 
