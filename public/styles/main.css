@@ -56,11 +56,10 @@ footer {
   border: 1px solid red;
 }
 
-.test {
-  padding-top: 16px;
-  padding-bottom: 12px;
+.text-red {
+  color: #ff6565;
 }
 
-.poop {
-  height: 100px;
+.text-green {
+  color: #2ab664;
 }

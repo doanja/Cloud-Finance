@@ -40,12 +40,16 @@ const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
   const tdTotalExpenses = $("<td>", { class: "font-weight-bold" }).text(
     "Total of Goals & Expenses:"
   );
-  const tdTotalExpenseAmount = $("<td>", { class: "font-weight-bold" }).text(
-    `$${totalExpensesValue}`
-  );
   const tdTotalExpenseGoal = $("<td>", { class: "font-weight-bold" }).text(
     `$${totalExpenseGoal}`
   );
+  const tdTotalExpenseAmount = $("<td>", { class: "font-weight-bold" }).text(
+    `$${totalExpensesValue}`
+  );
+
+  totalExpenseGoal > totalExpensesValue
+    ? tdTotalExpenseGoal.addClass("text-green")
+    : tdTotalExpenseAmount.addClass("text-red");
 
   $("#tbody").append(tr);
   tr.append(tdTotalExpenses, tdTotalExpenseGoal, tdTotalExpenseAmount);
@@ -118,6 +122,10 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
       "fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 float-right delete-category-button",
     deleteId: categoryData.id
   });
+
+  categoryData.goal > totalExpenseCat
+    ? tdCategoryGoal.addClass("text-green font-weight-bold")
+    : tdCategoryTotal.addClass("text-red font-weight-bold");
 
   // append to html
   $("#tbody").append(tBody, tr);
