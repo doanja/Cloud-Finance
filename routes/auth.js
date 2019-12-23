@@ -1,7 +1,7 @@
 const db = require("../models");
 
-module.exports = function(app) {
-  app.post("/login", (req, res) => {
+module.exports = function(app, passport) {
+  app.post("/login", passport.authenticate("local"), (req, res) => {
     // redirect to overview.html
   });
 

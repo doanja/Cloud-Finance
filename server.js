@@ -1,5 +1,8 @@
 require("dotenv").config();
 const express = require("express");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+
 // const path = require("path");
 const db = require("./models");
 const app = express();
@@ -12,7 +15,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Routes
-require("./routes/auth")(app);
+require("./routes/auth")(app, passport);
 require("./routes/users")(app);
 require("./routes/remainder")(app);
 require("./routes/categories")(app);
