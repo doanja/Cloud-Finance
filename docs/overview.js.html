@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: overview.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: overview.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// API REQUESTS
+
+/**
+ * function to update the user's income
+ * @param {number} userId the user's id
+ * @param {number} income the uesr's new income
+ */
+const updateUserIncome = (userId, income) => {
+  // make put request to update a single category
+  axios.put(`/api/user/income/${userId}`, { income }).then(res => {
+    location.reload();
+  }),
+    err => {
+      console.log(err);
+    };
+};
+
+/**
+ * function to calculate and render the income
+ * @param {number} userId the user's id
+ */
+const getIncome = userId => {
+  axios.get(`/api/user/${userId}`).then(res => {
+    renderIncome(res.data);
+  }),
+    err => {
+      console.log(err);
+    };
+};
+
+/**
+ * function to get all category and expense totals
+ * @param {number} userId the user's id
+ */
+const getBudgetCategories = userId => {
+  axios.get(`/api/category/all/${userId}`).then(res => {
+    res.data.forEach(category => {
+      let categoryTotal = 0;
+      // calculate the sum of expenses for each category
+      category.Expenses.forEach(expense => {
+        categoryTotal += parseFloat(expense.amount);
+      });
+      renderCategoryRow(category, categoryTotal.toFixed(2));
+    });
+    getBudgetCategoriesTotals(userId);
+  }),
+    err => {
+      console.log(err);
+    };
+};
+
+/**
+ * function to get total category goal and total expense
+ * @param {number} userId the user's id
+ */
+const getBudgetCategoriesTotals = userId => {
+  let expenseTotal = 0;
+  let categoryTotal = 0;
+  axios.get(`/api/category/all/${userId}`).then(res => {
+    res.data.forEach(category => {
+      categoryTotal += parseFloat(category.goal);
+      category.Expenses.forEach(expense => {
+        expenseTotal += parseFloat(expense.amount);
+      });
+    });
+    renderTotals(parseFloat(categoryTotal).toFixed(2), expenseTotal.toFixed(2));
+    getRemainder(userId);
+  }),
+    err => {
+      console.log(err);
+    };
+};
+
+/**
+ * function to calculate and render the remainder
+ * @param {number} userId the user's id
+ */
+const getRemainder = userId => {
+  axios.get(`/api/remainder/${userId}`).then(res => {
+    res.data.forEach(remainder => {
+      renderRemainderRow(remainder);
+    });
+  }),
+    err => {
+      console.log(err);
+    };
+};
+
+// RENDER FUNCTIONS
+
+/**
+ * function to render category rows
+ * @param {object} categoryData an object that contains the category data from the response
+ * @param {number} totalExpenseCat the total expense for the category
+ */
+const renderCategoryRow = (categoryData, totalExpenseCat) => {
+  const overUnder = parseFloat(categoryData.goal - totalExpenseCat).toFixed(2);
+  const tr = $("&lt;tr>");
+  const tdCategoryName = $("&lt;td>", { class: "pt-3" }).text(categoryData.name);
+  const tdCategoryGoal = $("&lt;td>", { class: "pt-3" }).text(
+    "$" + categoryData.goal
+  );
+  const tdCategoryTotal = $("&lt;td>", { class: "pt-3" }).text(
+    "$" + totalExpenseCat
+  );
+  const tdOverUnder = $("&lt;td>", { class: "pt-3" }).text("$" + overUnder);
+  const tdButtons = $("&lt;td>");
+  const editButton = $("&lt;i>", {
+    class:
+      "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button",
+    editId: categoryData.id,
+    categoryId: categoryData.id,
+    categoryValue: categoryData.name,
+    goalValue: categoryData.goal
+  });
+
+  overUnder &lt; 0
+    ? tdOverUnder.addClass("text-red font-weight-bold")
+    : tdOverUnder.addClass("text-green font-weight-bold");
+
+  $("#tbody").append(tr);
+  tr.append(
+    tdCategoryName,
+    tdCategoryGoal,
+    tdCategoryTotal,
+    tdOverUnder,
+    tdButtons
+  );
+  tdButtons.append(editButton);
+};
+
+/**
+ * function to render the category and expense total
+ * @param {number} categoryTotal the category total
+ * @param {number} expenseTotal the expense total
+ */
+const renderTotals = (categoryTotal, expenseTotal) => {
+  // calculate over under
+  const overUnder = parseFloat(categoryTotal - expenseTotal).toFixed(2);
+
+  const tr = $("&lt;tr>");
+  const tdCategoryName = $("&lt;td>").text("Totals");
+  const tdCategoryGoalTotal = $("&lt;td>").text("$" + categoryTotal);
+  const tdExpenseTotal = $("&lt;td>").text("$" + expenseTotal);
+  const tdOverUnder = $("&lt;td>").text("$" + overUnder);
+  const tdBlank = $("&lt;td>").text("");
+
+  overUnder &lt; 0
+    ? tdOverUnder.addClass("text-red font-weight-bold")
+    : tdOverUnder.addClass("text-green font-weight-bold");
+
+  $("#tbody").append(tr);
+  tr.append(
+    tdCategoryName,
+    tdCategoryGoalTotal,
+    tdExpenseTotal,
+    tdOverUnder,
+    tdBlank
+  );
+};
+
+/**
+ * function to render a row containing the remainder
+ * @param {object} remainderData the response from the API containing the remainder
+ */
+const renderRemainderRow = remainderData => {
+  const tr = $("&lt;tr>");
+  const tdIncomeLeft = $("&lt;td>").text("Income Left");
+  const tdBlank0 = $("&lt;td>").text("");
+  const tdRemainder = $("&lt;td>").text(
+    remainderData.remainder === null
+      ? "N/A"
+      : "$" +
+          (
+            parseFloat(remainderData.income) -
+            parseFloat(remainderData.remainder)
+          ).toFixed(2)
+  );
+  const tdBlank1 = $("&lt;td>").text("");
+  const tdBlank2 = $("&lt;td>").text("");
+
+  remainderData.remainder &lt; 0
+    ? tdRemainder.addClass("text-red font-weight-bold")
+    : tdRemainder.addClass("text-green font-weight-bold");
+
+  $("#tbody").append(tr);
+  tr.append(tdIncomeLeft, tdBlank0, tdRemainder, tdBlank1, tdBlank2);
+};
+
+/**
+ * function to render the user's income
+ * @param {object} userData an object that contains the user data from the response
+ */
+const renderIncome = userData => {
+  $("#income").val(userData.income);
+  $("#income").attr("value", userData.income);
+};
+
+// function to pass current data to a modal
+function updateIncomeClicked() {
+  const userIncome = parseFloat($("#income").val());
+  // const userId = parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  const userId = 1;
+
+  renderConfirmationModal(
+    "Are you sure you want to update your income?",
+    () => {
+      updateUserIncome(userId, userIncome);
+    }
+  );
+}
+
+$(document).ready(() => {
+  const userId = 1; //parseInt(window.location.href.split("/")[window.location.href.split("/").length - 1]);
+
+  getIncome(userId);
+  getBudgetCategories(userId);
+  $(document).on("click", ".update-income-button", updateIncomeClicked);
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategoryExpenseTotals">getCategoryExpenseTotals</a></li><li><a href="global.html#getCategoryGoalTotals">getCategoryGoalTotals</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Dec 22 2019 17:53:15 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

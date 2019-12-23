@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: profile.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: profile.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// API REQUESTS
+
+/**
+ * function to get the user's information
+ * @param {number} userId the user's id
+ */
+const getUserInfo = userId => {
+  axios.get(`/api/user/${userId}`).then(res => {
+    renderFormField("Email", "text", "email", res.data.email);
+    renderFormField("First name", "text", "fname", res.data.firstName);
+    renderFormField("Last name", "text", "lname", res.data.lastName);
+    renderButtons();
+  }),
+    err => {
+      console.log(err);
+    };
+};
+
+/**
+ * function to update the user's information
+ * @param {number} userId the user's id
+ * @param {string} firstName the user's first name
+ * @param {string} lastName the user's last name
+ * @param {string} email the user's email
+ */
+const updateUser = (userId, firstName, lastName, email) => {
+  console.log("updateUser()");
+  axios.put(`/api/user/${userId}`, { firstName, lastName, email }).then(res => {
+    location.reload();
+  }),
+    err => {
+      console.log(err);
+    };
+};
+
+// RENDER FUNCTIONS
+
+// function to render the submit button
+const renderButtons = () => {
+  // create html elements
+  const formGroup = $("&lt;div>", { class: "btn-group w-100" });
+  const resetButton = $("&lt;button>", {
+    class: "btn btn-outline-primary",
+    type: "button",
+    id: "reset-button"
+  }).text("Reset");
+  const saveButton = $("&lt;button>", {
+    class: "btn btn-outline-primary",
+    type: "button",
+    id: "save-button"
+  }).text("Save");
+
+  // append and render html elements
+  $(".wrap").append(formGroup);
+  formGroup.append(resetButton, saveButton);
+};
+
+const renderFormField = (text, type, elementId, value) => {
+  // create html elements
+  const formGroup = $("&lt;div>", { class: "form-group" });
+  const label = $("&lt;label>", { for: type }).text(text);
+  const input = $("&lt;input>", {
+    class: "form-control",
+    type: type,
+    id: elementId
+  }).val(value);
+
+  // append and render html elements
+  $(".wrap").append(formGroup);
+  formGroup.append(label, input);
+};
+
+/**
+ * function to parse the form and update the uesr's information
+ */
+const parseFormData = () => {
+  const userId = 1;
+  // parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  // TODO: set userId back
+
+  const email = $("#email").val();
+  const firstName = $("#fname").val();
+  const lastName = $("#lname").val();
+
+  renderConfirmationModal('Click "confirm" to Save', () => {
+    updateUser(userId, firstName, lastName, email);
+  });
+};
+
+$(document).ready(function() {
+  const userId = 1;
+  // parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  // TODO: set user ID back
+
+  // get the user's information from the url
+  getUserInfo(userId);
+
+  //  listen for form submission
+  $(document).on("click", "#save-button", parseFormData);
+  $(document).on("click", "#reset-button", () => {
+    location.reload();
+  });
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategoryExpenseTotals">getCategoryExpenseTotals</a></li><li><a href="global.html#getCategoryGoalTotals">getCategoryGoalTotals</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Dec 22 2019 17:53:15 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

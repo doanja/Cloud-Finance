@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const db = require("./models");
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 const syncOptions = { force: false };
 
 // Middleware

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: dashboard.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: dashboard.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * function to render the user's total expenses per category
+ * @param {number} userId the user's id
+ */
+const getCategoryExpenseTotals = userId => {
+  const labels = [];
+  const data = [];
+  const chart = $("#myChart")[0].getContext("2d");
+
+  axios.get(`/api/category/all/${userId}`).then(res => {
+    if (res.data.length === 0) {
+      //  put a message her to redirect user ?
+      return;
+    }
+
+    res.data.forEach(category => {
+      let categoryTotal = 0;
+
+      // calculate the sum of expenses for each category
+      category.Expenses.forEach(expense => {
+        categoryTotal += parseFloat(expense.amount);
+      });
+
+      // add data to the arrays
+      labels.push(category.name);
+      data.push(parseFloat(categoryTotal.toFixed(2)));
+    });
+
+    // render the chart
+    renderBarChart(chart, labels, data);
+  }),
+    err => {
+      console.log(err);
+    };
+};
+
+/**
+ * function to render the user's total expenses per category
+ * @param {number} userId the user's id
+ */
+const getCategoryGoalTotals = userId => {
+  const labels = [];
+  const data = [];
+  const chart = $("#myChart2")[0].getContext("2d");
+
+  axios.get(`/api/category/all/${userId}`).then(res => {
+    if (res.data.length === 0) {
+      //  put a message her to redirect user ?
+      return;
+    }
+
+    res.data.forEach(category => {
+      console.log("category :", category.goal);
+      labels.push(category.name);
+      // data.push(parseFloat(category.goal.toFixed(2)));
+    });
+
+    renderBarChart(chart, labels, data);
+    console.log("labels :", labels);
+    console.log("data :", data);
+  }),
+    err => {
+      console.log(err);
+    };
+};
+
+$(document).ready(() => {
+  const userId = 1;
+  // parseInt(
+  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
+  // );
+  // TODO: set userId back
+
+  getCategoryExpenseTotals(userId);
+  getCategoryGoalTotals(userId);
+});
+
+const renderBarChart = (chart, labels, data) => {
+  const categoryTotals = new Chart(chart, {
+    type: "bar", // the type of char (bar, horizontal bar, pie, line, donut, radar, polarArea)
+    data: {
+      labels,
+      datasets: [
+        { label: "Total Spent (USD)", data, backgroundColor: "#44475a" }
+      ]
+    },
+    options: {}
+  });
+};
+
+const myChart3 = $("#myChart3")[0].getContext("2d");
+
+// global options
+Chart.defaults.global.defaultFontFamily = "Lato";
+Chart.defaults.global.defaultFontSize = 18;
+Chart.defaults.global.defaultFontFamily = "#777";
+
+const char2 = new Chart(myChart2, {
+  type: "doughnut", // the type of char (bar, horizontal bar, pie, line, donut, radar, polarArea)
+  data: {
+    labels: [
+      "boston",
+      "worcester",
+      "springfield",
+      "lowel",
+      "cambridge",
+      "new bedford"
+    ],
+    datasets: [
+      {
+        label: "population",
+        data: [1212, 2134, 1234, 5315, 3462, 2345],
+        backgroundColor: [
+          "#282a36",
+          "#6272a4",
+          "#8be9fd",
+          "#50fa7b",
+          "#ff79c6	",
+          "#44475a"
+        ],
+        borderWidth: 1,
+        borderColor: "#777",
+        hoverBorderWidth: 3,
+        hoverborderColor: "#000"
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Largest Cities In MAssachusetts",
+      fontSize: 25
+    },
+    legend: {
+      display: "false",
+      position: "right",
+      labels: {
+        fontColor: "#000"
+      }
+    },
+    layout: {
+      padding: {
+        left: 50,
+        right: 0,
+        bottom: 0,
+        top: 0
+      }
+    },
+    tooltips: {
+      enabled: true
+    }
+  }
+});
+const chart3 = new Chart(myChart3, {
+  type: "pie", // the type of char (bar, horizontal bar, pie, line, donut, radar, polarArea)
+  data: {
+    labels: [
+      "boston",
+      "worcester",
+      "springfield",
+      "lowel",
+      "cambridge",
+      "new bedford"
+    ],
+    datasets: [
+      { label: "population", data: [1212, 2134, 1234, 5315, 3462, 2345] }
+    ]
+  },
+  options: {}
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategoryExpenseTotals">getCategoryExpenseTotals</a></li><li><a href="global.html#getCategoryGoalTotals">getCategoryGoalTotals</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Dec 22 2019 17:53:15 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
