@@ -1,9 +1,16 @@
 /**
- * function to render the user's total expenses per category
+ * function to render the user's total expenses per category vs. goal as a graph
  * @param {number} userId the user's id
  */
-const getCategoryExpenseTotals = userId => {
-  const canvas = $("#myChart")[0].getContext("2d"); // handle to the canvas
+const getCategorySum = userId => {
+  // handle to the canvas
+  const canvas1 = $("#chart1")[0].getContext("2d");
+  const canvas2 = $("#chart2")[0].getContext("2d");
+  const canvas3 = $("#chart3")[0].getContext("2d");
+  const canvas4 = $("#chart4")[0].getContext("2d");
+  const canvas5 = $("#chart5")[0].getContext("2d");
+  const canvas6 = $("#chart6")[0].getContext("2d");
+
   const labels = [];
 
   const expenseTotals = {
@@ -24,6 +31,7 @@ const getCategoryExpenseTotals = userId => {
       return;
     }
 
+    // for each category...
     res.data.forEach(category => {
       let categoryTotal = 0; // counter for category total (sum of all expenses)
 
@@ -38,41 +46,19 @@ const getCategoryExpenseTotals = userId => {
       expenseTotals.data.push(parseFloat(categoryTotal.toFixed(2))); // category totals
     });
 
+    // create dataset object
     const dataset = {
-      labels: labels,
+      labels,
       datasets: [expenseTotals, categoryGoals]
     };
 
     // render the chart
-    renderChart(canvas, "bar", dataset);
-  }),
-    err => {
-      console.log(err);
-    };
-};
-
-/**
- * function to render the user's total expenses per category
- * @param {number} userId the user's id
- */
-const getCategoryGoalTotals = userId => {
-  const labelsGoal = [];
-  const dataGoal = [];
-  const chart = $("#myChart2")[0].getContext("2d");
-
-  axios.get(`/api/category/all/${userId}`).then(res => {
-    if (res.data.length === 0) {
-      //  put a message her to redirect user ?
-      return;
-    }
-
-    res.data.forEach(category => {
-      labelsGoal.push(category.name);
-      dataGoal.push(category.goal);
-    });
-
-    // renderChart(chart, "bar", labels, data);
-    return { labels: labelsGoal, data: dataGoal };
+    renderChart(canvas1, "bar", dataset);
+    renderChart(canvas2, "line", dataset);
+    renderChart(canvas3, "radar", dataset);
+    renderChart(canvas4, "horizontalBar", dataset);
+    renderChart(canvas5, "doughnut", dataset);
+    renderChart(canvas6, "polarArea", dataset);
   }),
     err => {
       console.log(err);
@@ -100,70 +86,10 @@ $(document).ready(() => {
   // );
   // TODO: set userId back
 
-  // global options
-  Chart.defaults.global.defaultFontFamily = "Lato";
-  Chart.defaults.global.defaultFontSize = 18;
-  Chart.defaults.global.defaultFontFamily = "#777";
+  // // global options
+  // Chart.defaults.global.defaultFontFamily = "Lato";
+  // Chart.defaults.global.defaultFontSize = 18;
+  // Chart.defaults.global.defaultFontFamily = "#777";
 
-  getCategoryExpenseTotals(userId);
-  getCategoryGoalTotals(userId);
+  getCategorySum(userId);
 });
-
-const myChart3 = $("#myChart3")[0].getContext("2d");
-
-// const char2 = new Chart(myChart2, {
-//   type: "doughnut", // the type of char (bar, horizontal bar, pie, line, donut, radar, polarArea)
-//   data: {
-//     labels: [
-//       "boston",
-//       "worcester",
-//       "springfield",
-//       "lowel",
-//       "cambridge",
-//       "new bedford"
-//     ],
-//     datasets: [
-//       {
-//         label: "population",
-//         data: [1212, 2134, 1234, 5315, 3462, 2345],
-//         backgroundColor: [
-//           "#282a36",
-//           "#6272a4",
-//           "#8be9fd",
-//           "#50fa7b",
-//           "#ff79c6	",
-//           "#44475a"
-//         ],
-//         borderWidth: 1,
-//         borderColor: "#777",
-//         hoverBorderWidth: 3,
-//         hoverborderColor: "#000"
-//       }
-//     ]
-//   },
-//   options: {
-//     title: {
-//       display: true,
-//       text: "Largest Cities In MAssachusetts",
-//       fontSize: 25
-//     },
-//     legend: {
-//       display: "false",
-//       position: "right",
-//       labels: {
-//         fontColor: "#000"
-//       }
-//     },
-//     layout: {
-//       padding: {
-//         left: 50,
-//         right: 0,
-//         bottom: 0,
-//         top: 0
-//       }
-//     },
-//     tooltips: {
-//       enabled: true
-//     }
-//   }
-// });
