@@ -100,8 +100,7 @@ const updateExpense = (expenseId, description, amount, date, CategoryId) => {
   axios
     .put(`/api/expense/${expenseId}`, { description, amount, date, CategoryId })
     .then(res => {
-      // location.reload();
-      console.log("updateExpense()");
+      location.reload();
     }),
     err => {
       console.log(err);
