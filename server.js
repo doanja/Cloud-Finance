@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const path = require("path");
+// const path = require("path");
 const db = require("./models");
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -9,9 +9,6 @@ const syncOptions = { force: false };
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static("public"));
-
-// Static directory
 app.use(express.static("public"));
 
 // Routes

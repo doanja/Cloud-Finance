@@ -260,10 +260,16 @@ const listenForModalSubmission = (option, userId, obj) => {
       // grab the form fields from the modal
       const expenseDescription = $("#modal-description").val();
       const expenseAmount = parseFloat($("#modal-amount").val());
+      const expenseDate = $("#modal-date").val();
       const expenseCategory = $("#categories option:selected").attr(
         "categoryId"
       );
-      postExpense(expenseAmount, expenseDescription, expenseCategory);
+      postExpense(
+        expenseAmount,
+        expenseDescription,
+        expenseDate,
+        expenseCategory
+      );
       break;
 
     default:

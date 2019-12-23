@@ -15,11 +15,12 @@ module.exports = function(app) {
 
   // create a single expense
   app.post("/api/expense/", (req, res) => {
-    const { amount, description, CategoryId } = req.body;
+    const { amount, description, date, CategoryId } = req.body;
 
     db.Expense.create({
       amount,
       description,
+      date,
       CategoryId
     })
       .then(newExpense => {

@@ -114,11 +114,13 @@ const updateExpense = (expenseId, description, amount, date, CategoryId) => {
  * @param {string} description the expense description
  * @param {number} CategoryId the id of the category
  */
-const postExpense = (amount, description, CategoryId) => {
+const postExpense = (amount, description, date, CategoryId) => {
   // send post request to create a single expense
-  axios.post(`/api/expense/`, { amount, description, CategoryId }).then(res => {
-    location.reload();
-  }),
+  axios
+    .post(`/api/expense/`, { amount, description, date, CategoryId })
+    .then(res => {
+      location.reload();
+    }),
     err => {
       console.log(err);
     };
