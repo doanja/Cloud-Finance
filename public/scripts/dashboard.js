@@ -4,7 +4,21 @@
  */
 const getCategoryExpenseTotals = userId => {
   const labels = [];
-  const data = [];
+  const actualArr = [];
+  const goalArr = [];
+
+  const a = {
+    label: "Actual Dollars Spent",
+    data: [],
+    backgroundColor: "#6272a4"
+  };
+
+  const b = {
+    label: "Goal Dollar Amount",
+    data: [],
+    backgroundColor: "#44475"
+  };
+
   const chart = $("#myChart")[0].getContext("2d");
 
   axios.get(`/api/category/all/${userId}`).then(res => {
@@ -16,6 +30,9 @@ const getCategoryExpenseTotals = userId => {
     res.data.forEach(category => {
       let categoryTotal = 0;
 
+      // labelsGoal.push(category.name);
+      goalArr.push(category.goal);
+
       // calculate the sum of expenses for each category
       category.Expenses.forEach(expense => {
         categoryTotal += parseFloat(expense.amount);
@@ -23,11 +40,21 @@ const getCategoryExpenseTotals = userId => {
 
       // add data to the arrays
       labels.push(category.name);
-      data.push(parseFloat(categoryTotal.toFixed(2)));
+      actualArr.push(parseFloat(categoryTotal.toFixed(2)));
     });
 
+    a.data = actualArr;
+    b.data = goalArr;
+
+    const stuff = {
+      labels: labels,
+      datasets: [a, b]
+    };
+
+    console.log("stuff :", stuff);
     // render the chart
-    renderChart(chart, "bar", labels, data);
+    renderChart(chart, "bar", stuff);
+    // return { labels: labelsActual, data: dataActual };
   }),
     err => {
       console.log(err);
@@ -39,8 +66,8 @@ const getCategoryExpenseTotals = userId => {
  * @param {number} userId the user's id
  */
 const getCategoryGoalTotals = userId => {
-  const labels = [];
-  const data = [];
+  const labelsGoal = [];
+  const dataGoal = [];
   const chart = $("#myChart2")[0].getContext("2d");
 
   axios.get(`/api/category/all/${userId}`).then(res => {
@@ -50,27 +77,23 @@ const getCategoryGoalTotals = userId => {
     }
 
     res.data.forEach(category => {
-      labels.push(category.name);
-      data.push(category.goal);
+      labelsGoal.push(category.name);
+      dataGoal.push(category.goal);
     });
 
-    renderChart(chart, "bar", labels, data);
+    // renderChart(chart, "bar", labels, data);
+    return { labels: labelsGoal, data: dataGoal };
   }),
     err => {
       console.log(err);
     };
 };
 
-const renderChart = (chart, chartType, labels, data) => {
-  console.log("renderBarchart() ran");
-  const categoryTotals = new Chart(chart, {
+const renderChart = (chart, chartType, data) => {
+  console.log("data :", data);
+  const theChart = new Chart(chart, {
     type: chartType, // the type of char (bar, horizontal bar, pie, line, donut, radar, polarArea)
-    data: {
-      labels,
-      datasets: [
-        { label: "Total Spent (USD)", data, backgroundColor: "#44475a" }
-      ]
-    },
+    data,
     options: {}
   });
 };
