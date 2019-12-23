@@ -17,6 +17,12 @@ module.exports = function(app) {
   app.post("/api/expense/", (req, res) => {
     const { amount, description, date, CategoryId } = req.body;
 
+    // const errors = [];
+
+    // if (!amount || !description || !date || !CategoryId) {
+    //   errors.push({ msg: "Fill in all required fields..." });
+    // }
+
     db.Expense.create({
       amount,
       description,
