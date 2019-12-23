@@ -3,23 +3,20 @@
  * @param {number} userId the user's id
  */
 const getCategoryExpenseTotals = userId => {
+  const canvas = $("#myChart")[0].getContext("2d"); // handle to the canvas
   const labels = [];
-  const actualArr = [];
-  const goalArr = [];
 
-  const a = {
+  const expenseTotals = {
     label: "Actual Dollars Spent",
     data: [],
     backgroundColor: "#6272a4"
   };
 
-  const b = {
+  const categoryGoals = {
     label: "Goal Dollar Amount",
     data: [],
     backgroundColor: "#44475"
   };
-
-  const chart = $("#myChart")[0].getContext("2d");
 
   axios.get(`/api/category/all/${userId}`).then(res => {
     if (res.data.length === 0) {
@@ -28,10 +25,7 @@ const getCategoryExpenseTotals = userId => {
     }
 
     res.data.forEach(category => {
-      let categoryTotal = 0;
-
-      // labelsGoal.push(category.name);
-      goalArr.push(category.goal);
+      let categoryTotal = 0; // counter for category total (sum of all expenses)
 
       // calculate the sum of expenses for each category
       category.Expenses.forEach(expense => {
@@ -39,22 +33,18 @@ const getCategoryExpenseTotals = userId => {
       });
 
       // add data to the arrays
-      labels.push(category.name);
-      actualArr.push(parseFloat(categoryTotal.toFixed(2)));
+      labels.push(category.name); // name of each category
+      categoryGoals.data.push(category.goal); // goals
+      expenseTotals.data.push(parseFloat(categoryTotal.toFixed(2))); // category totals
     });
 
-    a.data = actualArr;
-    b.data = goalArr;
-
-    const stuff = {
+    const dataset = {
       labels: labels,
-      datasets: [a, b]
+      datasets: [expenseTotals, categoryGoals]
     };
 
-    console.log("stuff :", stuff);
     // render the chart
-    renderChart(chart, "bar", stuff);
-    // return { labels: labelsActual, data: dataActual };
+    renderChart(canvas, "bar", dataset);
   }),
     err => {
       console.log(err);
@@ -89,10 +79,15 @@ const getCategoryGoalTotals = userId => {
     };
 };
 
-const renderChart = (chart, chartType, data) => {
-  console.log("data :", data);
-  const theChart = new Chart(chart, {
-    type: chartType, // the type of char (bar, horizontal bar, pie, line, donut, radar, polarArea)
+/**
+ *
+ * @param {object} canvas the canvas object (dom element)
+ * @param {string} chartType the type of chart to be rendered
+ * @param {object} data the data to be rendered
+ */
+const renderChart = (canvas, chartType, data) => {
+  const chart = new Chart(canvas, {
+    type: chartType,
     data,
     options: {}
   });
