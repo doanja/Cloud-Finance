@@ -21,7 +21,7 @@ const updateUserIncome = (userId, income) => {
  */
 const getIncome = userId => {
   axios.get(`/api/user/${userId}`).then(res => {
-    setIncome(res.data);
+    renderIncome(res.data);
   }),
     err => {
       console.log(err);
@@ -191,7 +191,7 @@ const renderRemainderRow = remainderData => {
  * function to render the user's income
  * @param {object} userData an object that contains the user data from the response
  */
-const setIncome = userData => {
+const renderIncome = userData => {
   $("#income").val(userData.income);
   $("#income").attr("value", userData.income);
 };

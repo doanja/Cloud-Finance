@@ -2,9 +2,10 @@
  * function to render the user's total expenses per category
  * @param {number} userId the user's id
  */
-const getCategoryTotals = userId => {
+const getCategoryExpenseTotals = userId => {
   const labels = [];
   const data = [];
+  const chart = $("#myChart")[0].getContext("2d");
 
   axios.get(`/api/category/all/${userId}`).then(res => {
     if (res.data.length === 0) {
@@ -14,17 +15,49 @@ const getCategoryTotals = userId => {
 
     res.data.forEach(category => {
       let categoryTotal = 0;
+
       // calculate the sum of expenses for each category
       category.Expenses.forEach(expense => {
         categoryTotal += parseFloat(expense.amount);
       });
 
-      // add to the array: [category name, category total]
+      // add data to the arrays
       labels.push(category.name);
       data.push(parseFloat(categoryTotal.toFixed(2)));
     });
 
-    renderBarChart(labels, data);
+    // render the chart
+    renderBarChart(chart, labels, data);
+  }),
+    err => {
+      console.log(err);
+    };
+};
+
+/**
+ * function to render the user's total expenses per category
+ * @param {number} userId the user's id
+ */
+const getCategoryGoalTotals = userId => {
+  const labels = [];
+  const data = [];
+  const chart = $("#myChart2")[0].getContext("2d");
+
+  axios.get(`/api/category/all/${userId}`).then(res => {
+    if (res.data.length === 0) {
+      //  put a message her to redirect user ?
+      return;
+    }
+
+    res.data.forEach(category => {
+      console.log("category :", category.goal);
+      labels.push(category.name);
+      // data.push(parseFloat(category.goal.toFixed(2)));
+    });
+
+    renderBarChart(chart, labels, data);
+    console.log("labels :", labels);
+    console.log("data :", data);
   }),
     err => {
       console.log(err);
@@ -38,23 +71,23 @@ $(document).ready(() => {
   // );
   // TODO: set userId back
 
-  getCategoryTotals(userId);
+  getCategoryExpenseTotals(userId);
+  getCategoryGoalTotals(userId);
 });
 
-const renderBarChart = (labels, data) => {
-  const myChart = $("#myChart")[0].getContext("2d");
-
-  const categoryTotals = new Chart(myChart, {
+const renderBarChart = (chart, labels, data) => {
+  const categoryTotals = new Chart(chart, {
     type: "bar", // the type of char (bar, horizontal bar, pie, line, donut, radar, polarArea)
     data: {
       labels,
-      datasets: [{ label: "population", data, backgroundColor: "#44475a" }]
+      datasets: [
+        { label: "Total Spent (USD)", data, backgroundColor: "#44475a" }
+      ]
     },
     options: {}
   });
 };
 
-const myChart2 = $("#myChart2")[0].getContext("2d");
 const myChart3 = $("#myChart3")[0].getContext("2d");
 
 // global options
