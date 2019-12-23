@@ -27,7 +27,7 @@ const getCategorySum = userId => {
 
   axios.get(`/api/category/all/${userId}`).then(res => {
     if (res.data.length === 0) {
-      //  put a message her to redirect user ?
+      // TODO: put message so user routes to expenses
       return;
     }
 
@@ -85,11 +85,6 @@ $(document).ready(() => {
   //   window.location.href.split("/")[window.location.href.split("/").length - 1]
   // );
   // TODO: set userId back
-
-  // // global options
-  // Chart.defaults.global.defaultFontFamily = "Lato";
-  // Chart.defaults.global.defaultFontSize = 18;
-  // Chart.defaults.global.defaultFontFamily = "#777";
 
   getCategorySum(userId);
 });
