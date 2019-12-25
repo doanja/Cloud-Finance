@@ -46,18 +46,14 @@ module.exports = function(passport, db) {
 
             // use sequelize to create the new user passing in the newUser object
             db.User.create(newUser).then(function(newUser, created) {
-              console.log("newUser", newUser);
-              console.log("created :", created);
               // unsuccessful in creating user
               if (!newUser) {
-                console.log("!newUser");
                 return done(null, false, {
                   message: "Unsuccessful in creating new user"
                 });
               }
               // new user created successfully
               if (newUser) {
-                console.log("newUser");
                 return done(null, newUser, {
                   message: "User created successfully"
                 });
