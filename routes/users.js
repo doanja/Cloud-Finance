@@ -1,6 +1,4 @@
-const db = require("../models");
-
-module.exports = function(app) {
+module.exports = (app, db) => {
   // get all the user's info
   app.get("/api/user/:id", (req, res) => {
     db.User.findOne({

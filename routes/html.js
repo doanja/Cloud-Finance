@@ -17,7 +17,7 @@ module.exports = (app, path) => {
     res.sendFile(path.join(__dirname, "../public/html/expenses.html"));
   });
 
-  app.get("/profile/userId", isLoggedIn, (req, res) => {
+  app.get("/profile/:userId", isLoggedIn, (req, res) => {
     res.sendFile(path.join(__dirname, "../public/html/profile.html"));
   });
 

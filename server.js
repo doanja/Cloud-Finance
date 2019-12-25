@@ -30,10 +30,10 @@ require("./config/passport")(passport, db);
 
 // Routes
 require("./routes/auth")(app, passport);
-require("./routes/users")(app);
-require("./routes/remainder")(app);
-require("./routes/categories")(app);
-require("./routes/expenses")(app);
+require("./routes/users")(app, db);
+require("./routes/remainder")(app, db);
+require("./routes/categories")(app, db);
+require("./routes/expenses")(app, db);
 require("./routes/html")(app, path);
 
 // Syncing our sequelize models and then starting our Express app

@@ -39,20 +39,18 @@ const renderConfirmationModal = (title, callback) => {
 
 // function to create a cateogry
 const createCategory = () => {
-  // const userId = parseInt(
-  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
-  // );
-  const userId = 1;
+  const userId = parseInt(
+    window.location.href.split("/")[window.location.href.split("/").length - 1]
+  );
 
   renderModal("Create Category", userId);
 };
 
 // function to create an expense
 const createExpense = () => {
-  // const userId = parseInt(
-  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
-  // );
-  const userId = 1;
+  const userId = parseInt(
+    window.location.href.split("/")[window.location.href.split("/").length - 1]
+  );
 
   renderModal("Create Expense", userId);
 };
@@ -283,10 +281,9 @@ function editExpenseClicked() {
   const description = $(`.description-${editId}`).attr("value"); // get the description
   const amount = parseFloat($(`.amount-${editId}`).attr("value")); // get the amount
   const date = $(`.date-${editId}`).attr("value"); // get the amount
-  // const userId = parseInt(
-  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
-  // );
-  const userId = 1;
+  const userId = parseInt(
+    window.location.href.split("/")[window.location.href.split("/").length - 1]
+  );
   const categoryValue = $(this).attr("categoryValue"); // get the category text
 
   renderModal("Edit Expense", userId, {
@@ -316,10 +313,9 @@ function editCategoryClicked() {
   const editId = parseInt($(this).attr("editId")); // get the edit button id
   const categoryValue = $(this).attr("categoryValue"); // get the category text
   const goalValue = parseFloat($(this).attr("goalValue")); // get the goal value
-  // const userId = parseInt(
-  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
-  // );
-  const userId = 1;
+  const userId = parseInt(
+    window.location.href.split("/")[window.location.href.split("/").length - 1]
+  );
 
   renderModal("Edit Category", userId, { categoryValue, goalValue, editId });
 }

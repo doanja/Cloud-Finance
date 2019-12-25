@@ -74,11 +74,9 @@ const renderFormField = (text, type, elementId, value) => {
  * function to parse the form and update the uesr's information
  */
 const parseFormData = () => {
-  const userId = 1;
-  // parseInt(
-  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
-  // );
-  // TODO: set userId back
+  const userId = parseInt(
+    window.location.href.split("/")[window.location.href.split("/").length - 1]
+  );
 
   const email = $("#email").val();
   const firstName = $("#fname").val();
@@ -90,11 +88,9 @@ const parseFormData = () => {
 };
 
 $(document).ready(function() {
-  const userId = 1;
-  // parseInt(
-  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
-  // );
-  // TODO: set user ID back
+  const userId = parseInt(
+    window.location.href.split("/")[window.location.href.split("/").length - 1]
+  );
 
   // get the user's information from the url
   getUserInfo(userId);

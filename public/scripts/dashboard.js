@@ -80,11 +80,9 @@ const renderChart = (canvas, chartType, data) => {
 };
 
 $(document).ready(() => {
-  const userId = 1;
-  // parseInt(
-  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
-  // );
-  // TODO: set userId back
+  const userId = parseInt(
+    window.location.href.split("/")[window.location.href.split("/").length - 1]
+  );
 
   getCategorySum(userId);
 });

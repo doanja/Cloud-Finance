@@ -1,6 +1,4 @@
-const db = require("../models");
-
-module.exports = function(app) {
+module.exports = (app, db) => {
   // get all expenses belonging to the category
   app.get("/api/expense/:id", (req, res) => {
     db.Expense.findAll({ where: { CategoryId: req.params.id } })

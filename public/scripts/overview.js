@@ -199,10 +199,9 @@ const renderIncome = userData => {
 // function to pass current data to a modal
 function updateIncomeClicked() {
   const userIncome = parseFloat($("#income").val());
-  // const userId = parseInt(
-  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
-  // );
-  const userId = 1;
+  const userId = parseInt(
+    window.location.href.split("/")[window.location.href.split("/").length - 1]
+  );
 
   renderConfirmationModal(
     "Are you sure you want to update your income?",
@@ -213,7 +212,9 @@ function updateIncomeClicked() {
 }
 
 $(document).ready(() => {
-  const userId = 1; //parseInt(window.location.href.split("/")[window.location.href.split("/").length - 1]);
+  const userId = parseInt(
+    window.location.href.split("/")[window.location.href.split("/").length - 1]
+  );
 
   getIncome(userId);
   getBudgetCategories(userId);

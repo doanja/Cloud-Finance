@@ -142,6 +142,6 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
 $(document).ready(() => {
   const userId = parseInt(
     window.location.href.split("/")[window.location.href.split("/").length - 1]
-  ); // TODO: REPLACE 1'S WITH USERID ON THIS WHOLE PAGE
-  getCategoriesAll(1);
+  );
+  getCategoriesAll(userId);
 });
