@@ -2,10 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
-/* Testing Passport */
+// Passport
 const passport = require('passport');
-var session = require('express-session');
-/* Testing Passport */
+const session = require('express-session');
 
 const db = require('./models');
 const app = express();
@@ -17,16 +16,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static('public'));
 
-/* Testing Passport */
+// Passport
 app.use(
   session({ secret: 'keyboard cat', resave: true, saveUninitialized: true })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
-
 require('./config/passport')(passport, db);
-/* Testing Passport */
 
 // Routes
 require('./routes/auth')(app, passport);
