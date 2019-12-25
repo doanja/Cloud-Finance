@@ -27,16 +27,18 @@
             <div class="blur vertical-center">
                 <!-- sign in form -->
                 <div class="wrap bg-white p-3 mx-auto">
-                    <div class="form-group">
-                        <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter email">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password">
-                    </div>
-                    <button type="button" class="btn btn-primary w-100">Sign In</button>
-                    <a href="signup.html" class="btn btn-link">Not enrolled? Sign up now.</a>
+                    <form method="post" action="/login">
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" class="form-control" name="email" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" name="password" placeholder="Password">
+                        </div>
+                        <button class="btn btn-primary w-100" type="submit" name="action">Log In</button>
+                        <a href="/signup" class="btn btn-link">Not enrolled? Sign up now.</a>
+                    </form>
                 </div>
 
             </div>
