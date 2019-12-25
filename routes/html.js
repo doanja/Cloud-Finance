@@ -45,6 +45,12 @@ module.exports = (app, path) => {
     res.sendFile(path.join(__dirname, '../public/html/login.html'));
   });
 
+  app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+      res.redirect('/');
+    });
+  });
+
   app.get('/signup', (req, res) => {
     // Checking if user is authenticated. If so, by pass the signup page
     // if (req.user) {
