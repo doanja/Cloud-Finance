@@ -1,4 +1,4 @@
-module.exports = function(app, path, passport) {
+module.exports = (app, path, passport) => {
   app.get('/signup', (req, res) => {
     // redirect user to dashboard if they're already logged in
     if (req.user) {

@@ -1,20 +1,21 @@
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcrypt-nodejs");
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt-nodejs');
 
-module.exports = function(passport, db) {
+module.exports = (passport, db) => {
   // for sigining up new user
   passport.use(
-    "local-signup",
+    'local-signup',
     new LocalStrategy(
       {
-        usernameField: "email",
-        passwordField: "password",
+        // by default, local strategy uses username and password, we will override with email
+        usernameField: 'email',
+        passwordField: 'password',
         passReqToCallback: true // allows us to pass back the entire request to the callback
       },
       // required callback function
-      function(req, email, password, done) {
+      (req, email, password, done) => {
         // function to generate hash password
-        const hashPassword = function(password) {
+        const hashPassword = password => {
           return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
         };
 
@@ -23,12 +24,11 @@ module.exports = function(passport, db) {
           where: {
             email
           }
-        }).then(function(dbUser) {
+        }).then(user => {
           // if an email was found already --> means email is used by someone
-          if (dbUser) {
-            console.log("email already taken");
+          if (user) {
             return done(null, false, {
-              message: "That email is already taken"
+              message: 'That email is already taken'
             });
           }
           // no user was found --> create a new user
@@ -45,17 +45,17 @@ module.exports = function(passport, db) {
             };
 
             // use sequelize to create the new user passing in the newUser object
-            db.User.create(newUser).then(function(newUser, created) {
+            db.User.create(newUser).then((newUser, created) => {
               // unsuccessful in creating user
               if (!newUser) {
                 return done(null, false, {
-                  message: "Unsuccessful in creating new user"
+                  message: 'Unsuccessful in creating new user'
                 });
               }
               // new user created successfully
               if (newUser) {
                 return done(null, newUser, {
-                  message: "User created successfully"
+                  message: 'User created successfully'
                 });
               }
             });
@@ -67,16 +67,16 @@ module.exports = function(passport, db) {
 
   // strategy for logging in
   passport.use(
-    "local-login",
+    'local-login',
     new LocalStrategy(
       {
         // by default, local strategy uses username and password, we will override with email
-        usernameField: "email",
-        passwordField: "password",
+        usernameField: 'email',
+        passwordField: 'password',
         passReqToCallback: true // allows us to pass back the entire request to the callback
       },
-      function(req, email, password, done) {
-        const isValidPassword = function(userpass, password) {
+      (req, email, password, done) => {
+        const isValidPassword = (userpass, password) => {
           return bcrypt.compareSync(password, userpass);
         };
 
@@ -85,42 +85,42 @@ module.exports = function(passport, db) {
             email
           }
         })
-          .then(function(user) {
+          .then(user => {
             if (!user) {
               return done(null, false, {
-                message: "Email does not exist"
+                message: 'Email does not exist'
               });
             }
 
             if (!isValidPassword(user.password, password)) {
               return done(null, false, {
-                message: "Incorrect password."
+                message: 'Incorrect password.'
               });
             }
 
             var userinfo = user.get();
             return done(null, userinfo);
           })
-          .catch(function(err) {
-            console.log("Error:", err);
+          .catch(err => {
+            console.log('Error:', err);
 
             return done(null, false, {
-              message: "Something went wrong with your Signin"
+              message: 'Something went wrong with your Signin'
             });
           });
       }
     )
   );
 
+  // for sessions
+
   //serialize
   passport.serializeUser((user, done) => {
-    console.log("serialized");
     done(null, user.id);
   });
 
   // deserialize user
   passport.deserializeUser((id, done) => {
-    console.log("deserialized");
     db.User.findOne({
       where: {
         id
@@ -132,8 +132,7 @@ module.exports = function(passport, db) {
         }
       })
       .catch(err => {
-        console.log("error deserializing user:", err);
-        done(user.errors, null);
+        done(err, null);
       });
   });
 };
