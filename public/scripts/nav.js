@@ -17,6 +17,10 @@ const renderSettingsLink = (page, userId, parentElement) => {
   a.append(icon);
 };
 
+/**
+ * function to render a dropdown divider
+ * @param {string} parentElement the class or id name to append this to
+ */
 const renderDivider = parentElement => {
   const divider = $('<div>', { class: 'dropdown-divider' });
 
