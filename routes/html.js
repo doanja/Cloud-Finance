@@ -1,4 +1,3 @@
-const db = require("../models");
 const isLoggedIn = require("../config/middleware/isLoggedIn");
 
 module.exports = (app, path) => {
@@ -23,7 +22,7 @@ module.exports = (app, path) => {
   });
 
   app.get("/login", (req, res) => {
-    // Checking if user is authenticated. If so, by pass the login page
+    // redirect user to dashboard if they're already logged in
     if (req.user) {
       res.redirect("/dashboard/" + req.user.id);
     }
@@ -37,7 +36,7 @@ module.exports = (app, path) => {
   });
 
   app.get("/signup", (req, res) => {
-    // Checking if user is authenticated. If so, by pass the signup page
+    // redirect user to dashboard if they're already logged in
     if (req.user) {
       res.redirect("/dashboard/" + req.user.id);
     }

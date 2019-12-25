@@ -13,6 +13,6 @@ module.exports = function(app, passport) {
 
   app.get("/logout", (req, res) => {
     req.logout();
-    res.redirect("/login"); // TODO: maybe redirect to signed out page with links to sign in?
+    res.redirect("/login");
   });
 };
