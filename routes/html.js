@@ -1,4 +1,5 @@
 const db = require('../models');
+const isLoggedIn = require('../config/middleware/isLoggedIn');
 
 module.exports = (app, path) => {
   app.get('/', (req, res) => {
@@ -8,7 +9,8 @@ module.exports = (app, path) => {
   app.get(
     // TODO: ADD BACK IN USER ID
     '/dashboard/',
-    /*isAuthenticated,*/ (req, res) => {
+    isLoggedIn,
+    (req, res) => {
       res.sendFile(path.join(__dirname, '../public/html/dashboard.html'));
     }
   );

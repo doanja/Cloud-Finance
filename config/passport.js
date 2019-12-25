@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt-nodejs');
 const db = require('../models');
 
 module.exports = function(passport) {
+  // for sigining up new user
   passport.use(
     'local-signup',
     new LocalStrategy(
@@ -13,9 +14,6 @@ module.exports = function(passport) {
       },
       // required callback function
       function(req, email, password, done) {
-        // console.log('req.body :', req.body);
-        // console.log('email :', email);
-        // console.log('password :', password);
         // function to generate hash password
         const generateHash = function(password) {
           return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
@@ -24,7 +22,7 @@ module.exports = function(passport) {
         // check to see if user already exists
         db.User.findOne({
           where: {
-            email: email
+            email
           }
         }).then(function(user) {
           // if an email was found already --> means email is used by someone
@@ -47,6 +45,7 @@ module.exports = function(passport) {
 
             // use sequelize to create the new user passing in the newUser object
             db.User.create(newUser).then(function(newUser, created) {
+              console.log('newUser', newUser);
               if (!newUser) {
                 return done(null, false);
               }
@@ -57,6 +56,53 @@ module.exports = function(passport) {
             });
           }
         });
+      }
+    )
+  );
+
+  // strategy for logging in
+  passport.use(
+    'local-login',
+    new LocalStrategy(
+      {
+        // by default, local strategy uses username and password, we will override with email
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true // allows us to pass back the entire request to the callback
+      },
+      function(req, email, password, done) {
+        const isValidPassword = function(userpass, password) {
+          return bcrypt.compareSync(password, userpass);
+        };
+
+        User.findOne({
+          where: {
+            email
+          }
+        })
+          .then(function(user) {
+            if (!user) {
+              return done(null, false, {
+                message: 'Email does not exist'
+              });
+            }
+
+            if (!isValidPassword(user.password, password)) {
+              return done(null, false, {
+                message: 'Incorrect password.'
+              });
+            }
+
+            var userinfo = user.get();
+            return done(null, userinfo);
+          })
+          .catch(function(err) {
+            console.log('Error:', err);
+
+            return done(null, false, {
+              message: 'Something went wrong with your Signin'
+            });
+          });
       }
     )
   );

@@ -1,26 +1,27 @@
-const db = require('../models');
-
 module.exports = function(app, passport, path) {
-  // app.get('/signup', (req, res) => {
-  //   res.sendFile(path.join(__dirname, '../public/html/signup.html'));
-  // });
-
-  // app.get('/signin', (req, res) => {
-  //   res.sendFile(path.join(__dirname, '../public/html/signin.html'));
-  // });
-
   app.post(
     '/signup',
     // req.body will be passed to passport.js
-    passport.authenticate('local-signup', {
+    passport.authenticate(
+      'local-signup',
+      // ),
+      // (req, res) => {
+      //   res.redirect('/dashboard');
+      // }
+      {
+        successRedirect: '/login',
+        failureRedirect: '/signup'
+      }
+    )
+  );
+
+  app.post(
+    '/login',
+    passport.authenticate('local-login', {
       successRedirect: '/dashboard',
       failureRedirect: '/signup'
     })
   );
-
-  app.post('/login', passport.authenticate('local'), (req, res) => {
-    // redirect to overview.html
-  });
 
   app.get('/logout', (req, res) => {
     req.logout();
