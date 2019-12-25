@@ -25,7 +25,7 @@ app.use(passport.session());
 require('./config/passport')(passport, db);
 
 // Routes
-require('./routes/auth')(app, passport);
+require('./routes/auth')(app, path, passport);
 require('./routes/users')(app, db);
 require('./routes/remainder')(app, db);
 require('./routes/categories')(app, db);
