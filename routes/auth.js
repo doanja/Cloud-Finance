@@ -1,19 +1,30 @@
-const db = require("../models");
+module.exports = function(app, passport, path) {
+  app.post(
+    '/signup',
+    // req.body will be passed to passport.js
+    passport.authenticate(
+      'local-signup',
+      // ),
+      // (req, res) => {
+      //   res.redirect('/dashboard');
+      // }
+      {
+        successRedirect: '/login',
+        failureRedirect: '/signup'
+      }
+    )
+  );
 
-module.exports = function(app, passport) {
-  app.post("/login", passport.authenticate("local"), (req, res) => {
-    // redirect to overview.html
-  });
+  app.post(
+    '/login',
+    passport.authenticate('local-login', {
+      successRedirect: '/dashboard',
+      failureRedirect: '/signup'
+    })
+  );
 
-  app.post("/signup", (req, res) => {
-    // create the user,
-    // then redirect to login
-    // catch errors
-    // redirect to error page?
-  });
-
-  app.get("/logout", (req, res) => {
+  app.get('/logout', (req, res) => {
     req.logout();
-    res.redirect("/login"); // TODO: maybe redirect to signed out page with links to sign in?
+    res.redirect('/login'); // TODO: maybe redirect to signed out page with links to sign in?
   });
 };
