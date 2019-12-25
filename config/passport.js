@@ -23,9 +23,10 @@ module.exports = function(passport, db) {
           where: {
             email
           }
-        }).then(function(user) {
+        }).then(function(dbUser) {
           // if an email was found already --> means email is used by someone
-          if (user) {
+          if (dbUser) {
+            console.log("email already taken");
             return done(null, false, {
               message: "That email is already taken"
             });
@@ -46,12 +47,20 @@ module.exports = function(passport, db) {
             // use sequelize to create the new user passing in the newUser object
             db.User.create(newUser).then(function(newUser, created) {
               console.log("newUser", newUser);
+              console.log("created :", created);
+              // unsuccessful in creating user
               if (!newUser) {
-                return done(null, false);
+                console.log("!newUser");
+                return done(null, false, {
+                  message: "Unsuccessful in creating new user"
+                });
               }
-
+              // new user created successfully
               if (newUser) {
-                return done(null, newUser);
+                console.log("newUser");
+                return done(null, newUser, {
+                  message: "User created successfully"
+                });
               }
             });
           }
@@ -60,60 +69,62 @@ module.exports = function(passport, db) {
     )
   );
 
-  // strategy for logging in
-  passport.use(
-    "local-login",
-    new LocalStrategy(
-      {
-        // by default, local strategy uses username and password, we will override with email
-        usernameField: "email",
-        passwordField: "password",
-        passReqToCallback: true // allows us to pass back the entire request to the callback
-      },
-      function(req, email, password, done) {
-        const isValidPassword = function(userpass, password) {
-          return bcrypt.compareSync(password, userpass);
-        };
+  // // strategy for logging in
+  // passport.use(
+  //   "local-login",
+  //   new LocalStrategy(
+  //     {
+  //       // by default, local strategy uses username and password, we will override with email
+  //       usernameField: "email",
+  //       passwordField: "password",
+  //       passReqToCallback: true // allows us to pass back the entire request to the callback
+  //     },
+  //     function(req, email, password, done) {
+  //       const isValidPassword = function(userpass, password) {
+  //         return bcrypt.compareSync(password, userpass);
+  //       };
 
-        db.User.findOne({
-          where: {
-            email
-          }
-        })
-          .then(function(user) {
-            if (!user) {
-              return done(null, false, {
-                message: "Email does not exist"
-              });
-            }
+  //       db.User.findOne({
+  //         where: {
+  //           email
+  //         }
+  //       })
+  //         .then(function(user) {
+  //           if (!user) {
+  //             return done(null, false, {
+  //               message: "Email does not exist"
+  //             });
+  //           }
 
-            if (!isValidPassword(user.password, password)) {
-              return done(null, false, {
-                message: "Incorrect password."
-              });
-            }
+  //           if (!isValidPassword(user.password, password)) {
+  //             return done(null, false, {
+  //               message: "Incorrect password."
+  //             });
+  //           }
 
-            var userinfo = user.get();
-            return done(null, userinfo);
-          })
-          .catch(function(err) {
-            console.log("Error:", err);
+  //           var userinfo = user.get();
+  //           return done(null, userinfo);
+  //         })
+  //         .catch(function(err) {
+  //           console.log("Error:", err);
 
-            return done(null, false, {
-              message: "Something went wrong with your Signin"
-            });
-          });
-      }
-    )
-  );
+  //           return done(null, false, {
+  //             message: "Something went wrong with your Signin"
+  //           });
+  //         });
+  //     }
+  //   )
+  // );
 
   //serialize
   passport.serializeUser(function(user, done) {
+    console.log("serialized");
     done(null, user.id);
   });
 
   // deserialize user
   passport.deserializeUser(function(id, done) {
+    console.log("deserialized");
     db.User.findOne({
       where: {
         id

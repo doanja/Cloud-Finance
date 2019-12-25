@@ -29,7 +29,7 @@ require("./config/passport")(passport, db);
 /* Testing Passport */
 
 // Routes
-require("./routes/auth")(app, passport, path);
+require("./routes/auth")(app, passport);
 require("./routes/users")(app);
 require("./routes/remainder")(app);
 require("./routes/categories")(app);

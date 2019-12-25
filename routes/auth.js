@@ -1,18 +1,10 @@
-module.exports = function(app, passport, path) {
+module.exports = function(app, passport) {
   app.post(
     "/signup",
-    // req.body will be passed to passport.js
-    passport.authenticate(
-      "local-signup",
-      // ),
-      // (req, res) => {
-      //   res.redirect('/dashboard');
-      // }
-      {
-        successRedirect: "/login",
-        failureRedirect: "/signup"
-      }
-    )
+    passport.authenticate("local-signup", {
+      successRedirect: "/dashboard",
+      failureRedirect: "/signup"
+    })
   );
 
   app.post(
