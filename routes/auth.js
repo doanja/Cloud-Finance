@@ -7,13 +7,9 @@ module.exports = function(app, passport) {
     })
   );
 
-  app.post(
-    "/login",
-    passport.authenticate("local-login", {
-      successRedirect: "/dashboard",
-      failureRedirect: "/login"
-    })
-  );
+  app.post("/login", passport.authenticate("local-login"), (req, res) => {
+    res.redirect("/dashboard/" + req.user.id);
+  });
 
   app.get("/logout", (req, res) => {
     req.logout();

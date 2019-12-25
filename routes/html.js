@@ -6,47 +6,27 @@ module.exports = (app, path) => {
     res.sendFile(path.join(__dirname, "../public/html/index.html"));
   });
 
-  app.get(
-    // TODO: ADD BACK IN USER ID
-    "/dashboard",
-    isLoggedIn,
-    (req, res) => {
-      res.sendFile(path.join(__dirname, "../public/html/dashboard.html"));
-    }
-  );
+  app.get("/dashboard/:userId", isLoggedIn, (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/html/dashboard.html"));
+  });
 
-  app.get(
-    // TODO: ADD BACK IN USER ID
-    "/overview",
-    isLoggedIn,
-    (req, res) => {
-      res.sendFile(path.join(__dirname, "../public/html/overview.html"));
-    }
-  );
+  app.get("/overview/:userId", isLoggedIn, (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/html/overview.html"));
+  });
 
-  app.get(
-    // TODO: ADD BACK IN USER ID
-    "/expenses",
-    isLoggedIn,
-    (req, res) => {
-      res.sendFile(path.join(__dirname, "../public/html/expenses.html"));
-    }
-  );
+  app.get("/expenses/:userId", isLoggedIn, (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/html/expenses.html"));
+  });
 
-  app.get(
-    // TODO: ADD BACK IN USER ID
-    "/profile",
-    isLoggedIn,
-    (req, res) => {
-      res.sendFile(path.join(__dirname, "../public/html/profile.html"));
-    }
-  );
+  app.get("/profile/userId", isLoggedIn, (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/html/profile.html"));
+  });
 
   app.get("/login", (req, res) => {
     // Checking if user is authenticated. If so, by pass the login page
-    // if (req.user) {
-    //   res.redirect("/" + req.user.id);
-    // }
+    if (req.user) {
+      res.redirect("/dashboard/" + req.user.id);
+    }
     res.sendFile(path.join(__dirname, "../public/html/login.html"));
   });
 
@@ -58,9 +38,9 @@ module.exports = (app, path) => {
 
   app.get("/signup", (req, res) => {
     // Checking if user is authenticated. If so, by pass the signup page
-    // if (req.user) {
-    //   res.redirect("/" + req.user.id);
-    // }
+    if (req.user) {
+      res.redirect("/dashboard/" + req.user.id);
+    }
     res.sendFile(path.join(__dirname, "../public/html/signup.html"));
   });
 
