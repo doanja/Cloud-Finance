@@ -6,9 +6,9 @@
  */
 const getUserInfo = userId => {
   axios.get(`/api/user/${userId}`).then(res => {
-    renderFormField("Email", "text", "email", res.data.email);
-    renderFormField("First name", "text", "fname", res.data.firstName);
-    renderFormField("Last name", "text", "lname", res.data.lastName);
+    renderFormField('Email', 'text', 'email', res.data.email);
+    renderFormField('First name', 'text', 'fname', res.data.firstName);
+    renderFormField('Last name', 'text', 'lname', res.data.lastName);
     renderButtons();
   }),
     err => {
@@ -24,7 +24,7 @@ const getUserInfo = userId => {
  * @param {string} email the user's email
  */
 const updateUser = (userId, firstName, lastName, email) => {
-  console.log("updateUser()");
+  console.log('updateUser()');
   axios.put(`/api/user/${userId}`, { firstName, lastName, email }).then(res => {
     location.reload();
   }),
@@ -38,35 +38,35 @@ const updateUser = (userId, firstName, lastName, email) => {
 // function to render the submit button
 const renderButtons = () => {
   // create html elements
-  const formGroup = $("<div>", { class: "btn-group w-100" });
-  const resetButton = $("<button>", {
-    class: "btn btn-outline-primary",
-    type: "button",
-    id: "reset-button"
-  }).text("Reset");
-  const saveButton = $("<button>", {
-    class: "btn btn-outline-primary",
-    type: "button",
-    id: "save-button"
-  }).text("Save");
+  const formGroup = $('<div>', { class: 'btn-group w-100' });
+  const resetButton = $('<button>', {
+    class: 'btn btn-outline-primary',
+    type: 'button',
+    id: 'reset-button'
+  }).text('Reset');
+  const saveButton = $('<button>', {
+    class: 'btn btn-outline-primary',
+    type: 'button',
+    id: 'save-button'
+  }).text('Save');
 
   // append and render html elements
-  $(".wrap").append(formGroup);
+  $('.wrap').append(formGroup);
   formGroup.append(resetButton, saveButton);
 };
 
 const renderFormField = (text, type, elementId, value) => {
   // create html elements
-  const formGroup = $("<div>", { class: "form-group" });
-  const label = $("<label>", { for: type }).text(text);
-  const input = $("<input>", {
-    class: "form-control",
+  const formGroup = $('<div>', { class: 'form-group' });
+  const label = $('<label>', { for: type }).text(text);
+  const input = $('<input>', {
+    class: 'form-control',
     type: type,
     id: elementId
   }).val(value);
 
   // append and render html elements
-  $(".wrap").append(formGroup);
+  $('.wrap').append(formGroup);
   formGroup.append(label, input);
 };
 
@@ -75,12 +75,12 @@ const renderFormField = (text, type, elementId, value) => {
  */
 const parseFormData = () => {
   const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
-  const email = $("#email").val();
-  const firstName = $("#fname").val();
-  const lastName = $("#lname").val();
+  const email = $('#email').val();
+  const firstName = $('#fname').val();
+  const lastName = $('#lname').val();
 
   renderConfirmationModal('Click "confirm" to Save', () => {
     updateUser(userId, firstName, lastName, email);
@@ -89,15 +89,15 @@ const parseFormData = () => {
 
 $(document).ready(function() {
   const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
   // get the user's information from the url
   getUserInfo(userId);
 
   //  listen for form submission
-  $(document).on("click", "#save-button", parseFormData);
-  $(document).on("click", "#reset-button", () => {
+  $(document).on('click', '#save-button', parseFormData);
+  $(document).on('click', '#reset-button', () => {
     location.reload();
   });
 });

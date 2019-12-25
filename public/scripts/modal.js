@@ -5,23 +5,23 @@
  */
 const renderConfirmationModal = (title, callback) => {
   // create the elements
-  const modalFade = $("<div>", { id: "modal" }).css("z-index", 50);
-  const modalDiaglogue = $("<div>", { class: "modal-dialog" });
-  const modalContent = $("<div>", { class: "modal-content" });
-  const modalHeader = $("<div>", { class: "modal-header" });
-  const modalTitle = $("<h5>", { class: "modal-title text-dark" }).text(title);
-  const modalprefooter = $("<div>", { class: "modal-footer" });
-  const button = $("<button>", {
-    class: "btn btn-dark",
-    id: "modal-button"
-  }).text("Cancel");
-  const submit = $("<button>", {
-    class: "btn btn-dark",
-    id: "modal-submit"
-  }).text("Confirm");
+  const modalFade = $('<div>', { id: 'modal' }).css('z-index', 50);
+  const modalDiaglogue = $('<div>', { class: 'modal-dialog' });
+  const modalContent = $('<div>', { class: 'modal-content' });
+  const modalHeader = $('<div>', { class: 'modal-header' });
+  const modalTitle = $('<h5>', { class: 'modal-title text-dark' }).text(title);
+  const modalprefooter = $('<div>', { class: 'modal-footer' });
+  const button = $('<button>', {
+    class: 'btn btn-dark',
+    id: 'modal-button'
+  }).text('Cancel');
+  const submit = $('<button>', {
+    class: 'btn btn-dark',
+    id: 'modal-submit'
+  }).text('Confirm');
 
   // append and render the elements
-  $("#main-container").prepend(modalFade);
+  $('#main-container').prepend(modalFade);
   modalFade.append(modalDiaglogue);
   modalDiaglogue.append(modalContent);
   modalContent.append(modalHeader, modalprefooter);
@@ -32,7 +32,7 @@ const renderConfirmationModal = (title, callback) => {
   listenForModalClick();
 
   // listen for form submission
-  $("#modal-submit").click(() => {
+  $('#modal-submit').click(() => {
     callback();
   });
 };
@@ -40,19 +40,19 @@ const renderConfirmationModal = (title, callback) => {
 // function to create a cateogry
 const createCategory = () => {
   const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
-  renderModal("Create Category", userId);
+  renderModal('Create Category', userId);
 };
 
 // function to create an expense
 const createExpense = () => {
   const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
-  renderModal("Create Expense", userId);
+  renderModal('Create Expense', userId);
 };
 
 /**
@@ -62,7 +62,7 @@ const createExpense = () => {
  */
 const renderDropdownCategories = (text, elementId) => {
   // create the element
-  return $("<option>", {
+  return $('<option>', {
     class: `text-dark bg-light`,
     categoryId: elementId,
     value: text
@@ -76,8 +76,8 @@ const renderDropdownCategories = (text, elementId) => {
  */
 const renderDropdown = elementId => {
   // create the element
-  return $("<select>", {
-    class: "form-control w-100 mt-3 bg-dark text-white",
+  return $('<select>', {
+    class: 'form-control w-100 mt-3 bg-dark text-white',
     id: elementId
   });
 };
@@ -93,14 +93,14 @@ const renderModalFormFields = (
   labelType,
   elementId,
   inputText,
-  inputType = "test"
+  inputType = 'test'
 ) => {
   // create the elements
-  const formGroup = $("<div>", { class: "form-group" });
-  const label = $("<label>", { for: labelType }).text(labelType);
-  const input = $("<input>", {
+  const formGroup = $('<div>', { class: 'form-group' });
+  const label = $('<label>', { for: labelType }).text(labelType);
+  const input = $('<input>', {
     type: inputType,
-    class: "form-control text-left",
+    class: 'form-control text-left',
     id: elementId
   }).val(inputText);
 
@@ -118,24 +118,24 @@ const renderModalFormFields = (
  */
 const renderModal = (title, userId, data) => {
   // create the elements
-  const modalFade = $("<div>", { id: "modal" }).css("z-index", 5);
-  const modalDiaglogue = $("<div>", { class: "modal-dialog" });
-  const modalContent = $("<div>", { class: "modal-content" });
-  const modalHeader = $("<div>", { class: "modal-header" });
-  const modalBody = $("<div>", { class: "modal-body" });
-  const modalTitle = $("<h5>", { class: "modal-title text-dark" }).text(title);
-  const modalprefooter = $("<div>", { class: "modal-footer" });
-  const button = $("<button>", {
-    class: "btn btn-dark",
-    id: "modal-button"
-  }).text("Cancel");
-  const submit = $("<button>", {
-    class: "btn btn-dark",
-    id: "modal-submit"
-  }).text("Submit");
+  const modalFade = $('<div>', { id: 'modal' }).css('z-index', 5);
+  const modalDiaglogue = $('<div>', { class: 'modal-dialog' });
+  const modalContent = $('<div>', { class: 'modal-content' });
+  const modalHeader = $('<div>', { class: 'modal-header' });
+  const modalBody = $('<div>', { class: 'modal-body' });
+  const modalTitle = $('<h5>', { class: 'modal-title text-dark' }).text(title);
+  const modalprefooter = $('<div>', { class: 'modal-footer' });
+  const button = $('<button>', {
+    class: 'btn btn-dark',
+    id: 'modal-button'
+  }).text('Cancel');
+  const submit = $('<button>', {
+    class: 'btn btn-dark',
+    id: 'modal-submit'
+  }).text('Submit');
 
   // append and render the elements
-  $("#main-container").prepend(modalFade);
+  $('#main-container').prepend(modalFade);
   modalFade.append(modalDiaglogue);
   modalDiaglogue.append(modalContent);
   modalContent.append(modalHeader, modalBody, modalprefooter);
@@ -148,7 +148,7 @@ const renderModal = (title, userId, data) => {
   listenForModalClick();
 
   // listen for form submission
-  $("#modal-submit").click(() => {
+  $('#modal-submit').click(() => {
     listenForModalSubmission(title, userId, data);
   });
 };
@@ -163,46 +163,46 @@ const renderModal = (title, userId, data) => {
 const renderModalContent = (title, userId, obj, modalBody) => {
   // determine the form to render in the modal body
   switch (title) {
-    case "Edit Expense":
+    case 'Edit Expense':
       // render categories and append it to .modal-body
-      getCategories(userId, ".modal-body", obj.categoryValue);
+      getCategories(userId, '.modal-body', obj.categoryValue);
 
       // render form fields with prefilled text
       modalBody.append(
         renderModalFormFields(
-          "Description",
-          "modal-description",
+          'Description',
+          'modal-description',
           obj.description
         ),
-        renderModalFormFields("Amount", "modal-amount", obj.amount),
-        renderModalFormFields("Date", "modal-date", obj.date, "date")
+        renderModalFormFields('Amount', 'modal-amount', obj.amount),
+        renderModalFormFields('Date', 'modal-date', obj.date, 'date')
       );
       break;
 
-    case "Edit Category":
+    case 'Edit Category':
       // render form fields with prefilled text
       modalBody.append(
-        renderModalFormFields("Category Name", "modal-name", obj.categoryValue),
-        renderModalFormFields("Goal", "modal-goal", obj.goalValue)
+        renderModalFormFields('Category Name', 'modal-name', obj.categoryValue),
+        renderModalFormFields('Goal', 'modal-goal', obj.goalValue)
       );
       break;
 
-    case "Create Category":
+    case 'Create Category':
       // render form fields with prefilled text
       modalBody.append(
-        renderModalFormFields("Category Name", "modal-category", ""),
-        renderModalFormFields("Goal", "modal-goal", "")
+        renderModalFormFields('Category Name', 'modal-category', ''),
+        renderModalFormFields('Goal', 'modal-goal', '')
       );
       break;
 
-    case "Create Expense":
-      getCategories(userId, ".modal-body");
+    case 'Create Expense':
+      getCategories(userId, '.modal-body');
 
       // render form fields with prefilled text
       modalBody.append(
-        renderModalFormFields("Description", "modal-description", ""),
-        renderModalFormFields("Amount", "modal-amount", ""),
-        renderModalFormFields("Date", "modal-date", "", "date")
+        renderModalFormFields('Description', 'modal-description', ''),
+        renderModalFormFields('Amount', 'modal-amount', ''),
+        renderModalFormFields('Date', 'modal-date', '', 'date')
       );
       break;
 
@@ -214,11 +214,11 @@ const renderModalContent = (title, userId, obj, modalBody) => {
 // function to close the modal
 const listenForModalClick = () => {
   // Get the modal
-  const modal = document.getElementById("modal");
+  const modal = document.getElementById('modal');
 
   // when the user clicks the close button in the modal, close modal
-  $("#modal-button").click(() => {
-    $("#modal").remove();
+  $('#modal-button').click(() => {
+    $('#modal').remove();
   });
 };
 
@@ -231,36 +231,36 @@ const listenForModalClick = () => {
 const listenForModalSubmission = (option, userId, obj) => {
   // determine what to the submit button does
   switch (option) {
-    case "Edit Expense":
+    case 'Edit Expense':
       // grab the form fields from the modal
-      const description = $("#modal-description").val();
-      const amount = parseFloat($("#modal-amount").val());
-      const date = $("#modal-date").val();
-      const category = $("#categories option:selected").attr("categoryId");
+      const description = $('#modal-description').val();
+      const amount = parseFloat($('#modal-amount').val());
+      const date = $('#modal-date').val();
+      const category = $('#categories option:selected').attr('categoryId');
 
       updateExpense(obj.editId, description, amount, date, category);
       break;
 
-    case "Edit Category":
+    case 'Edit Category':
       // grab the form fields from the modal
-      const name = $("#modal-name").val();
-      const goal = parseFloat($("#modal-goal").val());
+      const name = $('#modal-name').val();
+      const goal = parseFloat($('#modal-goal').val());
       updateCategory(obj.editId, name, goal);
       break;
 
-    case "Create Category":
-      const categoryName = $("#modal-category").val();
-      const categoryGoal = parseFloat($("#modal-goal").val());
+    case 'Create Category':
+      const categoryName = $('#modal-category').val();
+      const categoryGoal = parseFloat($('#modal-goal').val());
       postCategory(userId, categoryName, categoryGoal);
       break;
 
-    case "Create Expense":
+    case 'Create Expense':
       // grab the form fields from the modal
-      const expenseDescription = $("#modal-description").val();
-      const expenseAmount = parseFloat($("#modal-amount").val());
-      const expenseDate = $("#modal-date").val();
-      const expenseCategory = $("#categories option:selected").attr(
-        "categoryId"
+      const expenseDescription = $('#modal-description').val();
+      const expenseAmount = parseFloat($('#modal-amount').val());
+      const expenseDate = $('#modal-date').val();
+      const expenseCategory = $('#categories option:selected').attr(
+        'categoryId'
       );
       postExpense(
         expenseAmount,
@@ -277,16 +277,16 @@ const listenForModalSubmission = (option, userId, obj) => {
 
 // function to pass current data to a modal
 function editExpenseClicked() {
-  const editId = parseInt($(this).attr("editId")); // get the edit button id
-  const description = $(`.description-${editId}`).attr("value"); // get the description
-  const amount = parseFloat($(`.amount-${editId}`).attr("value")); // get the amount
-  const date = $(`.date-${editId}`).attr("value"); // get the amount
+  const editId = parseInt($(this).attr('editId')); // get the edit button id
+  const description = $(`.description-${editId}`).attr('value'); // get the description
+  const amount = parseFloat($(`.amount-${editId}`).attr('value')); // get the amount
+  const date = $(`.date-${editId}`).attr('value'); // get the amount
   const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
-  const categoryValue = $(this).attr("categoryValue"); // get the category text
+  const categoryValue = $(this).attr('categoryValue'); // get the category text
 
-  renderModal("Edit Expense", userId, {
+  renderModal('Edit Expense', userId, {
     description,
     amount,
     date,
@@ -297,9 +297,9 @@ function editExpenseClicked() {
 
 // function to pass current data to a modal
 function deleteExpenseClicked() {
-  const deleteId = parseInt($(this).attr("deleteId"));
+  const deleteId = parseInt($(this).attr('deleteId'));
   renderConfirmationModal(
-    "Are you sure you want to delete the Expense?",
+    'Are you sure you want to delete the Expense?',
     () => {
       deleteExpense(deleteId);
     }
@@ -310,21 +310,21 @@ function deleteExpenseClicked() {
 
 // function to pass current data to a modal
 function editCategoryClicked() {
-  const editId = parseInt($(this).attr("editId")); // get the edit button id
-  const categoryValue = $(this).attr("categoryValue"); // get the category text
-  const goalValue = parseFloat($(this).attr("goalValue")); // get the goal value
+  const editId = parseInt($(this).attr('editId')); // get the edit button id
+  const categoryValue = $(this).attr('categoryValue'); // get the category text
+  const goalValue = parseFloat($(this).attr('goalValue')); // get the goal value
   const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
-  renderModal("Edit Category", userId, { categoryValue, goalValue, editId });
+  renderModal('Edit Category', userId, { categoryValue, goalValue, editId });
 }
 
 // function to pass current data to a modal
 function deleteCategoryClicked() {
-  const deleteId = parseInt($(this).attr("deleteId"));
+  const deleteId = parseInt($(this).attr('deleteId'));
   renderConfirmationModal(
-    "Are you sure you want to delete the category?",
+    'Are you sure you want to delete the category?',
     () => {
       deleteCategory(deleteId);
     }
@@ -332,12 +332,12 @@ function deleteCategoryClicked() {
 }
 
 $(document).ready(() => {
-  console.log("modal.js script loaded");
+  console.log('modal.js script loaded');
 
-  $(document).on("click", ".edit-category-button", editCategoryClicked);
-  $(document).on("click", ".delete-category-button", deleteCategoryClicked);
-  $(document).on("click", ".edit-button", editExpenseClicked);
-  $(document).on("click", ".delete-button", deleteExpenseClicked);
-  $(document).on("click", ".create-category", createCategory);
-  $(document).on("click", ".create-expense", createExpense);
+  $(document).on('click', '.edit-category-button', editCategoryClicked);
+  $(document).on('click', '.delete-category-button', deleteCategoryClicked);
+  $(document).on('click', '.edit-button', editExpenseClicked);
+  $(document).on('click', '.delete-button', deleteExpenseClicked);
+  $(document).on('click', '.create-category', createCategory);
+  $(document).on('click', '.create-expense', createExpense);
 });
