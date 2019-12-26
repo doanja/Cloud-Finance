@@ -26,8 +26,6 @@ const getCategorySum = userId => {
   };
 
   axios.get(`/api/category/all/${userId}`).then(res => {
-    console.log('res.data :', res.data);
-
     if (res.data.length === 0) {
       renderCardtitle('No data found. Click here to add expenses.', userId);
       return;
