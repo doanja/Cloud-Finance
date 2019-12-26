@@ -1,6 +1,6 @@
 const isValidDecimal = num => {
   // check if number is a valid decimal (10,2)
-  const pattern = new RegExp(/^[\d]{1,10}(\.[\d]{1,2})?$/);
+  const pattern = new RegExp(/^[1-9]\d*(\.\d+)?$/);
   return pattern.test(parseFloat(num));
 };
 
@@ -46,21 +46,21 @@ console.log(isValidDecimal(12.3223));
 console.log(isValidDecimal(12));
 console.log(isValidDecimal('.33'));
 
-console.log('---------------- isValidExpenseDescription');
+// console.log('---------------- isValidExpenseDescription');
 
-console.log(isValidExpenseDescription('aasjkdf213'));
-console.log(isValidExpenseDescription('aasjk213f213'));
-console.log(isValidExpenseDescription('@#asdjhfk'));
+// console.log(isValidExpenseDescription('aasjkdf213'));
+// console.log(isValidExpenseDescription('aasjk213f213'));
+// console.log(isValidExpenseDescription('@#asdjhfk'));
 
-console.log('------------------------- isValidPassword');
-console.log(isValidPassword('asjld;kfjl;L23As@'));
-console.log(isValidPassword('AB'));
-console.log(isValidPassword('APPLEAasdfaSFK'));
-console.log(isValidPassword('asjld;kfjlaaaaaaaaaaffffffffff;L23As@'));
+// console.log('------------------------- isValidPassword');
+// console.log(isValidPassword('asjld;kfjl;L23As@'));
+// console.log(isValidPassword('AB'));
+// console.log(isValidPassword('APPLEAasdfaSFK'));
+// console.log(isValidPassword('asjld;kfjlaaaaaaaaaaffffffffff;L23As@'));
 
-console.log('------------------------- isValidEmail');
+// console.log('------------------------- isValidEmail');
 
-console.log(isValidEmail('aslkdjfla@gmail.com'));
-console.log(isValidEmail('@gmail.com'));
-console.log(isValidEmail('aslkdjfla@'));
-console.log(isValidEmail('aslkdjf@la@com'));
+// console.log(isValidEmail('aslkdjfla@gmail.com'));
+// console.log(isValidEmail('@gmail.com'));
+// console.log(isValidEmail('aslkdjfla@'));
+// console.log(isValidEmail('aslkdjf@la@com'));

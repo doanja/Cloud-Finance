@@ -65,7 +65,6 @@ module.exports = (app, db) => {
         res.status(200).json(newCategory);
       })
       .catch(err => {
-        console.log(err);
         res.status(400).json({ error: err });
       });
   });

@@ -1,4 +1,4 @@
-const renderAlert = (text, parentElement) => {
+const renderAlert = (text, parentElement = '.modal-body') => {
   const alert = $('<div>', {
     class: 'alert alert-warning alert-dismissible fade show',
     role: 'alert'
@@ -10,14 +10,12 @@ const renderAlert = (text, parentElement) => {
     'data-dismiss': 'alert',
     'aria-label': 'Close'
   });
-  const dismissIcon = $('<span>', { 'aria-hidden': true }).text('&times;');
+  const dismissIcon = $('<span>', { 'aria-hidden': true }).text('X');
 
   $(parentElement).prepend(alert);
   alert.append(alertText, dismissButton);
   dismissButton.append(dismissIcon);
 };
-
-const checkFields = () => {};
 
 /**
  * function to render a confirmation modal when delete is clicked
@@ -234,9 +232,6 @@ const renderModalContent = (title, userId, obj, modalBody) => {
 
 // function to close the modal
 const listenForModalClick = () => {
-  // Get the modal
-  const modal = document.getElementById('modal');
-
   // when the user clicks the close button in the modal, close modal
   $('#modal-button').click(() => {
     $('#modal').remove();
@@ -250,6 +245,8 @@ const listenForModalClick = () => {
  * @param {object} obj the object containing required fields for expense/category
  */
 const listenForModalSubmission = (option, userId, obj) => {
+  $('.alert ').remove();
+
   // determine what to the submit button does
   switch (option) {
     case 'Edit Expense':
@@ -259,9 +256,14 @@ const listenForModalSubmission = (option, userId, obj) => {
       const date = $('#modal-date').val();
       const category = $('#categories option:selected').attr('categoryId');
 
-      updateExpense(obj.editId, description, amount, date, category);
+      if (!isValidExpenseDescription(description)) {
+        renderAlert('Enter a valid description');
+      } else if (!isValidDecimal(amount)) {
+        renderAlert('Enter a valid amount');
+      } else {
+        updateExpense(obj.editId, description, amount, date, category);
+      }
       break;
-
     case 'Edit Category':
       // grab the form fields from the modal
       const name = $('#modal-name').val();
