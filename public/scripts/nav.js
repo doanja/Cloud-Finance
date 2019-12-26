@@ -47,8 +47,6 @@ $(document).ready(() => {
     window.location.href.split('/').length - 1
   ];
 
-  $('.navbar-brand').attr('href', `/dashboard/${userId}`);
-
   renderNavLinks('Profile', 'profile', userId, '#menu');
   renderNavLinks('Dashboard', 'dashboard', userId, '#menu');
   renderNavLinks('Overview', 'overview', userId, '#menu');
