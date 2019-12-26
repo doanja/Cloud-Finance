@@ -4,30 +4,32 @@
  */
 const getCategorySum = userId => {
   // handle to the canvas
-  const canvas1 = $("#chart1")[0].getContext("2d");
-  const canvas2 = $("#chart2")[0].getContext("2d");
-  const canvas3 = $("#chart3")[0].getContext("2d");
-  const canvas4 = $("#chart4")[0].getContext("2d");
-  const canvas5 = $("#chart5")[0].getContext("2d");
-  const canvas6 = $("#chart6")[0].getContext("2d");
+  const canvas1 = $('#chart1')[0].getContext('2d');
+  const canvas2 = $('#chart2')[0].getContext('2d');
+  const canvas3 = $('#chart3')[0].getContext('2d');
+  const canvas4 = $('#chart4')[0].getContext('2d');
+  const canvas5 = $('#chart5')[0].getContext('2d');
+  const canvas6 = $('#chart6')[0].getContext('2d');
 
   const labels = [];
 
   const expenseTotals = {
-    label: "Actual Dollars Spent",
+    label: 'Actual Dollars Spent',
     data: [],
-    backgroundColor: "#6272a4"
+    backgroundColor: '#6272a4'
   };
 
   const categoryGoals = {
-    label: "Goal Dollar Amount",
+    label: 'Goal Dollar Amount',
     data: [],
-    backgroundColor: "#44475"
+    backgroundColor: '#44475'
   };
 
   axios.get(`/api/category/all/${userId}`).then(res => {
+    console.log('res.data :', res.data);
+
     if (res.data.length === 0) {
-      // TODO: put message so user routes to expenses
+      renderCardtitle('No data found. Click here to add expenses.', userId);
       return;
     }
 
@@ -53,12 +55,12 @@ const getCategorySum = userId => {
     };
 
     // render the chart
-    renderChart(canvas1, "bar", dataset);
-    renderChart(canvas2, "line", dataset);
-    renderChart(canvas3, "radar", dataset);
-    renderChart(canvas4, "horizontalBar", dataset);
-    renderChart(canvas5, "doughnut", dataset);
-    renderChart(canvas6, "polarArea", dataset);
+    renderChart(canvas1, 'bar', dataset);
+    renderChart(canvas2, 'line', dataset);
+    renderChart(canvas3, 'radar', dataset);
+    renderChart(canvas4, 'horizontalBar', dataset);
+    renderChart(canvas5, 'doughnut', dataset);
+    renderChart(canvas6, 'polarArea', dataset);
   }),
     err => {
       console.log(err);
@@ -79,9 +81,19 @@ const renderChart = (canvas, chartType, data) => {
   });
 };
 
+const renderCardtitle = (titleText, userId) => {
+  const title = $('<a>', {
+    class: 'card-title text-center my-auto',
+    href: `/expenses/${userId}`
+  }).text(titleText);
+
+  $('.dashboard-card').empty();
+  $('.dashboard-card').prepend(title);
+};
+
 $(document).ready(() => {
   const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
   getCategorySum(userId);

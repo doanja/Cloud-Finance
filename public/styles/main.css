@@ -3,7 +3,7 @@ body {
 }
 
 .jumbotron {
-  background: url("../images/background.jpg");
+  background: url('../images/background.jpg');
   background-size: cover;
   background-attachment: fixed;
   margin-bottom: 0;
@@ -62,4 +62,8 @@ i {
 
 .text-green {
   color: #2ab664;
+}
+
+.dashboard-card {
+  min-height: 15rem;
 }
