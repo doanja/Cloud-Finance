@@ -972,7 +972,7 @@
     
 
     
-    <h4 class="name" id="getCategoryExpenseTotals"><span class="type-signature"></span>getCategoryExpenseTotals<span class="signature">(userId)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getCategorySum"><span class="type-signature"></span>getCategorySum<span class="signature">(userId)</span><span class="type-signature"></span></h4>
     
 
     
@@ -980,7 +980,7 @@
 
 
 <div class="description">
-    <p>function to render the user's total expenses per category</p>
+    <p>function to render the user's total expenses per category vs. goal as a graph</p>
 </div>
 
 
@@ -1074,143 +1074,6 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="dashboard.js.html">dashboard.js</a>, <a href="dashboard.js.html#line5">line 5</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="getCategoryGoalTotals"><span class="type-signature"></span>getCategoryGoalTotals<span class="signature">(userId)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>function to render the user's total expenses per category</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>userId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>the user's id</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dashboard.js.html">dashboard.js</a>, <a href="dashboard.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -1804,7 +1667,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line233">line 233</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line231">line 231</a>
     </li></ul></dd>
     
 
@@ -2258,167 +2121,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="apiRequests.js.html">apiRequests.js</a>, <a href="apiRequests.js.html#line117">line 117</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="renderCategoryRow"><span class="type-signature"></span>renderCategoryRow<span class="signature">(categoryData, totalExpenseCat)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>function to render category rows</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>categoryData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>an object that contains the category data from the response</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>totalExpenseCat</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>the total expense for the category</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line96">line 96</a>
+        <a href="apiRequests.js.html">apiRequests.js</a>, <a href="apiRequests.js.html#line116">line 116</a>
     </li></ul></dd>
     
 
@@ -2614,6 +2317,345 @@
     
 
     
+    <h4 class="name" id="renderCategoryRow"><span class="type-signature"></span>renderCategoryRow<span class="signature">(categoryData, totalExpenseCat)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>function to render category rows</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>categoryData</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>an object that contains the category data from the response</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>totalExpenseCat</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the total expense for the category</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line96">line 96</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="renderChart"><span class="type-signature"></span>renderChart<span class="signature">(canvas, chartType, data)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the canvas object (dom element)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>chartType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the type of chart to be rendered</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the data to be rendered</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dashboard.js.html">dashboard.js</a>, <a href="dashboard.js.html#line76">line 76</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="renderConfirmationModal"><span class="type-signature"></span>renderConfirmationModal<span class="signature">(title, callback)</span><span class="type-signature"></span></h4>
     
 
@@ -2774,6 +2816,143 @@
     
 
     
+    <h4 class="name" id="renderDivider"><span class="type-signature"></span>renderDivider<span class="signature">(parentElement)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>function to render a dropdown divider</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>parentElement</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the class or id name to append this to</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="nav.js.html">nav.js</a>, <a href="nav.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="renderDropdown"><span class="type-signature"></span>renderDropdown<span class="signature">(elementId)</span><span class="type-signature"> &rarr; {object}</span></h4>
     
 
@@ -2875,7 +3054,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line79">line 79</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line77">line 77</a>
     </li></ul></dd>
     
 
@@ -3057,7 +3236,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line65">line 65</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line63">line 63</a>
     </li></ul></dd>
     
 
@@ -3537,7 +3716,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line121">line 121</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line119">line 119</a>
     </li></ul></dd>
     
 
@@ -3743,7 +3922,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line165">line 165</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line163">line 163</a>
     </li></ul></dd>
     
 
@@ -3926,7 +4105,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line94">line 94</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line92">line 92</a>
     </li></ul></dd>
     
 
@@ -3984,7 +4163,7 @@
     
 
     
-    <h4 class="name" id="renderNavLinks"><span class="type-signature"></span>renderNavLinks<span class="signature">(title, page, userId, parentElement)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="renderNavLinks"><span class="type-signature"></span>renderNavLinks<span class="signature">(linkTitle, pageName, userId, parentElement)</span><span class="type-signature"></span></h4>
     
 
     
@@ -4028,7 +4207,7 @@
 
         <tr>
             
-                <td class="name"><code>title</code></td>
+                <td class="name"><code>linkTitle</code></td>
             
 
             <td class="type">
@@ -4051,7 +4230,7 @@
 
         <tr>
             
-                <td class="name"><code>page</code></td>
+                <td class="name"><code>pageName</code></td>
             
 
             <td class="type">
@@ -4154,7 +4333,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="nav.js.html">nav.js</a>, <a href="nav.js.html#line26">line 26</a>
+        <a href="nav.js.html">nav.js</a>, <a href="nav.js.html#line37">line 37</a>
     </li></ul></dd>
     
 
@@ -5572,13 +5751,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategoryExpenseTotals">getCategoryExpenseTotals</a></li><li><a href="global.html#getCategoryGoalTotals">getCategoryGoalTotals</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategorySum">getCategorySum</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Dec 22 2019 17:53:15 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Dec 25 2019 16:35:43 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

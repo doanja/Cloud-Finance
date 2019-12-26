@@ -33,11 +33,12 @@
  * @param {string} parentElement the parent element's name to append this to
  */
 const renderSettingsLink = (page, userId, parentElement) => {
-  const li = $("&lt;li>");
-  const a = $("&lt;a>", { href: `/${page}/${userId}` });
-  const icon = $("&lt;i>", { class: "large material-icons", id: "profile-icon" }).text(
-    "account_circle"
-  );
+  const li = $('&lt;li>');
+  const a = $('&lt;a>', { href: `/${page}/${userId}` });
+  const icon = $('&lt;i>', {
+    class: 'large material-icons',
+    id: 'profile-icon'
+  }).text('account_circle');
 
   $(parentElement).append(li);
   li.append(a);
@@ -45,26 +46,43 @@ const renderSettingsLink = (page, userId, parentElement) => {
 };
 
 /**
+ * function to render a dropdown divider
+ * @param {string} parentElement the class or id name to append this to
+ */
+const renderDivider = parentElement => {
+  const divider = $('&lt;div>', { class: 'dropdown-divider' });
+
+  $(parentElement).append(divider);
+};
+
+/**
  * function to render nav links
- * @param {string} title the text to show on the link
- * @param {string} page the html page name
+ * @param {string} linkTitle the text to show on the link
+ * @param {string} pageName the html page name
  * @param {number} userId the user's id
  * @param {string} parentElement the class or id name to append this to
  */
-const renderNavLinks = (title, page, userId, parentElement) => {
-  const li = $("&lt;li>", { class: "tab" });
-  const a = $("&lt;a>", { href: `/${page}/${userId}` }).text(title);
-  $(parentElement).append(li);
-  li.append(a);
+const renderNavLinks = (linkTitle, pageName, userId, parentElement) => {
+  const a = $('&lt;a>', {
+    class: 'dropdown-item',
+    href: `/${pageName}/${userId}`
+  }).text(linkTitle);
+  $(parentElement).append(a);
 };
 
 $(document).ready(() => {
-  const userId = window.location.href.split("/")[window.location.href.split("/").length - 1];
+  const userId = window.location.href.split('/')[
+    window.location.href.split('/').length - 1
+  ];
 
-  renderNavLinks("Home", "dashboard", userId, ".tabs");
-  renderNavLinks("Expenses", "expenses", userId, ".tabs");
-  renderNavLinks("Budget", "budget", userId, ".tabs");
-  renderSettingsLink("profile", userId, ".hide-on-med-and-down");
+  $('.navbar-brand').attr('href', `/dashboard/${userId}`);
+
+  renderNavLinks('Profile', 'profile', userId, '#menu');
+  renderNavLinks('Dashboard', 'dashboard', userId, '#menu');
+  renderNavLinks('Overview', 'overview', userId, '#menu');
+  renderNavLinks('Expenses', 'expenses', userId, '#menu');
+  renderDivider('#menu');
+  renderNavLinks('Logout', 'logout', '', '#menu');
 });
 </code></pre>
         </article>
@@ -76,13 +94,13 @@ $(document).ready(() => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategoryExpenseTotals">getCategoryExpenseTotals</a></li><li><a href="global.html#getCategoryGoalTotals">getCategoryGoalTotals</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategorySum">getCategorySum</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Dec 22 2019 17:53:15 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Dec 25 2019 16:35:43 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

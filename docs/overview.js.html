@@ -227,10 +227,9 @@ const renderIncome = userData => {
 // function to pass current data to a modal
 function updateIncomeClicked() {
   const userIncome = parseFloat($("#income").val());
-  // const userId = parseInt(
-  //   window.location.href.split("/")[window.location.href.split("/").length - 1]
-  // );
-  const userId = 1;
+  const userId = parseInt(
+    window.location.href.split("/")[window.location.href.split("/").length - 1]
+  );
 
   renderConfirmationModal(
     "Are you sure you want to update your income?",
@@ -241,7 +240,9 @@ function updateIncomeClicked() {
 }
 
 $(document).ready(() => {
-  const userId = 1; //parseInt(window.location.href.split("/")[window.location.href.split("/").length - 1]);
+  const userId = parseInt(
+    window.location.href.split("/")[window.location.href.split("/").length - 1]
+  );
 
   getIncome(userId);
   getBudgetCategories(userId);
@@ -257,13 +258,13 @@ $(document).ready(() => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategoryExpenseTotals">getCategoryExpenseTotals</a></li><li><a href="global.html#getCategoryGoalTotals">getCategoryGoalTotals</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategorySum">getCategorySum</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Dec 22 2019 17:53:15 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Dec 25 2019 16:35:43 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
