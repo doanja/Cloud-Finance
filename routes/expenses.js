@@ -15,12 +15,6 @@ module.exports = (app, db) => {
   app.post('/api/expense/', (req, res) => {
     const { amount, description, date, CategoryId } = req.body;
 
-    // const errors = [];
-
-    // if (!amount || !description || !date || !CategoryId) {
-    //   errors.push({ msg: "Fill in all required fields..." });
-    // }
-
     db.Expense.create({
       amount,
       description,
@@ -38,7 +32,7 @@ module.exports = (app, db) => {
 
   // update a single Expense
   app.put('/api/expense/:id', (req, res) => {
-    let { amount, description, date, CategoryId } = req.body;
+    const { amount, description, date, CategoryId } = req.body;
     const { id } = req.params;
 
     db.Expense.update(
