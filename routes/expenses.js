@@ -21,6 +21,7 @@ module.exports = (app, db) => {
     const schema = Joi.object({
       amount: Joi.number()
         .positive()
+        .max(10)
         .required(),
       description: Joi.string()
         .alphanum()
@@ -62,6 +63,32 @@ module.exports = (app, db) => {
   app.put('/api/expense/:id', (req, res) => {
     let { amount, description, date, CategoryId } = req.body;
     const { id } = req.params;
+
+    // define joi schema
+    const schema = Joi.object({
+      amount: Joi.number()
+        .positive()
+        .max(10)
+        .required(),
+      description: Joi.string()
+        .alphanum()
+        .min(1)
+        .max(50)
+        .required(),
+      date: Joi.date().required(),
+      CategoryId: Joi.number()
+        .integer()
+        .required()
+    });
+
+    // compare schema with req.body
+    const validate = schema.validate(req.body);
+
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
 
     db.Expense.update(
       {

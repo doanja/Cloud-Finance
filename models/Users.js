@@ -1,5 +1,3 @@
-// var bcrypt = require("bcryptjs");
-
 module.exports = function(sequelize, DataTypes) {
   const User = sequelize.define('User', {
     id: {
@@ -35,17 +33,6 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: 0
     }
   });
-
-  /* Creating a custom method for our User model. 
-     This will check if an unhashed password entered by the 
-     user can be compared to the hashed password stored in our database */
-  // User.prototype.validPassword = password => {
-  //   return bcrypt.compareSync(password, this.password);
-  // };
-
-  // User.beforeCreate(user => {
-  //   user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
-  // });
 
   User.associate = models => {
     User.hasMany(models.Category, {

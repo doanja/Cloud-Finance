@@ -1,6 +1,8 @@
+const Joi = require('@hapi/joi');
+
 module.exports = (app, db) => {
   // get all the Category's (with expenses) belonging to the user's id
-  app.get("/api/category/all/:id", (req, res) => {
+  app.get('/api/category/all/:id', (req, res) => {
     db.Category.findAll({
       include: [db.Expense],
       where: { UserId: req.params.id }
@@ -15,7 +17,7 @@ module.exports = (app, db) => {
   });
 
   // get all catergories belonging to the user
-  app.get("/api/category/:id", (req, res) => {
+  app.get('/api/category/:id', (req, res) => {
     db.Category.findAll({ where: { UserId: req.params.id } })
       .then(data => {
         res.status(200).json(data);
@@ -27,9 +29,31 @@ module.exports = (app, db) => {
   });
 
   // create a single category
-  app.post("/api/category/:id", (req, res) => {
+  app.post('/api/category/:id', (req, res) => {
     const { name, goal } = req.body;
     const { id } = req.params;
+
+    // define joi schema
+    const schema = Joi.object({
+      name: Joi.string()
+        .alphanum()
+        .min(1)
+        .max(20)
+        .required(),
+      goal: Joi.number()
+        .positive()
+        .max(10)
+        .required()
+    });
+
+    // compare schema with req.body
+    const validate = schema.validate(req.body);
+
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
 
     db.Category.create({
       name,
@@ -46,8 +70,30 @@ module.exports = (app, db) => {
   });
 
   // update a single Category
-  app.put("/api/category/", (req, res) => {
+  app.put('/api/category/', (req, res) => {
     const { name, goal, id } = req.body;
+
+    // define joi schema
+    const schema = Joi.object({
+      name: Joi.string()
+        .alphanum()
+        .min(1)
+        .max(20)
+        .required(),
+      goal: Joi.number()
+        .positive()
+        .max(10)
+        .required()
+    });
+
+    // compare schema with req.body
+    const validate = schema.validate(req.body);
+
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
 
     db.Category.update(
       {
@@ -68,7 +114,7 @@ module.exports = (app, db) => {
   });
 
   // delete a single Category
-  app.delete("/api/category/:id", (req, res) => {
+  app.delete('/api/category/:id', (req, res) => {
     db.Category.destroy({
       where: { id: req.params.id }
     })
