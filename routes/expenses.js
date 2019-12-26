@@ -1,3 +1,5 @@
+const Joi = require('@hapi/joi');
+
 module.exports = (app, db) => {
   // get all expenses belonging to the category
   app.get('/api/expense/:id', (req, res) => {
@@ -15,12 +17,32 @@ module.exports = (app, db) => {
   app.post('/api/expense/', (req, res) => {
     const { amount, description, date, CategoryId } = req.body;
 
-    // const errors = [];
+    // define joi schema
+    const schema = Joi.object({
+      amount: Joi.number()
+        .positive()
+        .required(),
+      description: Joi.string()
+        .alphanum()
+        .min(1)
+        .max(50)
+        .required(),
+      date: Joi.date().required(),
+      CategoryId: Joi.number()
+        .integer()
+        .required()
+    });
 
-    // if (!amount || !description || !date || !CategoryId) {
-    //   errors.push({ msg: "Fill in all required fields..." });
-    // }
+    // compare schema with req.body
+    const validate = schema.validate(req.body);
 
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
+
+    // if no errors , finish the request
     db.Expense.create({
       amount,
       description,
