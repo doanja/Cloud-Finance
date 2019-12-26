@@ -1,7 +1,7 @@
 // var bcrypt = require("bcryptjs");
 
 module.exports = function(sequelize, DataTypes) {
-  const User = sequelize.define("User", {
+  const User = sequelize.define('User', {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: { min: 10 }
+      validate: { len: [10, 30] }
     },
     email: {
       type: DataTypes.STRING,
@@ -49,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
 
   User.associate = models => {
     User.hasMany(models.Category, {
-      onDelete: "cascade"
+      onDelete: 'cascade'
     });
   };
 

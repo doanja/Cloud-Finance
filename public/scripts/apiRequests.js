@@ -68,7 +68,7 @@ const getCategories = (userId, parentElement, defaultValue) => {
   // send get request to retrieve all categories
   axios.get(`/api/category/${userId}`).then(res => {
     // render dropdown button
-    const dropdown = renderDropdown("categories");
+    const dropdown = renderDropdown('categories');
 
     // for each category, create a dropdown option
     res.data.forEach(row => {

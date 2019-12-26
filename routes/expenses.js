@@ -1,6 +1,6 @@
 module.exports = (app, db) => {
   // get all expenses belonging to the category
-  app.get("/api/expense/:id", (req, res) => {
+  app.get('/api/expense/:id', (req, res) => {
     db.Expense.findAll({ where: { CategoryId: req.params.id } })
       .then(data => {
         res.status(200).json(data);
@@ -12,7 +12,7 @@ module.exports = (app, db) => {
   });
 
   // create a single expense
-  app.post("/api/expense/", (req, res) => {
+  app.post('/api/expense/', (req, res) => {
     const { amount, description, date, CategoryId } = req.body;
 
     // const errors = [];
@@ -37,7 +37,7 @@ module.exports = (app, db) => {
   });
 
   // update a single Expense
-  app.put("/api/expense/:id", (req, res) => {
+  app.put('/api/expense/:id', (req, res) => {
     let { amount, description, date, CategoryId } = req.body;
     const { id } = req.params;
 
@@ -62,7 +62,7 @@ module.exports = (app, db) => {
   });
 
   // delete a single expense
-  app.delete("/api/expense/:id", (req, res) => {
+  app.delete('/api/expense/:id', (req, res) => {
     db.Expense.destroy({
       where: { id: req.params.id }
     })
