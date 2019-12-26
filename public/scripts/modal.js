@@ -1,3 +1,24 @@
+const renderAlert = (text, parentElement) => {
+  const alert = $('<div>', {
+    class: 'alert alert-warning alert-dismissible fade show',
+    role: 'alert'
+  });
+  const alertText = $('<strong>').text(text);
+  const dismissButton = $('<button>', {
+    type: 'button',
+    class: 'close',
+    'data-dismiss': 'alert',
+    'aria-label': 'Close'
+  });
+  const dismissIcon = $('<span>', { 'aria-hidden': true }).text('&times;');
+
+  $(parentElement).prepend(alert);
+  alert.append(alertText, dismissButton);
+  dismissButton.append(dismissIcon);
+};
+
+const checkFields = () => {};
+
 /**
  * function to render a confirmation modal when delete is clicked
  * @param {string} title the title to go in the modal

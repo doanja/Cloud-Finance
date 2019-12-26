@@ -21,7 +21,7 @@ module.exports = (app, db) => {
     const schema = Joi.object({
       amount: Joi.number()
         .positive()
-        .max(10)
+        .max(999999999)
         .required(),
       description: Joi.string()
         .alphanum()
@@ -68,7 +68,7 @@ module.exports = (app, db) => {
     const schema = Joi.object({
       amount: Joi.number()
         .positive()
-        .max(10)
+        .max(999999999)
         .required(),
       description: Joi.string()
         .alphanum()

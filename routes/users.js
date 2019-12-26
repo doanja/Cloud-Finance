@@ -65,6 +65,23 @@ module.exports = (app, db) => {
   app.put('/api/user/income/:id', (req, res) => {
     const { income } = req.body;
 
+    // define joi schema
+    const schema = Joi.object({
+      income: Joi.number()
+        .positive()
+        .max(999999999)
+        .required()
+    });
+
+    // compare schema with req.body
+    const validate = schema.validate(req.body);
+
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
+
     // TODO: needs validation for updated fields on front end
     db.User.update(
       {
