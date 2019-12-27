@@ -6,12 +6,21 @@
  */
 const updateCategory = (id, name, goal) => {
   // make put request to update a single category
-  axios.put(`/api/category/`, { id, name, goal }).then(res => {
-    location.reload();
-  }),
-    err => {
-      console.log(err);
-    };
+  axios
+    .put(`/api/category/`, { id, name, goal })
+    .then(res => {
+      location.reload();
+    })
+    .catch(error => {
+      if (error.response) {
+        // render alert if there is an error
+        renderAlert(error.response.data);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+    });
 };
 
 /**
@@ -20,12 +29,14 @@ const updateCategory = (id, name, goal) => {
  */
 const deleteCategory = categoryId => {
   // send delete request to delete a single expense
-  axios.delete(`/api/category/${categoryId}`).then(res => {
-    location.reload();
-  }),
-    err => {
+  axios
+    .delete(`/api/category/${categoryId}`)
+    .then(res => {
+      location.reload();
+    })
+    .catch(err => {
       console.log(err);
-    };
+    });
 };
 
 /**
@@ -36,12 +47,21 @@ const deleteCategory = categoryId => {
  */
 const postCategory = (userId, name, goal) => {
   // send post request to create a single category
-  axios.post(`/api/category/${userId}`, { name, goal }).then(res => {
-    location.reload();
-  }),
-    err => {
-      console.log(err);
-    };
+  axios
+    .post(`/api/category/${userId}`, { name, goal })
+    .then(res => {
+      location.reload();
+    })
+    .catch(error => {
+      if (error.response) {
+        // render alert if there is an error
+        renderAlert(error.response.data);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+    });
 };
 
 /**
@@ -50,12 +70,14 @@ const postCategory = (userId, name, goal) => {
  */
 const deleteExpense = expenseId => {
   // send delete request to delete a single expense
-  axios.delete(`/api/expense/${expenseId}`).then(res => {
-    location.reload();
-  }),
-    err => {
+  axios
+    .delete(`/api/expense/${expenseId}`)
+    .then(res => {
+      location.reload();
+    })
+    .catch(err => {
       console.log(err);
-    };
+    });
 };
 
 /**
@@ -66,26 +88,28 @@ const deleteExpense = expenseId => {
  */
 const getCategories = (userId, parentElement, defaultValue) => {
   // send get request to retrieve all categories
-  axios.get(`/api/category/${userId}`).then(res => {
-    // render dropdown button
-    const dropdown = renderDropdown('categories');
+  axios
+    .get(`/api/category/${userId}`)
+    .then(res => {
+      // render dropdown button
+      const dropdown = renderDropdown('categories');
 
-    // for each category, create a dropdown option
-    res.data.forEach(row => {
-      dropdown.append(renderDropdownCategories(row.name, row.id));
-    });
+      // for each category, create a dropdown option
+      res.data.forEach(row => {
+        dropdown.append(renderDropdownCategories(row.name, row.id));
+      });
 
-    // set defaults for the value if one is defined
-    if (defaultValue !== undefined) {
-      dropdown.val(defaultValue);
-    }
+      // set defaults for the value if one is defined
+      if (defaultValue !== undefined) {
+        dropdown.val(defaultValue);
+      }
 
-    // append it to the modal
-    $(parentElement).append(dropdown);
-  }),
-    err => {
+      // append it to the modal
+      $(parentElement).append(dropdown);
+    })
+    .catch(err => {
       console.log(err);
-    };
+    });
 };
 
 /**
@@ -101,10 +125,17 @@ const updateExpense = (expenseId, description, amount, date, CategoryId) => {
     .put(`/api/expense/${expenseId}`, { description, amount, date, CategoryId })
     .then(res => {
       location.reload();
-    }),
-    err => {
-      console.log(err);
-    };
+    })
+    .catch(error => {
+      if (error.response) {
+        // render alert if there is an error
+        renderAlert(error.response.data);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+    });
 };
 
 /**
@@ -119,8 +150,15 @@ const postExpense = (amount, description, date, CategoryId) => {
     .post(`/api/expense/`, { amount, description, date, CategoryId })
     .then(res => {
       location.reload();
-    }),
-    err => {
-      console.log(err);
-    };
+    })
+    .catch(error => {
+      if (error.response) {
+        // render alert if there is an error
+        renderAlert(error.response.data);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log('Error', error.message);
+      }
+    });
 };

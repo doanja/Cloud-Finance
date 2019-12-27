@@ -50,7 +50,6 @@ module.exports = (app, db) => {
 
     // if there are errors, send them
     if (validate.error) {
-      console.log('error', validate.error.details[0].message);
       res.status(400).send(validate.error.details[0].message);
       return;
     }

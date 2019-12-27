@@ -5,14 +5,16 @@
  * @param {number} userId the user's id
  */
 const getUserInfo = userId => {
-  axios.get(`/api/user/${userId}`).then(res => {
-    renderFormField('First name', 'text', 'fname', res.data.firstName);
-    renderFormField('Last name', 'text', 'lname', res.data.lastName);
-    renderButtons();
-  }),
-    err => {
+  axios
+    .get(`/api/user/${userId}`)
+    .then(res => {
+      renderFormField('First name', 'text', 'fname', res.data.firstName);
+      renderFormField('Last name', 'text', 'lname', res.data.lastName);
+      renderButtons();
+    })
+    .catch(err => {
       console.log(err);
-    };
+    });
 };
 
 /**

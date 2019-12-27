@@ -19,14 +19,15 @@ module.exports = (app, db) => {
 
     // define joi schema
     const schema = Joi.object({
-      amount: Joi.number()
-        .positive()
-        .max(999999999)
-        .required(),
       description: Joi.string()
         .min(1)
         .max(50)
         .required(),
+      amount: Joi.number()
+        .positive()
+        .max(999999999)
+        .required(),
+
       date: Joi.date().required(),
       CategoryId: Joi.number()
         .integer()
@@ -63,13 +64,13 @@ module.exports = (app, db) => {
 
     // define joi schema
     const schema = Joi.object({
-      amount: Joi.number()
-        .positive()
-        .max(999999999)
-        .required(),
       description: Joi.string()
         .min(1)
         .max(50)
+        .required(),
+      amount: Joi.number()
+        .positive()
+        .max(999999999)
         .required(),
       date: Joi.date().required(),
       CategoryId: Joi.number()

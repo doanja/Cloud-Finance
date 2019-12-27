@@ -108,12 +108,7 @@ const renderDropdown = elementId => {
  * @param {string} inputText the text to be displayed in the input
  * @return {object} the form group
  */
-const renderModalFormFields = (
-  labelType,
-  elementId,
-  inputText,
-  inputType = 'test'
-) => {
+const renderModalFormFields = (labelType, elementId, inputText, inputType = 'test') => {
   // create the elements
   const formGroup = $('<div>', { class: 'form-group' });
   const label = $('<label>', { for: labelType }).text(labelType);
@@ -188,11 +183,7 @@ const renderModalContent = (title, userId, data, modalBody) => {
 
       // render form fields with prefilled text
       modalBody.append(
-        renderModalFormFields(
-          'Description',
-          'modal-description',
-          data.description
-        ),
+        renderModalFormFields('Description', 'modal-description', data.description),
         renderModalFormFields('Amount', 'modal-amount', data.amount),
         renderModalFormFields('Date', 'modal-date', data.date, 'date')
       );
@@ -201,11 +192,7 @@ const renderModalContent = (title, userId, data, modalBody) => {
     case 'Edit Category':
       // render form fields with prefilled text
       modalBody.append(
-        renderModalFormFields(
-          'Category Name',
-          'modal-name',
-          data.categoryValue
-        ),
+        renderModalFormFields('Category Name', 'modal-name', data.categoryValue),
         renderModalFormFields('Goal', 'modal-goal', data.goalValue)
       );
       break;
@@ -231,9 +218,7 @@ const renderModalContent = (title, userId, data, modalBody) => {
 
     case 'Edit Income':
       // render form fields with prefilled text
-      modalBody.append(
-        renderModalFormFields('Income', 'modal-income', data.income)
-      );
+      modalBody.append(renderModalFormFields('Income', 'modal-income', data.income));
       break;
 
     default:
@@ -273,16 +258,7 @@ const listenForModalSubmission = (option, userId, obj) => {
         .trim();
       const category = $('#categories option:selected').attr('categoryId');
 
-      // check for valid input
-      if (!isValidExpenseDescription(description)) {
-        renderAlert('Enter a valid Description');
-      } else if (!isValidDecimal(amount)) {
-        renderAlert('Enter a valid Amount');
-      } else if (!isValidDate(date)) {
-        renderAlert('Enter a valid Date');
-      } else {
-        updateExpense(obj.editId, description, amount, date, category);
-      }
+      updateExpense(obj.editId, description, amount, date, category);
 
       break;
 
@@ -295,14 +271,7 @@ const listenForModalSubmission = (option, userId, obj) => {
         .val()
         .trim();
 
-      // check for valid input
-      if (!isValidCategoryName(name)) {
-        renderAlert('Enter a valid Category Name');
-      } else if (!isValidDecimal(goal)) {
-        renderAlert('Enter a valid Goal');
-      } else {
-        updateCategory(obj.editId, name, goal);
-      }
+      updateCategory(obj.editId, name, goal);
 
       break;
 
@@ -314,14 +283,7 @@ const listenForModalSubmission = (option, userId, obj) => {
         .val()
         .trim();
 
-      // check for valid input
-      if (!isValidCategoryName(categoryName)) {
-        renderAlert('Enter a valid Category Name');
-      } else if (!isValidDecimal(categoryGoal)) {
-        renderAlert('Enter a valid Goal');
-      } else {
-        postCategory(userId, categoryName, categoryGoal);
-      }
+      postCategory(userId, categoryName, categoryGoal);
 
       break;
 
@@ -336,24 +298,9 @@ const listenForModalSubmission = (option, userId, obj) => {
       const expenseDate = $('#modal-date')
         .val()
         .trim();
-      const expenseCategory = $('#categories option:selected').attr(
-        'categoryId'
-      );
+      const expenseCategory = $('#categories option:selected').attr('categoryId');
 
-      if (!isValidExpenseDescription(expenseDescription)) {
-        renderAlert('Enter a valid Description');
-      } else if (!isValidDecimal(expenseAmount)) {
-        renderAlert('Enter a valid Amount');
-      } else if (!isValidDate(expenseDate)) {
-        renderAlert('Enter a valid Date');
-      } else {
-        postExpense(
-          expenseAmount,
-          expenseDescription,
-          expenseDate,
-          expenseCategory
-        );
-      }
+      postExpense(expenseAmount, expenseDescription, expenseDate, expenseCategory);
 
       break;
 
@@ -363,11 +310,7 @@ const listenForModalSubmission = (option, userId, obj) => {
         .val()
         .trim();
 
-      if (!isValidDecimal(income)) {
-        renderAlert('Enter a valid Amount');
-      } else {
-        updateUserIncome(userId, income);
-      }
+      updateUserIncome(userId, income);
 
       break;
 
@@ -399,12 +342,9 @@ function editExpenseClicked() {
 // function to pass current data to a modal
 function deleteExpenseClicked() {
   const deleteId = parseInt($(this).attr('deleteId'));
-  renderConfirmationModal(
-    'Are you sure you want to delete the Expense?',
-    () => {
-      deleteExpense(deleteId);
-    }
-  );
+  renderConfirmationModal('Are you sure you want to delete the Expense?', () => {
+    deleteExpense(deleteId);
+  });
 
   // deleteExpense(deleteId);
 }
@@ -424,12 +364,9 @@ function editCategoryClicked() {
 // function to pass current data to a modal
 function deleteCategoryClicked() {
   const deleteId = parseInt($(this).attr('deleteId'));
-  renderConfirmationModal(
-    'Are you sure you want to delete the category?',
-    () => {
-      deleteCategory(deleteId);
-    }
-  );
+  renderConfirmationModal('Are you sure you want to delete the category?', () => {
+    deleteCategory(deleteId);
+  });
 }
 
 $(document).ready(() => {
