@@ -18,6 +18,7 @@ $(document).ready(() => {
       .val()
       .trim();
 
+    // validate form fields
     if (!isValidEmail(email)) {
       e.preventDefault();
       renderAlert('Enter in a valid Email address', '#signup-form');
