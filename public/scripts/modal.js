@@ -31,11 +31,11 @@ const renderConfirmationModal = (title, callback) => {
   const modalTitle = $('<h5>', { class: 'modal-title text-dark' }).text(title);
   const modalprefooter = $('<div>', { class: 'modal-footer' });
   const button = $('<button>', {
-    class: 'btn btn-dark',
+    class: 'btn btn-primary',
     id: 'modal-button'
   }).text('Cancel');
   const submit = $('<button>', {
-    class: 'btn btn-dark',
+    class: 'btn btn-outline-primary',
     id: 'modal-submit'
   }).text('Confirm');
 
@@ -82,7 +82,7 @@ const createExpense = () => {
 const renderDropdownCategories = (text, elementId) => {
   // create the element
   return $('<option>', {
-    class: `text-dark bg-light`,
+    class: `text-light bg-dark`,
     categoryId: elementId,
     value: text
   }).text(text);
@@ -96,7 +96,7 @@ const renderDropdownCategories = (text, elementId) => {
 const renderDropdown = elementId => {
   // create the element
   return $('<select>', {
-    class: 'form-control w-100 mt-3 bg-dark text-white',
+    class: 'form-control w-100 mt-3 bg-primary text-white',
     id: elementId
   });
 };
@@ -140,11 +140,11 @@ const renderModal = (title, userId, data) => {
   const modalTitle = $('<h5>', { class: 'modal-title text-dark' }).text(title);
   const modalprefooter = $('<div>', { class: 'modal-footer' });
   const button = $('<button>', {
-    class: 'btn btn-dark',
+    class: 'btn btn-outline-primary',
     id: 'modal-button'
   }).text('Cancel');
   const submit = $('<button>', {
-    class: 'btn btn-dark',
+    class: 'btn btn-primary',
     id: 'modal-submit'
   }).text('Submit');
 

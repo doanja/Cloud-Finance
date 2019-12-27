@@ -1,0 +1,29 @@
+// fonts
+@import url('https://fonts.googleapis.com/css?family=Cabin|Roboto&display=swap');
+
+$cabin: 'Cabin', sans-serif;
+$roboto: 'Roboto', sans-serif;
+
+// set custom colors
+$primary-color: #173656;
+$secondary-color: #9dc3ec;
+$tertiary-color: #9584a8;
+
+// function to set color to be white or black depending on $color
+@function set-text-color($color) {
+  @if (lightness($color) > 40) {
+    @return #231f20;
+  } @else {
+    @return #fff;
+  }
+}
+
+// override bootstrap theme colors
+$theme-colors: (
+  'primary': $primary-color,
+  'light': #fff,
+  'dark': $primary-color
+);
+
+// set font family
+$font-family-sans-serif: $roboto;
