@@ -1,3 +1,5 @@
+const Joi = require('@hapi/joi');
+
 module.exports = (app, db) => {
   // get all the user's info
   app.get('/api/user/:id', (req, res) => {
@@ -13,37 +15,38 @@ module.exports = (app, db) => {
       });
   });
 
-  // create a single user
-  app.post('/api/user', (req, res) => {
-    const { firstName, lastName, username, password, email, income } = req.body;
-
-    db.User.create({
-      firstName,
-      lastName,
-      username,
-      password,
-      email,
-      income
-    })
-      .then(newUser => {
-        res.status(200).json(newUser);
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(400).json({ error: err });
-      });
-  });
-
   // update a single user
   app.put('/api/user/:id', (req, res) => {
-    const { firstName, lastName, email } = req.body;
+    const { firstName, lastName } = req.body;
+
+    // define joi schema
+    const schema = Joi.object({
+      firstName: Joi.string()
+        .alphanum()
+        .min(2)
+        .max(20)
+        .required(),
+      lastName: Joi.string()
+        .alphanum()
+        .min(2)
+        .max(20)
+        .required()
+    });
+
+    // compare schema with req.body
+    const validate = schema.validate(req.body);
+
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
 
     // TODO: needs validation for updated fields on front end
     db.User.update(
       {
         firstName,
-        lastName,
-        email
+        lastName
       },
       {
         where: { id: req.params.id }
@@ -62,6 +65,23 @@ module.exports = (app, db) => {
   app.put('/api/user/income/:id', (req, res) => {
     const { income } = req.body;
 
+    // define joi schema
+    const schema = Joi.object({
+      income: Joi.number()
+        .positive()
+        .max(999999999)
+        .required()
+    });
+
+    // compare schema with req.body
+    const validate = schema.validate(req.body);
+
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
+
     // TODO: needs validation for updated fields on front end
     db.User.update(
       {
@@ -75,7 +95,6 @@ module.exports = (app, db) => {
         res.status(200).json(data);
       })
       .catch(err => {
-        console.log(err);
         res.status(400).json({ error: err });
       });
   });

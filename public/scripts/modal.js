@@ -1,3 +1,22 @@
+const renderAlert = (text, parentElement = '.modal-body') => {
+  const alert = $('<div>', {
+    class: 'alert alert-danger alert-dismissible fade show',
+    role: 'alert'
+  });
+  const alertText = $('<strong>').text(text);
+  const dismissButton = $('<button>', {
+    type: 'button',
+    class: 'close',
+    'data-dismiss': 'alert',
+    'aria-label': 'Close'
+  });
+  const dismissIcon = $('<span>', { 'aria-hidden': true }).text('\u{2A2F}');
+
+  $(parentElement).prepend(alert);
+  alert.append(alertText, dismissButton);
+  dismissButton.append(dismissIcon);
+};
+
 /**
  * function to render a confirmation modal when delete is clicked
  * @param {string} title the title to go in the modal
@@ -213,9 +232,6 @@ const renderModalContent = (title, userId, obj, modalBody) => {
 
 // function to close the modal
 const listenForModalClick = () => {
-  // Get the modal
-  const modal = document.getElementById('modal');
-
   // when the user clicks the close button in the modal, close modal
   $('#modal-button').click(() => {
     $('#modal').remove();
@@ -229,45 +245,105 @@ const listenForModalClick = () => {
  * @param {object} obj the object containing required fields for expense/category
  */
 const listenForModalSubmission = (option, userId, obj) => {
+  $('.alert ').remove();
+
   // determine what to the submit button does
   switch (option) {
     case 'Edit Expense':
       // grab the form fields from the modal
-      const description = $('#modal-description').val();
-      const amount = parseFloat($('#modal-amount').val());
-      const date = $('#modal-date').val();
+      const description = $('#modal-description')
+        .val()
+        .trim();
+      const amount = $('#modal-amount')
+        .val()
+        .trim();
+      const date = $('#modal-date')
+        .val()
+        .trim();
       const category = $('#categories option:selected').attr('categoryId');
 
-      updateExpense(obj.editId, description, amount, date, category);
+      // check for valid input
+      if (!isValidExpenseDescription(description)) {
+        renderAlert('Enter a valid Description');
+      } else if (!isValidDecimal(amount)) {
+        renderAlert('Enter a valid Amount');
+      } else if (!isValidDate(date)) {
+        renderAlert('Enter a valid Date');
+      } else {
+        updateExpense(obj.editId, description, amount, date, category);
+      }
+
       break;
 
     case 'Edit Category':
       // grab the form fields from the modal
-      const name = $('#modal-name').val();
-      const goal = parseFloat($('#modal-goal').val());
-      updateCategory(obj.editId, name, goal);
+      const name = $('#modal-name')
+        .val()
+        .trim();
+      const goal = $('#modal-goal')
+        .val()
+        .trim();
+
+      // check for valid input
+      if (!isValidCategoryName(name)) {
+        renderAlert('Enter a valid Category Name');
+      } else if (!isValidDecimal(goal)) {
+        renderAlert('Enter a valid Goal');
+      } else {
+        updateCategory(obj.editId, name, goal);
+      }
+
       break;
 
     case 'Create Category':
-      const categoryName = $('#modal-category').val();
-      const categoryGoal = parseFloat($('#modal-goal').val());
-      postCategory(userId, categoryName, categoryGoal);
+      const categoryName = $('#modal-category')
+        .val()
+        .trim();
+      const categoryGoal = $('#modal-goal')
+        .val()
+        .trim();
+
+      // check for valid input
+      if (!isValidCategoryName(categoryName)) {
+        renderAlert('Enter a valid Category Name');
+      } else if (!isValidDecimal(categoryGoal)) {
+        renderAlert('Enter a valid Goal');
+      } else {
+        postCategory(userId, categoryName, categoryGoal);
+      }
+
       break;
 
     case 'Create Expense':
       // grab the form fields from the modal
-      const expenseDescription = $('#modal-description').val();
-      const expenseAmount = parseFloat($('#modal-amount').val());
-      const expenseDate = $('#modal-date').val();
+      const expenseDescription = $('#modal-description')
+        .val()
+        .trim();
+      const expenseAmount = $('#modal-amount')
+        .val()
+        .trim();
+      const expenseDate = $('#modal-date')
+        .val()
+        .trim();
       const expenseCategory = $('#categories option:selected').attr(
         'categoryId'
       );
-      postExpense(
-        expenseAmount,
-        expenseDescription,
-        expenseDate,
-        expenseCategory
-      );
+
+      if (!isValidExpenseDescription(expenseDescription)) {
+        renderAlert('Enter a valid Description');
+      } else if (!isValidDecimal(expenseAmount)) {
+        renderAlert('Enter a valid Amount');
+      } else if (!isValidDate(expenseDate)) {
+        renderAlert('Enter a valid Date');
+      } else {
+        postExpense(
+          expenseAmount,
+          expenseDescription,
+          expenseDate,
+          expenseCategory
+        );
+      }
+
       break;
 
     default:
@@ -332,8 +408,6 @@ function deleteCategoryClicked() {
 }
 
 $(document).ready(() => {
-  console.log('modal.js script loaded');
-
   $(document).on('click', '.edit-category-button', editCategoryClicked);
   $(document).on('click', '.delete-category-button', deleteCategoryClicked);
   $(document).on('click', '.edit-button', editExpenseClicked);

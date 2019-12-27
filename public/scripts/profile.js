@@ -6,7 +6,6 @@
  */
 const getUserInfo = userId => {
   axios.get(`/api/user/${userId}`).then(res => {
-    renderFormField('Email', 'text', 'email', res.data.email);
     renderFormField('First name', 'text', 'fname', res.data.firstName);
     renderFormField('Last name', 'text', 'lname', res.data.lastName);
     renderButtons();
@@ -21,11 +20,9 @@ const getUserInfo = userId => {
  * @param {number} userId the user's id
  * @param {string} firstName the user's first name
  * @param {string} lastName the user's last name
- * @param {string} email the user's email
  */
-const updateUser = (userId, firstName, lastName, email) => {
-  console.log('updateUser()');
-  axios.put(`/api/user/${userId}`, { firstName, lastName, email }).then(res => {
+const updateUser = (userId, firstName, lastName) => {
+  axios.put(`/api/user/${userId}`, { firstName, lastName }).then(res => {
     location.reload();
   }),
     err => {
@@ -78,12 +75,11 @@ const parseFormData = () => {
     window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
-  const email = $('#email').val();
   const firstName = $('#fname').val();
   const lastName = $('#lname').val();
 
   renderConfirmationModal('Click "confirm" to Save', () => {
-    updateUser(userId, firstName, lastName, email);
+    updateUser(userId, firstName, lastName);
   });
 };
 

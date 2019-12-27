@@ -1,3 +1,5 @@
+const Joi = require('@hapi/joi');
+
 module.exports = (app, db) => {
   // get all expenses belonging to the category
   app.get('/api/expense/:id', (req, res) => {
@@ -15,6 +17,30 @@ module.exports = (app, db) => {
   app.post('/api/expense/', (req, res) => {
     const { amount, description, date, CategoryId } = req.body;
 
+    // define joi schema
+    const schema = Joi.object({
+      amount: Joi.number()
+        .positive()
+        .max(999999999)
+        .required(),
+      description: Joi.string()
+        .min(1)
+        .max(50)
+        .required(),
+      date: Joi.date().required(),
+      CategoryId: Joi.number()
+        .integer()
+        .required()
+    });
+
+    // compare schema with req.body
+    const validate = schema.validate(req.body);
+
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
     db.Expense.create({
       amount,
       description,
@@ -34,6 +60,31 @@ module.exports = (app, db) => {
   app.put('/api/expense/:id', (req, res) => {
     const { amount, description, date, CategoryId } = req.body;
     const { id } = req.params;
+
+    // define joi schema
+    const schema = Joi.object({
+      amount: Joi.number()
+        .positive()
+        .max(999999999)
+        .required(),
+      description: Joi.string()
+        .min(1)
+        .max(50)
+        .required(),
+      date: Joi.date().required(),
+      CategoryId: Joi.number()
+        .integer()
+        .required()
+    });
+
+    // compare schema with req.body
+    const validate = schema.validate(req.body);
+
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
 
     db.Expense.update(
       {
