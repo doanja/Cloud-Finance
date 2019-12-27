@@ -41,8 +41,6 @@ module.exports = (app, db) => {
       res.status(400).send(validate.error.details[0].message);
       return;
     }
-
-    // if no errors , finish the request
     db.Expense.create({
       amount,
       description,
@@ -60,7 +58,7 @@ module.exports = (app, db) => {
 
   // update a single Expense
   app.put('/api/expense/:id', (req, res) => {
-    let { amount, description, date, CategoryId } = req.body;
+    const { amount, description, date, CategoryId } = req.body;
     const { id } = req.params;
 
     // define joi schema
