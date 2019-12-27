@@ -34,7 +34,6 @@
  */
 const getUserInfo = userId => {
   axios.get(`/api/user/${userId}`).then(res => {
-    renderFormField('Email', 'text', 'email', res.data.email);
     renderFormField('First name', 'text', 'fname', res.data.firstName);
     renderFormField('Last name', 'text', 'lname', res.data.lastName);
     renderButtons();
@@ -49,11 +48,9 @@ const getUserInfo = userId => {
  * @param {number} userId the user's id
  * @param {string} firstName the user's first name
  * @param {string} lastName the user's last name
- * @param {string} email the user's email
  */
-const updateUser = (userId, firstName, lastName, email) => {
-  console.log('updateUser()');
-  axios.put(`/api/user/${userId}`, { firstName, lastName, email }).then(res => {
+const updateUser = (userId, firstName, lastName) => {
+  axios.put(`/api/user/${userId}`, { firstName, lastName }).then(res => {
     location.reload();
   }),
     err => {
@@ -106,16 +103,15 @@ const parseFormData = () => {
     window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
-  const email = $('#email').val();
   const firstName = $('#fname').val();
   const lastName = $('#lname').val();
 
   renderConfirmationModal('Click "confirm" to Save', () => {
-    updateUser(userId, firstName, lastName, email);
+    updateUser(userId, firstName, lastName);
   });
 };
 
-$(document).ready(function() {
+$(document).ready(() => {
   const userId = parseInt(
     window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
@@ -139,13 +135,13 @@ $(document).ready(function() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategorySum">getCategorySum</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategorySum">getCategorySum</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#isValidCategoryName">isValidCategoryName</a></li><li><a href="global.html#isValidDate">isValidDate</a></li><li><a href="global.html#isValidDecimal">isValidDecimal</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidExpenseDescription">isValidExpenseDescription</a></li><li><a href="global.html#isValidName">isValidName</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Dec 25 2019 16:35:43 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Dec 27 2019 09:22:33 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

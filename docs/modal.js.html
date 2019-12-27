@@ -26,7 +26,26 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>const renderAlert = (text, parentElement = '.modal-body') => {
+  const alert = $('&lt;div>', {
+    class: 'alert alert-danger alert-dismissible fade show',
+    role: 'alert'
+  });
+  const alertText = $('&lt;strong>').text(text);
+  const dismissButton = $('&lt;button>', {
+    type: 'button',
+    class: 'close',
+    'data-dismiss': 'alert',
+    'aria-label': 'Close'
+  });
+  const dismissIcon = $('&lt;span>', { 'aria-hidden': true }).text('\u{2A2F}');
+
+  $(parentElement).prepend(alert);
+  alert.append(alertText, dismissButton);
+  dismissButton.append(dismissIcon);
+};
+
+/**
  * function to render a confirmation modal when delete is clicked
  * @param {string} title the title to go in the modal
  * @param {function} callback the function to be executed when submit is clicked
@@ -185,33 +204,37 @@ const renderModal = (title, userId, data) => {
  * function to render the modal form and append it to the modal
  * @param {string} title the title to go in the modal
  * @param {string} userId the id of the the user
- * @param {object} obj the object containing required fields for preforming crud operations on the table
+ * @param {object} data the object containing fields for the category or expense
  * @param {object} modalBody the object to append this to
  */
-const renderModalContent = (title, userId, obj, modalBody) => {
+const renderModalContent = (title, userId, data, modalBody) => {
   // determine the form to render in the modal body
   switch (title) {
     case 'Edit Expense':
       // render categories and append it to .modal-body
-      getCategories(userId, '.modal-body', obj.categoryValue);
+      getCategories(userId, '.modal-body', data.categoryValue);
 
       // render form fields with prefilled text
       modalBody.append(
         renderModalFormFields(
           'Description',
           'modal-description',
-          obj.description
+          data.description
         ),
-        renderModalFormFields('Amount', 'modal-amount', obj.amount),
-        renderModalFormFields('Date', 'modal-date', obj.date, 'date')
+        renderModalFormFields('Amount', 'modal-amount', data.amount),
+        renderModalFormFields('Date', 'modal-date', data.date, 'date')
       );
       break;
 
     case 'Edit Category':
       // render form fields with prefilled text
       modalBody.append(
-        renderModalFormFields('Category Name', 'modal-name', obj.categoryValue),
-        renderModalFormFields('Goal', 'modal-goal', obj.goalValue)
+        renderModalFormFields(
+          'Category Name',
+          'modal-name',
+          data.categoryValue
+        ),
+        renderModalFormFields('Goal', 'modal-goal', data.goalValue)
       );
       break;
 
@@ -234,6 +257,13 @@ const renderModalContent = (title, userId, obj, modalBody) => {
       );
       break;
 
+    case 'Edit Income':
+      // render form fields with prefilled text
+      modalBody.append(
+        renderModalFormFields('Income', 'modal-income', data.income)
+      );
+      break;
+
     default:
       break;
   }
@@ -241,9 +271,6 @@ const renderModalContent = (title, userId, obj, modalBody) => {
 
 // function to close the modal
 const listenForModalClick = () => {
-  // Get the modal
-  const modal = document.getElementById('modal');
-
   // when the user clicks the close button in the modal, close modal
   $('#modal-button').click(() => {
     $('#modal').remove();
@@ -257,45 +284,119 @@ const listenForModalClick = () => {
  * @param {object} obj the object containing required fields for expense/category
  */
 const listenForModalSubmission = (option, userId, obj) => {
+  $('.alert ').remove();
+
   // determine what to the submit button does
   switch (option) {
     case 'Edit Expense':
       // grab the form fields from the modal
-      const description = $('#modal-description').val();
-      const amount = parseFloat($('#modal-amount').val());
-      const date = $('#modal-date').val();
+      const description = $('#modal-description')
+        .val()
+        .trim();
+      const amount = $('#modal-amount')
+        .val()
+        .trim();
+      const date = $('#modal-date')
+        .val()
+        .trim();
       const category = $('#categories option:selected').attr('categoryId');
 
-      updateExpense(obj.editId, description, amount, date, category);
+      // check for valid input
+      if (!isValidExpenseDescription(description)) {
+        renderAlert('Enter a valid Description');
+      } else if (!isValidDecimal(amount)) {
+        renderAlert('Enter a valid Amount');
+      } else if (!isValidDate(date)) {
+        renderAlert('Enter a valid Date');
+      } else {
+        updateExpense(obj.editId, description, amount, date, category);
+      }
+
       break;
 
     case 'Edit Category':
       // grab the form fields from the modal
-      const name = $('#modal-name').val();
-      const goal = parseFloat($('#modal-goal').val());
-      updateCategory(obj.editId, name, goal);
+      const name = $('#modal-name')
+        .val()
+        .trim();
+      const goal = $('#modal-goal')
+        .val()
+        .trim();
+
+      // check for valid input
+      if (!isValidCategoryName(name)) {
+        renderAlert('Enter a valid Category Name');
+      } else if (!isValidDecimal(goal)) {
+        renderAlert('Enter a valid Goal');
+      } else {
+        updateCategory(obj.editId, name, goal);
+      }
+
       break;
 
     case 'Create Category':
-      const categoryName = $('#modal-category').val();
-      const categoryGoal = parseFloat($('#modal-goal').val());
-      postCategory(userId, categoryName, categoryGoal);
+      const categoryName = $('#modal-category')
+        .val()
+        .trim();
+      const categoryGoal = $('#modal-goal')
+        .val()
+        .trim();
+
+      // check for valid input
+      if (!isValidCategoryName(categoryName)) {
+        renderAlert('Enter a valid Category Name');
+      } else if (!isValidDecimal(categoryGoal)) {
+        renderAlert('Enter a valid Goal');
+      } else {
+        postCategory(userId, categoryName, categoryGoal);
+      }
+
       break;
 
     case 'Create Expense':
       // grab the form fields from the modal
-      const expenseDescription = $('#modal-description').val();
-      const expenseAmount = parseFloat($('#modal-amount').val());
-      const expenseDate = $('#modal-date').val();
+      const expenseDescription = $('#modal-description')
+        .val()
+        .trim();
+      const expenseAmount = $('#modal-amount')
+        .val()
+        .trim();
+      const expenseDate = $('#modal-date')
+        .val()
+        .trim();
       const expenseCategory = $('#categories option:selected').attr(
         'categoryId'
       );
-      postExpense(
-        expenseAmount,
-        expenseDescription,
-        expenseDate,
-        expenseCategory
-      );
+
+      if (!isValidExpenseDescription(expenseDescription)) {
+        renderAlert('Enter a valid Description');
+      } else if (!isValidDecimal(expenseAmount)) {
+        renderAlert('Enter a valid Amount');
+      } else if (!isValidDate(expenseDate)) {
+        renderAlert('Enter a valid Date');
+      } else {
+        postExpense(
+          expenseAmount,
+          expenseDescription,
+          expenseDate,
+          expenseCategory
+        );
+      }
+
+      break;
+
+    case 'Edit Income':
+      // grab the form fields from the modal
+      const income = $('#modal-income')
+        .val()
+        .trim();
+
+      if (!isValidDecimal(income)) {
+        renderAlert('Enter a valid Amount');
+      } else {
+        updateUserIncome(userId, income);
+      }
+
       break;
 
     default:
@@ -360,8 +461,6 @@ function deleteCategoryClicked() {
 }
 
 $(document).ready(() => {
-  console.log('modal.js script loaded');
-
   $(document).on('click', '.edit-category-button', editCategoryClicked);
   $(document).on('click', '.delete-category-button', deleteCategoryClicked);
   $(document).on('click', '.edit-button', editExpenseClicked);
@@ -379,13 +478,13 @@ $(document).ready(() => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategorySum">getCategorySum</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategorySum">getCategorySum</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#isValidCategoryName">isValidCategoryName</a></li><li><a href="global.html#isValidDate">isValidDate</a></li><li><a href="global.html#isValidDecimal">isValidDecimal</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidExpenseDescription">isValidExpenseDescription</a></li><li><a href="global.html#isValidName">isValidName</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Dec 25 2019 16:35:43 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Dec 27 2019 09:22:33 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

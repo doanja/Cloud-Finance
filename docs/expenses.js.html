@@ -64,22 +64,22 @@ const getCategoriesAll = userId => {
  * @param {number} totalExpensesValue the total expense
  */
 const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
-  const tr = $("&lt;tr>");
-  const tdTotalExpenses = $("&lt;td>", { class: "font-weight-bold" }).text(
-    "Total of Goals &amp; Expenses:"
+  const tr = $('&lt;tr>');
+  const tdTotalExpenses = $('&lt;td>', { class: 'font-weight-bold' }).text(
+    'Total of Goals &amp; Expenses:'
   );
-  const tdTotalExpenseGoal = $("&lt;td>", { class: "font-weight-bold" }).text(
+  const tdTotalExpenseGoal = $('&lt;td>', { class: 'font-weight-bold' }).text(
     `$${totalExpenseGoal}`
   );
-  const tdTotalExpenseAmount = $("&lt;td>", { class: "font-weight-bold" }).text(
+  const tdTotalExpenseAmount = $('&lt;td>', { class: 'font-weight-bold' }).text(
     `$${totalExpensesValue}`
   );
 
-  totalExpenseGoal > totalExpensesValue
-    ? tdTotalExpenseGoal.addClass("text-green")
-    : tdTotalExpenseAmount.addClass("text-red");
+  totalExpenseGoal &lt; totalExpensesValue
+    ? tdTotalExpenseGoal.addClass('text-green')
+    : tdTotalExpenseAmount.addClass('text-red');
 
-  $("#tbody").append(tr);
+  $('#tbody').append(tr);
   tr.append(tdTotalExpenses, tdTotalExpenseGoal, tdTotalExpenseAmount);
 };
 
@@ -89,34 +89,34 @@ const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
  * @param {number} categoryName the name of the category
  */
 const renderExpenseRow = (expenseData, categoryName) => {
-  const tr = $("&lt;tr>");
-  const tdExpenseName = $("&lt;td>", {
-    class: "pt-3 description-" + expenseData.id,
+  const tr = $('&lt;tr>');
+  const tdExpenseName = $('&lt;td>', {
+    class: 'pt-3 description-' + expenseData.id,
     value: expenseData.description
   }).text(expenseData.description);
-  const td = $("&lt;td>", { class: "pt-3" }).text("-");
-  const tdExpenseAmount = $("&lt;td>", {
-    class: "pt-3 amount-" + expenseData.id,
+  const td = $('&lt;td>', { class: 'pt-3' }).text('-');
+  const tdExpenseAmount = $('&lt;td>', {
+    class: 'pt-3 amount-' + expenseData.id,
     value: expenseData.amount
   }).text(`$${expenseData.amount}`);
-  const tdDate = $("&lt;td>", {
-    class: "pt-3 date-" + expenseData.id,
+  const tdDate = $('&lt;td>', {
+    class: 'pt-3 date-' + expenseData.id,
     value: expenseData.date
   }).text(expenseData.date);
-  const tdButtons = $("&lt;td>");
-  const editButton = $("&lt;i>", {
-    class: "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-button",
+  const tdButtons = $('&lt;td>');
+  const editButton = $('&lt;i>', {
+    class: 'fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-button',
     editId: expenseData.id,
     categoryValue: categoryName
   });
-  const deleteButton = $("&lt;i>", {
+  const deleteButton = $('&lt;i>', {
     class:
-      "fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 float-right delete-button",
+      'fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 float-right delete-button',
     deleteId: expenseData.id
   });
 
   // append to html
-  $("#tbody").append(tr);
+  $('#tbody').append(tr);
   tr.append(tdExpenseName, td, tdExpenseAmount, tdDate, tdButtons);
   tdButtons.append(editButton, deleteButton);
 };
@@ -127,36 +127,36 @@ const renderExpenseRow = (expenseData, categoryName) => {
  * @param {number} totalExpenseCat the total expense of the category
  */
 const renderCategoryRow = (categoryData, totalExpenseCat) => {
-  const tBody = $("&lt;tbody>");
-  const tr = $("&lt;tr>", { class: "bg-secondary text-white" });
-  const tdCategoryName = $("&lt;td>", { class: "pt-3" }).text(categoryData.name);
-  const tdCategoryGoal = $("&lt;td>", { class: "pt-3" }).text(
+  const tBody = $('&lt;tbody>');
+  const tr = $('&lt;tr>', { class: 'bg-secondary text-white' });
+  const tdCategoryName = $('&lt;td>', { class: 'pt-3' }).text(categoryData.name);
+  const tdCategoryGoal = $('&lt;td>', { class: 'pt-3' }).text(
     `$${categoryData.goal}`
   );
-  const tdCategoryTotal = $("&lt;td>", { class: "pt-3" }).text(
+  const tdCategoryTotal = $('&lt;td>', { class: 'pt-3' }).text(
     `$${totalExpenseCat}`
   );
-  const tdBlank = $("&lt;td>", { class: "pt-3" });
-  const tdButtons = $("&lt;td>");
-  const categoryEditButton = $("&lt;i>", {
+  const tdBlank = $('&lt;td>', { class: 'pt-3' });
+  const tdButtons = $('&lt;td>');
+  const categoryEditButton = $('&lt;i>', {
     class:
-      "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button",
+      'fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button',
     editId: categoryData.id,
     categoryValue: categoryData.name,
     goalValue: categoryData.goal
   });
-  const categoryDeleteButton = $("&lt;i>", {
+  const categoryDeleteButton = $('&lt;i>', {
     class:
-      "fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 float-right delete-category-button",
+      'fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 float-right delete-category-button',
     deleteId: categoryData.id
   });
 
-  categoryData.goal > totalExpenseCat
-    ? tdCategoryGoal.addClass("text-green font-weight-bold")
-    : tdCategoryTotal.addClass("text-red font-weight-bold");
+  categoryData.goal &lt; totalExpenseCat
+    ? tdCategoryGoal.addClass('text-green font-weight-bold')
+    : tdCategoryTotal.addClass('text-red font-weight-bold');
 
   // append to html
-  $("#tbody").append(tBody, tr);
+  $('#tbody').append(tBody, tr);
   tr.append(
     tdCategoryName,
     tdCategoryGoal,
@@ -169,7 +169,7 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
 
 $(document).ready(() => {
   const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
   getCategoriesAll(userId);
 });
@@ -183,13 +183,13 @@ $(document).ready(() => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategorySum">getCategorySum</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategorySum">getCategorySum</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#isValidCategoryName">isValidCategoryName</a></li><li><a href="global.html#isValidDate">isValidDate</a></li><li><a href="global.html#isValidDecimal">isValidDecimal</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidExpenseDescription">isValidExpenseDescription</a></li><li><a href="global.html#isValidName">isValidName</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Dec 25 2019 16:35:43 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Dec 27 2019 09:22:33 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

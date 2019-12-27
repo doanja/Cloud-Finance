@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: apiRequests.js</title>
+    <title>JSDoc: Source: validatation.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: apiRequests.js</h1>
+    <h1 class="page-title">Source: validatation.js</h1>
 
     
 
@@ -27,130 +27,76 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * function update a category
- * @param {number} id the id of the category
- * @param {string} name the description of the category
- * @param {number} goal the amount of the category
+ * function to determine if a number is a valid decimal
+ * @param {number} num the number to test against the regex
+ * @return {boolean} true if num passes the regex test, false otherwise
  */
-const updateCategory = (id, name, goal) => {
-  // make put request to update a single category
-  axios.put(`/api/category/`, { id, name, goal }).then(res => {
-    location.reload();
-  }),
-    err => {
-      console.log(err);
-    };
+const isValidDecimal = num => {
+  const pattern = new RegExp(/^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$/g);
+  return pattern.test(num);
 };
 
 /**
- * function to delete a single category
- * @param {number} categoryId the id of the expense to be deleted
+ * function to determine if a string is valid (1-50 characters)
+ * @param {string} str the string to test against the regex
+ * @return {boolean} true of str passes the regex test, false otherwise
  */
-const deleteCategory = categoryId => {
-  // send delete request to delete a single expense
-  axios.delete(`/api/category/${categoryId}`).then(res => {
-    location.reload();
-  }),
-    err => {
-      console.log(err);
-    };
+const isValidExpenseDescription = str => {
+  const pattern = new RegExp(/^.{1,50}$/);
+  return pattern.test(str);
 };
 
 /**
- * function to create a new category
- * @param {number} userId the id of the user
- * @param {string} name the name of the category
- * @param {string} goal the goal of the category
+ * function to determine if a string is valid date
+ * @param {string} str the string to test against the regex
+ * @return {boolean} true of str passes the regex test, false otherwise
  */
-const postCategory = (userId, name, goal) => {
-  // send post request to create a single category
-  axios.post(`/api/category/${userId}`, { name, goal }).then(res => {
-    location.reload();
-  }),
-    err => {
-      console.log(err);
-    };
+const isValidDate = str => {
+  // check if str is a valid date
+  const pattern = new RegExp(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/);
+  return pattern.test(str);
 };
 
 /**
- * function to delete a single expense
- * @param {number} expenseId the id of the expense to be deleted
+ * function to determine if a string is valid (1-20 characters)
+ * @param {string} str the string to test against the regex
+ * @return {boolean} true of str passes the regex test, false otherwise
  */
-const deleteExpense = expenseId => {
-  // send delete request to delete a single expense
-  axios.delete(`/api/expense/${expenseId}`).then(res => {
-    location.reload();
-  }),
-    err => {
-      console.log(err);
-    };
+const isValidCategoryName = str => {
+  const pattern = new RegExp(/^.{1,20}$/);
+  return pattern.test(str);
 };
 
 /**
- * function to get all categories and append a dropdown the the parent element
- * @param {number} userId the id of the user
- * @param {string} parentElement the element to append this to
- * @param {string} defaultValue the default value for the dropdown
+ * function to determine if a string is valid (alphas only)
+ * @param {string} str the string to test against the regex
+ * @return {boolean} true of str passes the regex test, false otherwise
  */
-const getCategories = (userId, parentElement, defaultValue) => {
-  // send get request to retrieve all categories
-  axios.get(`/api/category/${userId}`).then(res => {
-    // render dropdown button
-    const dropdown = renderDropdown('categories');
-
-    // for each category, create a dropdown option
-    res.data.forEach(row => {
-      dropdown.append(renderDropdownCategories(row.name, row.id));
-    });
-
-    // set defaults for the value if one is defined
-    if (defaultValue !== undefined) {
-      dropdown.val(defaultValue);
-    }
-
-    // append it to the modal
-    $(parentElement).append(dropdown);
-  }),
-    err => {
-      console.log(err);
-    };
+const isValidName = str => {
+  const pattern = new RegExp(/^[a-zA-Z]+$/);
+  return pattern.test(str);
 };
 
 /**
- * function to update the expense by sending a put request
- * @param {number} expenseId the id of the expense
- * @param {string} description the description of the expense
- * @param {number} amount the amount of the expense
- * @param {number} CategoryId the id of the category
+ * function to determine if a string is valid (10-30 characters)
+ * @param {string} str the string to test against the regex
+ * @return {boolean} true of str passes the regex test, false otherwise
  */
-const updateExpense = (expenseId, description, amount, date, CategoryId) => {
-  // make put request to update a single expense
-  axios
-    .put(`/api/expense/${expenseId}`, { description, amount, date, CategoryId })
-    .then(res => {
-      location.reload();
-    }),
-    err => {
-      console.log(err);
-    };
+const isValidPassword = str => {
+  const pattern = new RegExp(/^.{10,30}$/);
+  return pattern.test(str);
 };
 
 /**
- * function to create a new expense
- * @param {string} amount the expense amount
- * @param {string} description the expense description
- * @param {number} CategoryId the id of the category
+ * function to determine if a string is valid email
+ * @param {string} str the string to test against the regex
+ * @return {boolean} true of str passes the regex test, false otherwise
  */
-const postExpense = (amount, description, date, CategoryId) => {
-  // send post request to create a single expense
-  axios
-    .post(`/api/expense/`, { amount, description, date, CategoryId })
-    .then(res => {
-      location.reload();
-    }),
-    err => {
-      console.log(err);
-    };
+const isValidEmail = str => {
+  const pattern = new RegExp(
+    /^[a-zA-Z0-9.!#$%&amp;'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+  );
+  return pattern.test(str);
 };
 </code></pre>
         </article>
