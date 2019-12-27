@@ -95,19 +95,19 @@ const getRemainder = userId => {
  */
 const renderCategoryRow = (categoryData, totalExpenseCat) => {
   const overUnder = parseFloat(categoryData.goal - totalExpenseCat).toFixed(2);
-  const tr = $("<tr>");
-  const tdCategoryName = $("<td>", { class: "pt-3" }).text(categoryData.name);
-  const tdCategoryGoal = $("<td>", { class: "pt-3" }).text(
-    "$" + categoryData.goal
+  const tr = $('<tr>');
+  const tdCategoryName = $('<td>', { class: 'pt-3' }).text(categoryData.name);
+  const tdCategoryGoal = $('<td>', { class: 'pt-3' }).text(
+    '$' + categoryData.goal
   );
-  const tdCategoryTotal = $("<td>", { class: "pt-3" }).text(
-    "$" + totalExpenseCat
+  const tdCategoryTotal = $('<td>', { class: 'pt-3' }).text(
+    '$' + totalExpenseCat
   );
-  const tdOverUnder = $("<td>", { class: "pt-3" }).text("$" + overUnder);
-  const tdButtons = $("<td>");
-  const editButton = $("<i>", {
+  const tdOverUnder = $('<td>', { class: 'pt-3' }).text('$' + overUnder);
+  const tdButtons = $('<td>');
+  const editButton = $('<i>', {
     class:
-      "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button",
+      'fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button',
     editId: categoryData.id,
     categoryId: categoryData.id,
     categoryValue: categoryData.name,
@@ -115,10 +115,10 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   });
 
   overUnder < 0
-    ? tdOverUnder.addClass("text-red font-weight-bold")
-    : tdOverUnder.addClass("text-green font-weight-bold");
+    ? tdOverUnder.addClass('text-red font-weight-bold')
+    : tdOverUnder.addClass('text-green font-weight-bold');
 
-  $("#tbody").append(tr);
+  $('#tbody').append(tr);
   tr.append(
     tdCategoryName,
     tdCategoryGoal,
@@ -138,18 +138,18 @@ const renderTotals = (categoryTotal, expenseTotal) => {
   // calculate over under
   const overUnder = parseFloat(categoryTotal - expenseTotal).toFixed(2);
 
-  const tr = $("<tr>");
-  const tdCategoryName = $("<td>").text("Totals");
-  const tdCategoryGoalTotal = $("<td>").text("$" + categoryTotal);
-  const tdExpenseTotal = $("<td>").text("$" + expenseTotal);
-  const tdOverUnder = $("<td>").text("$" + overUnder);
-  const tdBlank = $("<td>").text("");
+  const tr = $('<tr>');
+  const tdCategoryName = $('<td>').text('Totals');
+  const tdCategoryGoalTotal = $('<td>').text('$' + categoryTotal);
+  const tdExpenseTotal = $('<td>').text('$' + expenseTotal);
+  const tdOverUnder = $('<td>').text('$' + overUnder);
+  const tdBlank = $('<td>').text('');
 
   overUnder < 0
-    ? tdOverUnder.addClass("text-red font-weight-bold")
-    : tdOverUnder.addClass("text-green font-weight-bold");
+    ? tdOverUnder.addClass('text-red font-weight-bold')
+    : tdOverUnder.addClass('text-green font-weight-bold');
 
-  $("#tbody").append(tr);
+  $('#tbody').append(tr);
   tr.append(
     tdCategoryName,
     tdCategoryGoalTotal,
@@ -164,26 +164,26 @@ const renderTotals = (categoryTotal, expenseTotal) => {
  * @param {object} remainderData the response from the API containing the remainder
  */
 const renderRemainderRow = remainderData => {
-  const tr = $("<tr>");
-  const tdIncomeLeft = $("<td>").text("Income Left");
-  const tdBlank0 = $("<td>").text("");
-  const tdRemainder = $("<td>").text(
+  const tr = $('<tr>');
+  const tdIncomeLeft = $('<td>').text('Income Left');
+  const tdBlank0 = $('<td>').text('');
+  const tdRemainder = $('<td>').text(
     remainderData.remainder === null
-      ? "N/A"
-      : "$" +
+      ? 'N/A'
+      : '$' +
           (
             parseFloat(remainderData.income) -
             parseFloat(remainderData.remainder)
           ).toFixed(2)
   );
-  const tdBlank1 = $("<td>").text("");
-  const tdBlank2 = $("<td>").text("");
+  const tdBlank1 = $('<td>').text('');
+  const tdBlank2 = $('<td>').text('');
 
   remainderData.remainder < 0
-    ? tdRemainder.addClass("text-red font-weight-bold")
-    : tdRemainder.addClass("text-green font-weight-bold");
+    ? tdRemainder.addClass('text-red font-weight-bold')
+    : tdRemainder.addClass('text-green font-weight-bold');
 
-  $("#tbody").append(tr);
+  $('#tbody').append(tr);
   tr.append(tdIncomeLeft, tdBlank0, tdRemainder, tdBlank1, tdBlank2);
 };
 
@@ -192,31 +192,28 @@ const renderRemainderRow = remainderData => {
  * @param {object} userData an object that contains the user data from the response
  */
 const renderIncome = userData => {
-  $("#income").val(userData.income);
-  $("#income").attr("value", userData.income);
+  $('#income').val(userData.income);
+  $('#income').attr('value', userData.income);
 };
 
 // function to pass current data to a modal
 function updateIncomeClicked() {
-  const userIncome = parseFloat($("#income").val());
+  const userIncome = $('#income')
+    .val()
+    .trim();
   const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
-  renderConfirmationModal(
-    "Are you sure you want to update your income?",
-    () => {
-      updateUserIncome(userId, userIncome);
-    }
-  );
+  renderModal('Edit Income', userId, { income: userIncome });
 }
 
 $(document).ready(() => {
   const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
   getIncome(userId);
   getBudgetCategories(userId);
-  $(document).on("click", ".update-income-button", updateIncomeClicked);
+  $(document).on('click', '.update-income-button', updateIncomeClicked);
 });

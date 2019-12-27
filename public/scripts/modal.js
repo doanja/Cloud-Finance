@@ -176,33 +176,37 @@ const renderModal = (title, userId, data) => {
  * function to render the modal form and append it to the modal
  * @param {string} title the title to go in the modal
  * @param {string} userId the id of the the user
- * @param {object} obj the object containing required fields for preforming crud operations on the table
+ * @param {object} data the object containing fields for the category or expense
  * @param {object} modalBody the object to append this to
  */
-const renderModalContent = (title, userId, obj, modalBody) => {
+const renderModalContent = (title, userId, data, modalBody) => {
   // determine the form to render in the modal body
   switch (title) {
     case 'Edit Expense':
       // render categories and append it to .modal-body
-      getCategories(userId, '.modal-body', obj.categoryValue);
+      getCategories(userId, '.modal-body', data.categoryValue);
 
       // render form fields with prefilled text
       modalBody.append(
         renderModalFormFields(
           'Description',
           'modal-description',
-          obj.description
+          data.description
         ),
-        renderModalFormFields('Amount', 'modal-amount', obj.amount),
-        renderModalFormFields('Date', 'modal-date', obj.date, 'date')
+        renderModalFormFields('Amount', 'modal-amount', data.amount),
+        renderModalFormFields('Date', 'modal-date', data.date, 'date')
       );
       break;
 
     case 'Edit Category':
       // render form fields with prefilled text
       modalBody.append(
-        renderModalFormFields('Category Name', 'modal-name', obj.categoryValue),
-        renderModalFormFields('Goal', 'modal-goal', obj.goalValue)
+        renderModalFormFields(
+          'Category Name',
+          'modal-name',
+          data.categoryValue
+        ),
+        renderModalFormFields('Goal', 'modal-goal', data.goalValue)
       );
       break;
 
@@ -222,6 +226,13 @@ const renderModalContent = (title, userId, obj, modalBody) => {
         renderModalFormFields('Description', 'modal-description', ''),
         renderModalFormFields('Amount', 'modal-amount', ''),
         renderModalFormFields('Date', 'modal-date', '', 'date')
+      );
+      break;
+
+    case 'Edit Income':
+      // render form fields with prefilled text
+      modalBody.append(
+        renderModalFormFields('Income', 'modal-income', data.income)
       );
       break;
 
@@ -342,6 +353,20 @@ const listenForModalSubmission = (option, userId, obj) => {
           expenseDate,
           expenseCategory
         );
+      }
+
+      break;
+
+    case 'Edit Income':
+      // grab the form fields from the modal
+      const income = $('#modal-income')
+        .val()
+        .trim();
+
+      if (!isValidDecimal(income)) {
+        renderAlert('Enter a valid Amount');
+      } else {
+        updateUserIncome(userId, income);
       }
 
       break;
