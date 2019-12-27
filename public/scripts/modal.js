@@ -1,6 +1,6 @@
 const renderAlert = (text, parentElement = '.modal-body') => {
   const alert = $('<div>', {
-    class: 'alert alert-warning alert-dismissible fade show',
+    class: 'alert alert-danger alert-dismissible fade show',
     role: 'alert'
   });
   const alertText = $('<strong>').text(text);
@@ -10,7 +10,7 @@ const renderAlert = (text, parentElement = '.modal-body') => {
     'data-dismiss': 'alert',
     'aria-label': 'Close'
   });
-  const dismissIcon = $('<span>', { 'aria-hidden': true }).text('X');
+  const dismissIcon = $('<span>', { 'aria-hidden': true }).text('\u{2A2F}');
 
   $(parentElement).prepend(alert);
   alert.append(alertText, dismissButton);
@@ -251,15 +251,21 @@ const listenForModalSubmission = (option, userId, obj) => {
   switch (option) {
     case 'Edit Expense':
       // grab the form fields from the modal
-      const description = $('#modal-description').val();
-      const amount = parseFloat($('#modal-amount').val());
-      const date = $('#modal-date').val();
+      const description = $('#modal-description')
+        .val()
+        .trim();
+      const amount = $('#modal-amount')
+        .val()
+        .trim();
+      const date = $('#modal-date')
+        .val()
+        .trim();
       const category = $('#categories option:selected').attr('categoryId');
 
       if (!isValidExpenseDescription(description)) {
-        renderAlert('Enter a valid description');
+        renderAlert('Enter a valid Description');
       } else if (!isValidDecimal(amount)) {
-        renderAlert('Enter a valid amount');
+        renderAlert('Enter a valid Amount');
       } else {
         updateExpense(obj.editId, description, amount, date, category);
       }
@@ -355,8 +361,6 @@ function deleteCategoryClicked() {
 }
 
 $(document).ready(() => {
-  console.log('modal.js script loaded');
-
   $(document).on('click', '.edit-category-button', editCategoryClicked);
   $(document).on('click', '.delete-category-button', deleteCategoryClicked);
   $(document).on('click', '.edit-button', editExpenseClicked);

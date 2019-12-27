@@ -1,7 +1,7 @@
 const isValidDecimal = num => {
   // check if number is a valid decimal (10,2)
-  const pattern = new RegExp(/^[1-9]\d*(\.\d+)?$/);
-  return pattern.test(parseFloat(num));
+  const pattern = new RegExp(/^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$/g);
+  return pattern.test(num);
 };
 
 const isValidExpenseDescription = str => {
@@ -36,15 +36,20 @@ const isValidEmail = str => {
   return pattern.test(str);
 };
 
-console.log('------------------------- isValidExpenseDescription');
+// console.log('------------------------- isValidDecimal');
 
-console.log(isValidDecimal('abc'));
-console.log(isValidDecimal(12.32));
-console.log(isValidDecimal(12));
-console.log(isValidDecimal('12.23.12'));
-console.log(isValidDecimal(12.3223));
-console.log(isValidDecimal(12));
-console.log(isValidDecimal('.33'));
+// console.log('abc', isValidDecimal('abc'));
+// console.log('12.32', isValidDecimal(12.32));
+// console.log('"12.32"', isValidDecimal('12.32'));
+// console.log('"12"', isValidDecimal('12'));
+// console.log('12', isValidDecimal(12));
+// console.log('"12.23.12"', isValidDecimal('12.23.12'));
+// console.log('"12.23.12"', isValidDecimal('12.23.12'));
+// console.log('12.3233', isValidDecimal(12.3223));
+// console.log('.33', isValidDecimal('.33'));
+// console.log('0.54', isValidDecimal('0.54'));
+// console.log('-0.54', isValidDecimal('-0.54'));
+// console.log('0.54@<!>', isValidDecimal('0.54@<!>'));
 
 // console.log('---------------- isValidExpenseDescription');
 
