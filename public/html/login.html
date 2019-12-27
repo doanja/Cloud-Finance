@@ -27,16 +27,18 @@
             <div class="blur vertical-center">
                 <!-- sign in form -->
                 <div class="wrap bg-white p-3 mx-auto">
-                    <form method="post" action="/login">
-                        <div class="form-group">
+                    <form method="post" action="/login" id="login-form">
+                        <div class=" form-group">
                             <label for="email">Email address</label>
-                            <input type="email" class="form-control" name="email" placeholder="Enter email">
+                            <input type="email" class="form-control" name="email" placeholder="Enter email" id="email">
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Password">
+                            <input type="password" class="form-control" name="password" placeholder="Password"
+                                id="password">
                         </div>
-                        <button class="btn btn-primary w-100" type="submit" name="action">Log In</button>
+                        <button class="btn btn-primary w-100" type="submit" name="action" id="login-button">Log
+                            In</button>
                         <a href="/signup" class="btn btn-link">Not enrolled? Sign up now.</a>
                     </form>
                 </div>
@@ -59,6 +61,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../scripts/login.js"></script>
+    <script type="text/javascript" src="../scripts/modal.js"></script>
+    <script type="text/javascript" src="../scripts/validatation.js"></script>
 </body>
 
 </html>
