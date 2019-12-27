@@ -24,7 +24,6 @@ module.exports = (app, db) => {
         .max(999999999)
         .required(),
       description: Joi.string()
-        .alphanum()
         .min(1)
         .max(50)
         .required(),
@@ -71,7 +70,6 @@ module.exports = (app, db) => {
         .max(999999999)
         .required(),
       description: Joi.string()
-        .alphanum()
         .min(1)
         .max(50)
         .required(),

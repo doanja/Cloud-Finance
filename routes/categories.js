@@ -36,7 +36,6 @@ module.exports = (app, db) => {
     // define joi schema
     const schema = Joi.object({
       name: Joi.string()
-        .alphanum()
         .min(1)
         .max(20)
         .required(),
@@ -76,7 +75,6 @@ module.exports = (app, db) => {
     // define joi schema
     const schema = Joi.object({
       name: Joi.string()
-        .alphanum()
         .min(1)
         .max(20)
         .required(),

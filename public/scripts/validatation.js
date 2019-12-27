@@ -6,7 +6,7 @@ const isValidDecimal = num => {
 
 const isValidExpenseDescription = str => {
   // check if str is 1 - 50 characters long and alphanumeric only
-  const pattern = new RegExp(/^([a-zA-Z0-9_-]){1,50}$/);
+  const pattern = new RegExp(/^.{1,50}$/);
   return pattern.test(str);
 };
 
@@ -20,7 +20,7 @@ const isValidDate = str => {
 
 const isValidCategoryName = str => {
   // check if str is 1 - 50 characters long and alphanumeric only
-  const pattern = new RegExp(/^([a-zA-Z0-9_-]){1,20}$/);
+  const pattern = new RegExp(/^.{1,20}$/);
   return pattern.test(str);
 };
 
@@ -65,11 +65,11 @@ const isValidEmail = str => {
 // console.log(isValidExpenseDescription('aasjk213f213'));
 // console.log(isValidExpenseDescription('@#asdjhfk'));
 
-console.log('---------------- isValidDate');
+// console.log('---------------- isValidDate');
 
-console.log('10/12/1993', isValidDate('10/12/1993'));
-console.log('21/23/4124', isValidDate('21/23/4124'));
-console.log('01/01/2019', isValidDate('01/01/2019'));
+// console.log('1993/12/19', isValidDate('1993/12/19'));
+// console.log('21/2323/20', isValidDate('21/2323/20'));
+// console.log('2019/01/20', isValidDate('2019/01/20'));
 
 // console.log('------------------------- isValidPassword');
 
