@@ -27,25 +27,29 @@
             <div class="blur vertical-center">
                 <!-- sign in form -->
                 <div class="wrap bg-white p-3 mx-auto">
-                    <form method="post" action="/signup">
+                    <form method="post" action="/signup" id="signup-form">
                         <div class="form-group">
                             <label for="email">Email address</label>
-                            <input type="email" class="form-control" name="email" placeholder="Enter email">
+                            <input type="email" class="form-control" name="email" placeholder="Enter email" id="email">
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Password">
+                            <input type="password" class="form-control" name="password" placeholder="Password"
+                                id="password">
                         </div>
                         <div class="form-group">
                             <label for="email">First name</label>
-                            <input type="text" class="form-control" name="firstName" placeholder="First name">
+                            <input type="text" class="form-control" name="firstName" placeholder="First name"
+                                id="firstName">
                         </div>
                         <div class="form-group">
                             <label for="text">Last name</label>
-                            <input type="text" class="form-control" name="lastName" placeholder="Last name">
+                            <input type="text" class="form-control" name="lastName" placeholder="Last name"
+                                id="lastName">
                         </div>
 
-                        <button class="btn btn-primary w-100" type="submit" name="action">Submit</button>
+                        <button class="btn btn-primary w-100" type="submit" name="action"
+                            id="submit-button">Submit</button>
                     </form>
                 </div>
 
@@ -67,6 +71,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../scripts/signup.js"></script>
+    <script type="text/javascript" src="../scripts/modal.js"></script>
+    <script type="text/javascript" src="../scripts/validatation.js"></script>
 </body>
 
 </html>

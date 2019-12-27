@@ -83,7 +83,7 @@ const parseFormData = () => {
   });
 };
 
-$(document).ready(function() {
+$(document).ready(() => {
   const userId = parseInt(
     window.location.href.split('/')[window.location.href.split('/').length - 1]
   );

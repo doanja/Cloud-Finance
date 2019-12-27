@@ -1,8 +1,7 @@
 USE budgetplus;
 
 INSERT INTO users (firstName, lastName, password, email, income, updatedAt, createdAt)
-VALUES  ("Brennon", "Morris", "pokemon@1", "bmorris@amazon.com", "6875.00", "2019-12-10T05:22:35.657", "2019-12-10T05:22:35.657"),
-        ("John", "Doan", "doanja", "doanja@outlook.com", "5625.00", "2019-12-10T05:22:35.657", "2019-12-10T05:22:35.657");
+VALUES  ("Brennon", "Morris", "pokemon@1", "bmorris@amazon.com", "6875.00", "2019-12-10T05:22:35.657", "2019-12-10T05:22:35.657"),      
 
 USE budgetplus;
 

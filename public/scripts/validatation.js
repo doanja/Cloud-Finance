@@ -12,9 +12,7 @@ const isValidExpenseDescription = str => {
 
 const isValidDate = str => {
   // check if str is a valid date
-  const pattern = new RegExp(
-    /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
-  );
+  const pattern = new RegExp(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/);
   return pattern.test(str);
 };
 
@@ -26,7 +24,7 @@ const isValidCategoryName = str => {
 
 const isValidName = str => {
   // check if str is 2 - 20 characters long and alphanumeric only
-  const pattern = new RegExp(/^([a-zA-Z0-9_-]){2,20}$/);
+  const pattern = new RegExp(/^[a-zA-Z]+$/);
   return pattern.test(str);
 };
 
