@@ -221,6 +221,13 @@ const renderModalContent = (title, userId, data, modalBody) => {
       modalBody.append(renderModalFormFields('Income', 'modal-income', data.income));
       break;
 
+    case 'Edit Profile':
+      // render form fields with prefilled text
+      modalBody.append(
+        renderModalFormFields('First name', 'modal-firstName', data.firstName),
+        renderModalFormFields('Last name', 'modal-lastName', data.lastName)
+      );
+
     default:
       break;
   }
@@ -311,6 +318,19 @@ const listenForModalSubmission = (option, userId, obj) => {
         .trim();
 
       updateUserIncome(userId, income);
+
+      break;
+
+    case 'Edit Profile':
+      // grab the form fields from the modal
+      const firstName = $('#modal-firstName')
+        .val()
+        .trim();
+      const lastName = $('#modal-lastName')
+        .val()
+        .trim();
+
+      updateUser(userId, firstName, lastName);
 
       break;
 

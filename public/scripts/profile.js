@@ -24,12 +24,21 @@ const getUserInfo = userId => {
  * @param {string} lastName the user's last name
  */
 const updateUser = (userId, firstName, lastName) => {
-  axios.put(`/api/user/${userId}`, { firstName, lastName }).then(res => {
-    location.reload();
-  }),
-    err => {
-      console.log(err);
-    };
+  axios
+    .put(`/api/user/${userId}`, { firstName, lastName })
+    .then(res => {
+      location.reload();
+    })
+    .catch(err => {
+      if (err.response) {
+        // render alert if there is an error
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
+      } else {
+        console.log('Error', err.message);
+      }
+    });
 };
 
 // RENDER FUNCTIONS
@@ -43,15 +52,15 @@ const renderButtons = () => {
     type: 'button',
     id: 'reset-button'
   }).text('Reset');
-  const saveButton = $('<button>', {
+  const editButton = $('<button>', {
     class: 'btn btn-outline-primary',
     type: 'button',
-    id: 'save-button'
-  }).text('Save');
+    id: 'edit-button'
+  }).text('Edit');
 
   // append and render html elements
   $('.wrap').append(formGroup);
-  formGroup.append(resetButton, saveButton);
+  formGroup.append(resetButton, editButton);
 };
 
 const renderFormField = (text, type, elementId, value) => {
@@ -72,17 +81,11 @@ const renderFormField = (text, type, elementId, value) => {
 /**
  * function to parse the form and update the uesr's information
  */
-const parseFormData = () => {
-  const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
-  );
-
+const parseFormData = userId => {
   const firstName = $('#fname').val();
   const lastName = $('#lname').val();
 
-  renderConfirmationModal('Click "confirm" to Save', () => {
-    updateUser(userId, firstName, lastName);
-  });
+  renderModal('Edit Profile', userId, { firstName, lastName });
 };
 
 $(document).ready(() => {
@@ -94,7 +97,9 @@ $(document).ready(() => {
   getUserInfo(userId);
 
   //  listen for form submission
-  $(document).on('click', '#save-button', parseFormData);
+  $(document).on('click', '#edit-button', () => {
+    parseFormData(userId);
+  });
   $(document).on('click', '#reset-button', () => {
     location.reload();
   });

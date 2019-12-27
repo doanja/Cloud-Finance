@@ -5,28 +5,30 @@
  * @param {number} userId the user's id
  */
 const getCategoriesAll = userId => {
-  axios.get(`/api/category/all/${userId}`).then(res => {
-    let grandTotal = 0;
-    let goalTotal = 0;
-    res.data.forEach(row => {
-      let total = 0;
-      goalTotal += parseFloat(row.goal);
-      row.Expenses.forEach(expense => {
-        total += parseFloat(expense.amount);
+  axios
+    .get(`/api/category/all/${userId}`)
+    .then(res => {
+      let grandTotal = 0;
+      let goalTotal = 0;
+      res.data.forEach(row => {
+        let total = 0;
+        goalTotal += parseFloat(row.goal);
+        row.Expenses.forEach(expense => {
+          total += parseFloat(expense.amount);
+        });
+        grandTotal += total;
+        renderCategoryRow(row, total.toFixed(2));
+        row.Expenses.forEach(expense => {
+          total += parseFloat(expense.amount);
+          renderExpenseRow(expense, row.name);
+        });
       });
-      grandTotal += total;
-      renderCategoryRow(row, total.toFixed(2));
-      row.Expenses.forEach(expense => {
-        total += parseFloat(expense.amount);
-        renderExpenseRow(expense, row.name);
-      });
-    });
 
-    renderTotalExpenses(grandTotal.toFixed(2), goalTotal.toFixed(2));
-  }),
-    err => {
+      renderTotalExpenses(grandTotal.toFixed(2), goalTotal.toFixed(2));
+    })
+    .catch(err => {
       console.log(err);
-    };
+    });
 };
 
 // RENDER FUNCTIONS
@@ -40,9 +42,7 @@ const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
   const tdTotalExpenses = $('<td>', { class: 'font-weight-bold' }).text(
     'Total of Goals & Expenses:'
   );
-  const tdTotalExpenseGoal = $('<td>', { class: 'font-weight-bold' }).text(
-    `$${totalExpenseGoal}`
-  );
+  const tdTotalExpenseGoal = $('<td>', { class: 'font-weight-bold' }).text(`$${totalExpenseGoal}`);
   const tdTotalExpenseAmount = $('<td>', { class: 'font-weight-bold' }).text(
     `$${totalExpensesValue}`
   );
@@ -82,8 +82,7 @@ const renderExpenseRow = (expenseData, categoryName) => {
     categoryValue: categoryName
   });
   const deleteButton = $('<i>', {
-    class:
-      'fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 float-right delete-button',
+    class: 'fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 float-right delete-button',
     deleteId: expenseData.id
   });
 
@@ -102,17 +101,12 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   const tBody = $('<tbody>');
   const tr = $('<tr>', { class: 'bg-secondary text-white' });
   const tdCategoryName = $('<td>', { class: 'pt-3' }).text(categoryData.name);
-  const tdCategoryGoal = $('<td>', { class: 'pt-3' }).text(
-    `$${categoryData.goal}`
-  );
-  const tdCategoryTotal = $('<td>', { class: 'pt-3' }).text(
-    `$${totalExpenseCat}`
-  );
+  const tdCategoryGoal = $('<td>', { class: 'pt-3' }).text(`$${categoryData.goal}`);
+  const tdCategoryTotal = $('<td>', { class: 'pt-3' }).text(`$${totalExpenseCat}`);
   const tdBlank = $('<td>', { class: 'pt-3' });
   const tdButtons = $('<td>');
   const categoryEditButton = $('<i>', {
-    class:
-      'fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button',
+    class: 'fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button',
     editId: categoryData.id,
     categoryValue: categoryData.name,
     goalValue: categoryData.goal
@@ -129,13 +123,7 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
 
   // append to html
   $('#tbody').append(tBody, tr);
-  tr.append(
-    tdCategoryName,
-    tdCategoryGoal,
-    tdCategoryTotal,
-    tdBlank,
-    tdButtons
-  );
+  tr.append(tdCategoryName, tdCategoryGoal, tdCategoryTotal, tdBlank, tdButtons);
   tdButtons.append(categoryEditButton, categoryDeleteButton);
 };
 

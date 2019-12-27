@@ -25,44 +25,46 @@ const getCategorySum = userId => {
     backgroundColor: '#44475'
   };
 
-  axios.get(`/api/category/all/${userId}`).then(res => {
-    if (res.data.length === 0) {
-      renderCardtitle('No data found. Click here to add expenses.', userId);
-      return;
-    }
+  axios
+    .get(`/api/category/all/${userId}`)
+    .then(res => {
+      if (res.data.length === 0) {
+        renderCardtitle('No data found. Click here to add expenses.', userId);
+        return;
+      }
 
-    // for each category...
-    res.data.forEach(category => {
-      let categoryTotal = 0; // counter for category total (sum of all expenses)
+      // for each category...
+      res.data.forEach(category => {
+        let categoryTotal = 0; // counter for category total (sum of all expenses)
 
-      // calculate the sum of expenses for each category
-      category.Expenses.forEach(expense => {
-        categoryTotal += parseFloat(expense.amount);
+        // calculate the sum of expenses for each category
+        category.Expenses.forEach(expense => {
+          categoryTotal += parseFloat(expense.amount);
+        });
+
+        // add data to the arrays
+        labels.push(category.name); // name of each category
+        categoryGoals.data.push(category.goal); // goals
+        expenseTotals.data.push(parseFloat(categoryTotal.toFixed(2))); // category totals
       });
 
-      // add data to the arrays
-      labels.push(category.name); // name of each category
-      categoryGoals.data.push(category.goal); // goals
-      expenseTotals.data.push(parseFloat(categoryTotal.toFixed(2))); // category totals
-    });
+      // create dataset object
+      const dataset = {
+        labels,
+        datasets: [expenseTotals, categoryGoals]
+      };
 
-    // create dataset object
-    const dataset = {
-      labels,
-      datasets: [expenseTotals, categoryGoals]
-    };
-
-    // render the chart
-    renderChart(canvas1, 'bar', dataset);
-    renderChart(canvas2, 'line', dataset);
-    renderChart(canvas3, 'radar', dataset);
-    renderChart(canvas4, 'horizontalBar', dataset);
-    renderChart(canvas5, 'doughnut', dataset);
-    renderChart(canvas6, 'polarArea', dataset);
-  }),
-    err => {
+      // render the chart
+      renderChart(canvas1, 'bar', dataset);
+      renderChart(canvas2, 'line', dataset);
+      renderChart(canvas3, 'radar', dataset);
+      renderChart(canvas4, 'horizontalBar', dataset);
+      renderChart(canvas5, 'doughnut', dataset);
+      renderChart(canvas6, 'polarArea', dataset);
+    })
+    .catch(err => {
       console.log(err);
-    };
+    });
 };
 
 /**

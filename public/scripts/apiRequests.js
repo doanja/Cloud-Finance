@@ -11,14 +11,14 @@ const updateCategory = (id, name, goal) => {
     .then(res => {
       location.reload();
     })
-    .catch(error => {
-      if (error.response) {
+    .catch(err => {
+      if (err.response) {
         // render alert if there is an error
-        renderAlert(error.response.data);
-      } else if (error.request) {
-        console.log(error.request);
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
       } else {
-        console.log('Error', error.message);
+        console.log('Error', err.message);
       }
     });
 };
@@ -52,14 +52,14 @@ const postCategory = (userId, name, goal) => {
     .then(res => {
       location.reload();
     })
-    .catch(error => {
-      if (error.response) {
+    .catch(err => {
+      if (err.response) {
         // render alert if there is an error
-        renderAlert(error.response.data);
-      } else if (error.request) {
-        console.log(error.request);
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
       } else {
-        console.log('Error', error.message);
+        console.log('Error', err.message);
       }
     });
 };
@@ -126,14 +126,14 @@ const updateExpense = (expenseId, description, amount, date, CategoryId) => {
     .then(res => {
       location.reload();
     })
-    .catch(error => {
-      if (error.response) {
+    .catch(err => {
+      if (err.response) {
         // render alert if there is an error
-        renderAlert(error.response.data);
-      } else if (error.request) {
-        console.log(error.request);
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
       } else {
-        console.log('Error', error.message);
+        console.log('Error', err.message);
       }
     });
 };
@@ -151,14 +151,14 @@ const postExpense = (amount, description, date, CategoryId) => {
     .then(res => {
       location.reload();
     })
-    .catch(error => {
-      if (error.response) {
+    .catch(err => {
+      if (err.response) {
         // render alert if there is an error
-        renderAlert(error.response.data);
-      } else if (error.request) {
-        console.log(error.request);
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
       } else {
-        console.log('Error', error.message);
+        console.log('Error', err.message);
       }
     });
 };
