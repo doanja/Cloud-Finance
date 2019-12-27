@@ -83,6 +83,9 @@ module.exports = (app, db) => {
       goal: Joi.number()
         .positive()
         .max(999999999)
+        .required(),
+      id: Joi.number()
+        .positive()
         .required()
     });
 

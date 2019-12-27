@@ -10,6 +10,14 @@ const isValidExpenseDescription = str => {
   return pattern.test(str);
 };
 
+const isValidDate = str => {
+  // check if str is a valid date
+  const pattern = new RegExp(
+    /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/
+  );
+  return pattern.test(str);
+};
+
 const isValidCategoryName = str => {
   // check if str is 1 - 50 characters long and alphanumeric only
   const pattern = new RegExp(/^([a-zA-Z0-9_-]){1,20}$/);
@@ -57,7 +65,14 @@ const isValidEmail = str => {
 // console.log(isValidExpenseDescription('aasjk213f213'));
 // console.log(isValidExpenseDescription('@#asdjhfk'));
 
+console.log('---------------- isValidDate');
+
+console.log('10/12/1993', isValidDate('10/12/1993'));
+console.log('21/23/4124', isValidDate('21/23/4124'));
+console.log('01/01/2019', isValidDate('01/01/2019'));
+
 // console.log('------------------------- isValidPassword');
+
 // console.log(isValidPassword('asjld;kfjl;L23As@'));
 // console.log(isValidPassword('AB'));
 // console.log(isValidPassword('APPLEAasdfaSFK'));

@@ -36,22 +36,22 @@ const getCategoriesAll = userId => {
  * @param {number} totalExpensesValue the total expense
  */
 const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
-  const tr = $("<tr>");
-  const tdTotalExpenses = $("<td>", { class: "font-weight-bold" }).text(
-    "Total of Goals & Expenses:"
+  const tr = $('<tr>');
+  const tdTotalExpenses = $('<td>', { class: 'font-weight-bold' }).text(
+    'Total of Goals & Expenses:'
   );
-  const tdTotalExpenseGoal = $("<td>", { class: "font-weight-bold" }).text(
+  const tdTotalExpenseGoal = $('<td>', { class: 'font-weight-bold' }).text(
     `$${totalExpenseGoal}`
   );
-  const tdTotalExpenseAmount = $("<td>", { class: "font-weight-bold" }).text(
+  const tdTotalExpenseAmount = $('<td>', { class: 'font-weight-bold' }).text(
     `$${totalExpensesValue}`
   );
 
-  totalExpenseGoal > totalExpensesValue
-    ? tdTotalExpenseGoal.addClass("text-green")
-    : tdTotalExpenseAmount.addClass("text-red");
+  totalExpenseGoal < totalExpensesValue
+    ? tdTotalExpenseGoal.addClass('text-green')
+    : tdTotalExpenseAmount.addClass('text-red');
 
-  $("#tbody").append(tr);
+  $('#tbody').append(tr);
   tr.append(tdTotalExpenses, tdTotalExpenseGoal, tdTotalExpenseAmount);
 };
 
@@ -61,34 +61,34 @@ const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
  * @param {number} categoryName the name of the category
  */
 const renderExpenseRow = (expenseData, categoryName) => {
-  const tr = $("<tr>");
-  const tdExpenseName = $("<td>", {
-    class: "pt-3 description-" + expenseData.id,
+  const tr = $('<tr>');
+  const tdExpenseName = $('<td>', {
+    class: 'pt-3 description-' + expenseData.id,
     value: expenseData.description
   }).text(expenseData.description);
-  const td = $("<td>", { class: "pt-3" }).text("-");
-  const tdExpenseAmount = $("<td>", {
-    class: "pt-3 amount-" + expenseData.id,
+  const td = $('<td>', { class: 'pt-3' }).text('-');
+  const tdExpenseAmount = $('<td>', {
+    class: 'pt-3 amount-' + expenseData.id,
     value: expenseData.amount
   }).text(`$${expenseData.amount}`);
-  const tdDate = $("<td>", {
-    class: "pt-3 date-" + expenseData.id,
+  const tdDate = $('<td>', {
+    class: 'pt-3 date-' + expenseData.id,
     value: expenseData.date
   }).text(expenseData.date);
-  const tdButtons = $("<td>");
-  const editButton = $("<i>", {
-    class: "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-button",
+  const tdButtons = $('<td>');
+  const editButton = $('<i>', {
+    class: 'fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-button',
     editId: expenseData.id,
     categoryValue: categoryName
   });
-  const deleteButton = $("<i>", {
+  const deleteButton = $('<i>', {
     class:
-      "fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 float-right delete-button",
+      'fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 float-right delete-button',
     deleteId: expenseData.id
   });
 
   // append to html
-  $("#tbody").append(tr);
+  $('#tbody').append(tr);
   tr.append(tdExpenseName, td, tdExpenseAmount, tdDate, tdButtons);
   tdButtons.append(editButton, deleteButton);
 };
@@ -99,36 +99,36 @@ const renderExpenseRow = (expenseData, categoryName) => {
  * @param {number} totalExpenseCat the total expense of the category
  */
 const renderCategoryRow = (categoryData, totalExpenseCat) => {
-  const tBody = $("<tbody>");
-  const tr = $("<tr>", { class: "bg-secondary text-white" });
-  const tdCategoryName = $("<td>", { class: "pt-3" }).text(categoryData.name);
-  const tdCategoryGoal = $("<td>", { class: "pt-3" }).text(
+  const tBody = $('<tbody>');
+  const tr = $('<tr>', { class: 'bg-secondary text-white' });
+  const tdCategoryName = $('<td>', { class: 'pt-3' }).text(categoryData.name);
+  const tdCategoryGoal = $('<td>', { class: 'pt-3' }).text(
     `$${categoryData.goal}`
   );
-  const tdCategoryTotal = $("<td>", { class: "pt-3" }).text(
+  const tdCategoryTotal = $('<td>', { class: 'pt-3' }).text(
     `$${totalExpenseCat}`
   );
-  const tdBlank = $("<td>", { class: "pt-3" });
-  const tdButtons = $("<td>");
-  const categoryEditButton = $("<i>", {
+  const tdBlank = $('<td>', { class: 'pt-3' });
+  const tdButtons = $('<td>');
+  const categoryEditButton = $('<i>', {
     class:
-      "fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button",
+      'fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button',
     editId: categoryData.id,
     categoryValue: categoryData.name,
     goalValue: categoryData.goal
   });
-  const categoryDeleteButton = $("<i>", {
+  const categoryDeleteButton = $('<i>', {
     class:
-      "fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 float-right delete-category-button",
+      'fas fa-trash fa-1x font-weight-bold icon-red mx-1 pt-2 float-right delete-category-button',
     deleteId: categoryData.id
   });
 
-  categoryData.goal > totalExpenseCat
-    ? tdCategoryGoal.addClass("text-green font-weight-bold")
-    : tdCategoryTotal.addClass("text-red font-weight-bold");
+  categoryData.goal < totalExpenseCat
+    ? tdCategoryGoal.addClass('text-green font-weight-bold')
+    : tdCategoryTotal.addClass('text-red font-weight-bold');
 
   // append to html
-  $("#tbody").append(tBody, tr);
+  $('#tbody').append(tBody, tr);
   tr.append(
     tdCategoryName,
     tdCategoryGoal,
@@ -141,7 +141,7 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
 
 $(document).ready(() => {
   const userId = parseInt(
-    window.location.href.split("/")[window.location.href.split("/").length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
   getCategoriesAll(userId);
 });

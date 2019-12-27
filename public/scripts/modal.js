@@ -262,41 +262,88 @@ const listenForModalSubmission = (option, userId, obj) => {
         .trim();
       const category = $('#categories option:selected').attr('categoryId');
 
+      // check for valid input
       if (!isValidExpenseDescription(description)) {
         renderAlert('Enter a valid Description');
       } else if (!isValidDecimal(amount)) {
         renderAlert('Enter a valid Amount');
+      } else if (!isValidDate(date)) {
+        renderAlert('Enter a valid Date');
       } else {
         updateExpense(obj.editId, description, amount, date, category);
       }
+
       break;
+
     case 'Edit Category':
       // grab the form fields from the modal
-      const name = $('#modal-name').val();
-      const goal = parseFloat($('#modal-goal').val());
-      updateCategory(obj.editId, name, goal);
+      const name = $('#modal-name')
+        .val()
+        .trim();
+      const goal = $('#modal-goal')
+        .val()
+        .trim();
+
+      // check for valid input
+      if (!isValidCategoryName(name)) {
+        renderAlert('Enter a valid Category Name');
+      } else if (!isValidDecimal(goal)) {
+        renderAlert('Enter a valid Goal');
+      } else {
+        updateCategory(obj.editId, name, goal);
+      }
+
       break;
 
     case 'Create Category':
-      const categoryName = $('#modal-category').val();
-      const categoryGoal = parseFloat($('#modal-goal').val());
-      postCategory(userId, categoryName, categoryGoal);
+      const categoryName = $('#modal-category')
+        .val()
+        .trim();
+      const categoryGoal = $('#modal-goal')
+        .val()
+        .trim();
+
+      // check for valid input
+      if (!isValidCategoryName(categoryName)) {
+        renderAlert('Enter a valid Category Name');
+      } else if (!isValidDecimal(categoryGoal)) {
+        renderAlert('Enter a valid Goal');
+      } else {
+        postCategory(userId, categoryName, categoryGoal);
+      }
+
       break;
 
     case 'Create Expense':
       // grab the form fields from the modal
-      const expenseDescription = $('#modal-description').val();
-      const expenseAmount = parseFloat($('#modal-amount').val());
-      const expenseDate = $('#modal-date').val();
+      const expenseDescription = $('#modal-description')
+        .val()
+        .trim();
+      const expenseAmount = $('#modal-amount')
+        .val()
+        .trim();
+      const expenseDate = $('#modal-date')
+        .val()
+        .trim();
       const expenseCategory = $('#categories option:selected').attr(
         'categoryId'
       );
-      postExpense(
-        expenseAmount,
-        expenseDescription,
-        expenseDate,
-        expenseCategory
-      );
+
+      if (!isValidExpenseDescription(expenseDescription)) {
+        renderAlert('Enter a valid Description');
+      } else if (!isValidDecimal(expenseAmount)) {
+        renderAlert('Enter a valid Amount');
+      } else if (!isValidDate(expenseDate)) {
+        renderAlert('Enter a valid Date');
+      } else {
+        postExpense(
+          expenseAmount,
+          expenseDescription,
+          expenseDate,
+          expenseCategory
+        );
+      }
+
       break;
 
     default:
