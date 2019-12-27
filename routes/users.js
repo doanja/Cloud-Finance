@@ -42,7 +42,6 @@ module.exports = (app, db) => {
       return;
     }
 
-    // TODO: needs validation for updated fields on front end
     db.User.update(
       {
         firstName,
@@ -82,7 +81,6 @@ module.exports = (app, db) => {
       return;
     }
 
-    // TODO: needs validation for updated fields on front end
     db.User.update(
       {
         income
