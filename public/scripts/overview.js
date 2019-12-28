@@ -130,6 +130,10 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
     ? tdOverUnder.addClass('text-red font-weight-bold')
     : tdOverUnder.addClass('text-green font-weight-bold');
 
+  overUnder > 0
+    ? tdOverUnder.removeClass('text-red font-weight-bold')
+    : tdOverUnder.removeClass('text-green font-weight-bold');
+
   $('#tbody').append(tr);
   tr.append(tdCategoryName, tdCategoryGoal, tdCategoryTotal, tdOverUnder, tdButtons);
   tdButtons.append(editButton);
@@ -155,6 +159,10 @@ const renderTotals = (categoryTotal, expenseTotal) => {
     ? tdOverUnder.addClass('text-red font-weight-bold')
     : tdOverUnder.addClass('text-green font-weight-bold');
 
+  overUnder > 0
+    ? tdOverUnder.removeClass('text-red font-weight-bold')
+    : tdOverUnder.removeClass('text-green font-weight-bold');
+
   $('#tbody').append(tr);
   tr.append(tdCategoryName, tdCategoryGoalTotal, tdExpenseTotal, tdOverUnder, tdBlank);
 };
@@ -164,20 +172,24 @@ const renderTotals = (categoryTotal, expenseTotal) => {
  * @param {object} remainderData the response from the API containing the remainder
  */
 const renderRemainderRow = remainderData => {
+  const remainder = (
+    parseFloat(remainderData.income) - parseFloat(remainderData.remainder)
+  ).toFixed(2);
+
   const tr = $('<tr>');
   const tdIncomeLeft = $('<td>').text('Income Left');
   const tdBlank0 = $('<td>').text('');
-  const tdRemainder = $('<td>').text(
-    remainderData.remainder === null
-      ? 'N/A'
-      : '$' + (parseFloat(remainderData.income) - parseFloat(remainderData.remainder)).toFixed(2)
-  );
+  const tdRemainder = $('<td>').text(remainderData.remainder === null ? 'N/A' : '$' + remainder);
   const tdBlank1 = $('<td>').text('');
   const tdBlank2 = $('<td>').text('');
 
-  remainderData.remainder < 0
+  remainder <= 0
     ? tdRemainder.addClass('text-red font-weight-bold')
     : tdRemainder.addClass('text-green font-weight-bold');
+
+  remainder > 0
+    ? tdRemainder.removeClass('text-red font-weight-bold')
+    : tdRemainder.removeClass('text-green font-weight-bold');
 
   $('#tbody').append(tr);
   tr.append(tdIncomeLeft, tdBlank0, tdRemainder, tdBlank1, tdBlank2);

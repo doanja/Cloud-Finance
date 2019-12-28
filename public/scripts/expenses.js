@@ -47,7 +47,7 @@ const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
     `$${totalExpensesValue}`
   );
 
-  totalExpenseGoal < totalExpensesValue
+  totalExpenseGoal > totalExpensesValue
     ? tdTotalExpenseGoal.addClass('text-green')
     : tdTotalExpenseAmount.addClass('text-red');
 
@@ -117,9 +117,13 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
     deleteId: categoryData.id
   });
 
-  categoryData.goal < totalExpenseCat
+  categoryData.goal > totalExpenseCat
     ? tdCategoryGoal.addClass('text-green font-weight-bold')
     : tdCategoryTotal.addClass('text-red font-weight-bold');
+
+  categoryData.goal < totalExpenseCat
+    ? tdCategoryGoal.removeClass('text-green font-weight-bold')
+    : tdCategoryTotal.removeClass('text-red font-weight-bold');
 
   // append to html
   $('#tbody').append(tBody, tr);
