@@ -1,14 +1,16 @@
-// fonts
+// import google fonts
 @import url('https://fonts.googleapis.com/css?family=Cabin|Raleway&display=swap');
 
+// set font variables
 $cabin: 'Cabin', sans-serif;
 $raleway: 'Raleway', sans-serif;
 
-// set custom colors
+// set custom colors variables
 $primary-color: #418a66;
 $secondary-color: #564d48;
 $tertiary-color: #109175;
 $red: #ff6565;
+$green: #2ab664;
 
 // function to set color to be white or black depending on $color
 @function set-text-color($color) {

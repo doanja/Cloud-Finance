@@ -28,7 +28,7 @@ const renderConfirmationModal = (title, callback) => {
   const modalDiaglogue = $('<div>', { class: 'modal-dialog' });
   const modalContent = $('<div>', { class: 'modal-content' });
   const modalHeader = $('<div>', { class: 'modal-header' });
-  const modalTitle = $('<h5>', { class: 'modal-title text-dark' }).text(title);
+  const modalTitle = $('<h5>', { class: 'modal-title text-primary' }).text(title);
   const modalprefooter = $('<div>', { class: 'modal-footer' });
   const button = $('<button>', {
     class: 'btn btn-primary',
@@ -137,7 +137,7 @@ const renderModal = (title, userId, data) => {
   const modalContent = $('<div>', { class: 'modal-content' });
   const modalHeader = $('<div>', { class: 'modal-header' });
   const modalBody = $('<div>', { class: 'modal-body' });
-  const modalTitle = $('<h5>', { class: 'modal-title text-dark' }).text(title);
+  const modalTitle = $('<h5>', { class: 'modal-title text-primary' }).text(title);
   const modalprefooter = $('<div>', { class: 'modal-footer' });
   const button = $('<button>', {
     class: 'btn btn-outline-primary',
