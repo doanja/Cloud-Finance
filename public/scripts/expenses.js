@@ -63,7 +63,7 @@ const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
 const renderExpenseRow = (expenseData, categoryName) => {
   const tr = $('<tr>');
   const tdExpenseName = $('<td>', {
-    class: 'pt-3 description-' + expenseData.id,
+    class: 'pt-3 pl-4 description-' + expenseData.id,
     value: expenseData.description
   }).text(expenseData.description);
   const td = $('<td>', { class: 'pt-3' }).text('-');

@@ -53,7 +53,7 @@ const renderButtons = () => {
     id: 'reset-button'
   }).text('Reset');
   const editButton = $('<button>', {
-    class: 'btn btn-outline-primary',
+    class: 'btn btn-primary',
     type: 'button',
     id: 'edit-button'
   }).text('Edit');

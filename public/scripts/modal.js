@@ -82,7 +82,7 @@ const createExpense = () => {
 const renderDropdownCategories = (text, elementId) => {
   // create the element
   return $('<option>', {
-    class: `text-light bg-dark`,
+    class: `bg-white text-primary`,
     categoryId: elementId,
     value: text
   }).text(text);

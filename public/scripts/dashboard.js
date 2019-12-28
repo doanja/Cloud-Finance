@@ -16,13 +16,13 @@ const getCategorySum = userId => {
   const expenseTotals = {
     label: 'Actual Dollars Spent',
     data: [],
-    backgroundColor: '#6272a4'
+    backgroundColor: '#418a66'
   };
 
   const categoryGoals = {
     label: 'Goal Dollar Amount',
     data: [],
-    backgroundColor: '#44475'
+    backgroundColor: '#564d48'
   };
 
   axios

@@ -1,13 +1,14 @@
 // fonts
-@import url('https://fonts.googleapis.com/css?family=Cabin|Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Cabin|Raleway&display=swap');
 
 $cabin: 'Cabin', sans-serif;
-$roboto: 'Roboto', sans-serif;
+$raleway: 'Raleway', sans-serif;
 
 // set custom colors
-$primary-color: #173656;
-$secondary-color: #9dc3ec;
-$tertiary-color: #9584a8;
+$primary-color: #418a66;
+$secondary-color: #564d48;
+$tertiary-color: #109175;
+$red: #ff6565;
 
 // function to set color to be white or black depending on $color
 @function set-text-color($color) {
@@ -21,9 +22,11 @@ $tertiary-color: #9584a8;
 // override bootstrap theme colors
 $theme-colors: (
   'primary': $primary-color,
-  'light': #fff,
-  'dark': $primary-color
+  'secondary': $secondary-color,
+  'info': $tertiary-color,
+  'light': set-text-color($primary-color),
+  'dark': darken($primary-color, 50)
 );
 
 // set font family
-$font-family-sans-serif: $roboto;
+$font-family-sans-serif: $cabin;

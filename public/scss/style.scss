@@ -10,7 +10,7 @@ a:hover {
 }
 
 .navbar-brand {
-  font-family: $cabin;
+  font-family: $raleway;
 }
 
 .jumbotron {
@@ -19,14 +19,15 @@ a:hover {
   background-attachment: fixed;
   margin-bottom: 0;
   width: 100vw;
+  border-top: 3px solid $tertiary-color;
+  border-bottom: 3px solid $tertiary-color;
 }
 
 .blur {
   width: 100vw;
   height: 40rem;
-  /* box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2); */
   background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(2px);
   margin-bottom: 0;
   min-height: 100%; /* for browsers that don't support vh */
   min-height: 100vh;
@@ -37,24 +38,28 @@ a:hover {
   min-width: 350px;
 }
 
-/* for content inside the blur that needs centuring */
+// for content inside the blur that needs centuring
 .vertical-center {
-  min-height: 100%; /* for browsers that don't support vh */
+  min-height: 100%; // for browsers that don't support vh
   min-height: 100vh;
   display: flex;
   align-items: center;
 }
 
-/* for tables (expenses.html, overview.html) */
+// for tables (expenses.html, overview.html)
 .budget-data {
-  max-width: 50vw;
+  max-width: 60vw;
 }
 
-.test {
+.graphs {
   width: 90vw;
 }
 
-/* icons */
+.dashboard-card {
+  min-height: 15rem;
+}
+
+// icons
 i {
   cursor: pointer;
 }
@@ -64,28 +69,21 @@ i {
 }
 
 .icon-red:hover {
-  color: red;
+  color: $red;
 }
 
 .text-red {
-  color: #ff6565;
+  color: $red;
 }
 
 .text-green {
-  color: #2ab664;
+  color: $green;
 }
 
-.dashboard-card {
-  min-height: 15rem;
-}
-
+// removing border-radius from bootstrap classes
 .btn,
-.form-control {
+.form-control,
+.card,
+.modal-content {
   border-radius: 0px;
-}
-
-.form-control {
-  border-top: none;
-  border-right: none;
-  border-left: none;
 }
