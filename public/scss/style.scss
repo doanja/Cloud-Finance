@@ -19,6 +19,7 @@ a:hover {
   background-attachment: fixed;
   margin-bottom: 0;
   width: 100vw;
+  border-radius: 0px;
   border-top: 3px solid $tertiary-color;
   border-bottom: 3px solid $tertiary-color;
 }
@@ -61,8 +62,7 @@ a:hover {
 
 // icons
 i,
-#income,
-.category-row {
+#income {
   cursor: pointer;
 }
 

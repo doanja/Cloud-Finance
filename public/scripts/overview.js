@@ -148,7 +148,7 @@ const renderTotals = (categoryTotal, expenseTotal) => {
   // calculate over under
   const overUnder = parseFloat(categoryTotal - expenseTotal).toFixed(2);
 
-  const tr = $('<tr>');
+  const tr = $('<tr>', { class: 'bg-secondary text-light' });
   const tdCategoryName = $('<td>').text('Totals');
   const tdCategoryGoalTotal = $('<td>').text('$' + categoryTotal);
   const tdExpenseTotal = $('<td>').text('$' + expenseTotal);
@@ -192,7 +192,7 @@ const renderRemainderRow = remainderData => {
     : tdRemainder.removeClass('text-green font-weight-bold');
 
   $('#tbody').append(tr);
-  tr.append(tdIncomeLeft, tdBlank0, tdRemainder, tdBlank1, tdBlank2);
+  tr.append(tdIncomeLeft, tdRemainder, tdBlank0, tdBlank1, tdBlank2);
 };
 
 /**
@@ -224,7 +224,5 @@ $(document).ready(() => {
   getIncome(userId);
   getBudgetCategories(userId);
 
-  $(document).on('click', '.update-income-button', updateIncomeClicked);
   $(document).on('click', '#income', updateIncomeClicked);
-  $(document).on('click', '.category-row', editCategoryClicked);
 });

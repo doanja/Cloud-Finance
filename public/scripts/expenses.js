@@ -38,7 +38,7 @@ const getCategoriesAll = userId => {
  * @param {number} totalExpensesValue the total expense
  */
 const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
-  const tr = $('<tr>');
+  const tr = $('<tr>', { class: 'bg-primary text-light' });
   const tdTotalExpenses = $('<td>', { class: 'font-weight-bold' }).text(
     'Total of Goals & Expenses:'
   );
@@ -46,13 +46,15 @@ const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
   const tdTotalExpenseAmount = $('<td>', { class: 'font-weight-bold' }).text(
     `$${totalExpensesValue}`
   );
+  const tdBlank1 = $('<td>');
+  const tdBlank2 = $('<td>');
 
   totalExpenseGoal > totalExpensesValue
     ? tdTotalExpenseGoal.addClass('text-green')
     : tdTotalExpenseAmount.addClass('text-red');
 
   $('#tbody').append(tr);
-  tr.append(tdTotalExpenses, tdTotalExpenseGoal, tdTotalExpenseAmount);
+  tr.append(tdTotalExpenses, tdTotalExpenseGoal, tdTotalExpenseAmount, tdBlank1, tdBlank2);
 };
 
 /**
