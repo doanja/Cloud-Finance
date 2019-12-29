@@ -1,5 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt-nodejs');
+const Bcrypt = require('bcrypt-nodejs');
 
 module.exports = (passport, db) => {
   // for sigining up new user
@@ -16,7 +16,7 @@ module.exports = (passport, db) => {
       (req, email, password, done) => {
         // function to generate hash password
         const hashPassword = password => {
-          return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+          return Bcrypt.hashSync(password, Bcrypt.genSaltSync(8), null);
         };
 
         // check to see if user already exists
@@ -77,7 +77,7 @@ module.exports = (passport, db) => {
       },
       (req, email, password, done) => {
         const isValidPassword = (userpass, password) => {
-          return bcrypt.compareSync(password, userpass);
+          return Bcrypt.compareSync(password, userpass);
         };
 
         db.User.findOne({
