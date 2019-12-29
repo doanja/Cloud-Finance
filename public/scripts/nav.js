@@ -43,9 +43,9 @@ const renderNavLinks = (linkTitle, pageName, userId, parentElement) => {
 };
 
 $(document).ready(() => {
-  const userId = window.location.href.split('/')[
-    window.location.href.split('/').length - 1
-  ];
+  const userId = window.location.href.split('/')[window.location.href.split('/').length - 1];
+
+  $('.navbar-brand').attr('href', '/dashboard/' + userId);
 
   renderNavLinks('Profile', 'profile', userId, '#menu');
   renderNavLinks('Dashboard', 'dashboard', userId, '#menu');

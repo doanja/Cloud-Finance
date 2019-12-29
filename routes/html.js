@@ -2,9 +2,10 @@ const isLoggedIn = require('../config/middleware/isLoggedIn');
 
 module.exports = (app, path) => {
   app.get('/', (req, res) => {
-    if (req.user) {
-      res.redirect('/dashboard/' + req.user.id);
-    }
+    // if (req.user) {
+    //   console.log('logged in already');
+    //   res.redirect('/dashboard/' + req.user.id);
+    // }
     res.sendFile(path.join(__dirname, '../public/html/index.html'));
   });
 
