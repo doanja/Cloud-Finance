@@ -68,7 +68,7 @@ const renderFormField = (text, type, elementId, value) => {
   const formGroup = $('<div>', { class: 'form-group' });
   const label = $('<label>', { for: type }).text(text);
   const input = $('<input>', {
-    class: 'form-control',
+    class: 'form-control profile-form',
     type: type,
     id: elementId
   }).val(value);
@@ -98,6 +98,12 @@ $(document).ready(() => {
 
   //  listen for form submission
   $(document).on('click', '#edit-button', () => {
+    parseFormData(userId);
+  });
+  $(document).on('click', '#fname', () => {
+    parseFormData(userId);
+  });
+  $(document).on('click', '#lname', () => {
     parseFormData(userId);
   });
   $(document).on('click', '#reset-button', () => {
