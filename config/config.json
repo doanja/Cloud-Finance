@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "test",
-    "database": "budgetplus",
+    "database": "finance",
     "host": "localhost",
     "dialect": "mysql"
   },

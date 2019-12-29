@@ -1,7 +1,7 @@
 {
-  "name": "BudgetPlus",
+  "name": "Cloud Finance",
   "version": "1.0.0",
-  "description": "BudgetPlus",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

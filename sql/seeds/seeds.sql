@@ -1,9 +1,9 @@
-USE budgetplus;
+USE finance;
 
 INSERT INTO users (firstName, lastName, password, email, income, updatedAt, createdAt)
 VALUES  ("Brennon", "Morris", "pokemon@1", "bmorris@amazon.com", "6875.00", "2019-12-10T05:22:35.657", "2019-12-10T05:22:35.657");      
 
-USE budgetplus;
+USE finance;
 
 INSERT INTO categories (name, goal, createdAt, updatedAt, UserId)
 
@@ -14,7 +14,7 @@ VALUES  ("Home & Utilities", "1200.00", "2019-12-10T05:22:35.657", "2019-12-10T0
         ("Shopping & Entertainment", "200.00", "2019-12-10T05:22:35.657", "2019-12-10T05:22:35.657",1),
         ("Health & Fitness", "50.00", "2019-12-10T05:22:35.657", "2019-12-10T05:22:35.657",1);
 
-USE budgetplus;
+USE finance;
 
 INSERT INTO expenses (description, amount, date, createdAt, updatedAt, CategoryId)
 
