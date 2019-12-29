@@ -19,7 +19,7 @@ app.use(express.static('public'));
 app.use(session({ secret: 'test', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-require('./config/passport')(passport, db);
+require('./config/middleware/passport')(passport, db);
 
 // Routes
 require('./routes/auth')(app, path, passport);
