@@ -1,6 +1,6 @@
 module.exports = (app, db) => {
   // returns the user's income and remainder (total expenses across all categories)
-  app.get("/api/remainder/:id", (req, res) => {
+  app.get('/api/remainder/:id', (req, res) => {
     const { id } = req.params;
 
     db.sequelize
@@ -8,9 +8,9 @@ module.exports = (app, db) => {
         `SELECT 
           u.income, 
           sum(amount) AS remainder 
-        FROM users AS u 
-          LEFT JOIN categories AS cat ON cat.UserID = u.id 
-          LEFT JOIN expenses AS exp ON exp.CategoryId = cat.id 
+        FROM Users AS u 
+          LEFT JOIN Categories AS cat ON cat.UserID = u.id 
+          LEFT JOIN Expenses AS exp ON exp.CategoryId = cat.id 
         WHERE u.id = ${id}`,
         { type: db.sequelize.QueryTypes.SELECT, where: { id } }
       )
