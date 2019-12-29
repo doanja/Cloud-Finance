@@ -41,7 +41,6 @@ const getCategoriesAll = userId => {
   axios
     .get(`/api/category/all/${userId}`)
     .then(res => {
-      console.log('res.data :', res.data);
       let grandTotal = 0;
       let goalTotal = 0;
       res.data.forEach(row => {

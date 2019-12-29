@@ -116,7 +116,9 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   const tdCategoryName = $('<td>', { class: 'pt-3' }).text(categoryData.name);
   const tdCategoryGoal = $('<td>', { class: 'pt-3' }).text('$' + categoryData.goal);
   const tdCategoryTotal = $('<td>', { class: 'pt-3' }).text('$' + totalExpenseCat);
-  const tdOverUnder = $('<td>', { class: 'pt-3' }).text('$' + overUnder);
+  const tdOverUnder = $('<td>', { class: 'pt-3' }).text(
+    overUnder < 0 ? '-$' + Math.abs(overUnder).toFixed(2) : '$' + overUnder
+  );
   const tdButtons = $('<td>');
   const editButton = $('<i>', {
     class: 'fas fa-edit fa-1x font-weight-bold icon-blue mx-1 pt-2 edit-category-button',
@@ -152,7 +154,9 @@ const renderTotals = (categoryTotal, expenseTotal) => {
   const tdCategoryName = $('<td>').text('Totals');
   const tdCategoryGoalTotal = $('<td>').text('$' + categoryTotal);
   const tdExpenseTotal = $('<td>').text('$' + expenseTotal);
-  const tdOverUnder = $('<td>').text('$' + overUnder);
+  const tdOverUnder = $('<td>').text(
+    overUnder < 0 ? '-$' + Math.abs(overUnder).toFixed(2) : '$' + overUnder
+  );
   const tdBlank = $('<td>').text('');
 
   overUnder < 0
@@ -179,7 +183,13 @@ const renderRemainderRow = remainderData => {
   const tr = $('<tr>');
   const tdIncomeLeft = $('<td>').text('Income Left');
   const tdBlank0 = $('<td>').text('');
-  const tdRemainder = $('<td>').text(remainderData.remainder === null ? 'N/A' : '$' + remainder);
+  const tdRemainder = $('<td>').text(
+    remainderData.remainder === null
+      ? 'N/A'
+      : remainder < 0
+      ? '-$' + Math.abs(remainder).toFixed(2)
+      : '$' + remainder
+  );
   const tdBlank1 = $('<td>').text('');
   const tdBlank2 = $('<td>').text('');
 
