@@ -4,10 +4,44 @@
  * function to render categories and expenses
  * @param {number} userId the user's id
  */
+const getCategoriesAllByDate = (userId, startDate, endDate) => {
+  axios
+    .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
+    .then(res => {
+      console.log('res.data :', res.data);
+
+      // let grandTotal = 0;
+      // let goalTotal = 0;
+      // res.data.forEach(row => {
+      //   let total = 0;
+      //   goalTotal += parseFloat(row.goal);
+      //   row.Expenses.forEach(expense => {
+      //     total += parseFloat(expense.amount);
+      //   });
+      //   grandTotal += total;
+      //   renderCategoryRow(row, total.toFixed(2));
+      //   row.Expenses.forEach(expense => {
+      //     total += parseFloat(expense.amount);
+      //     renderExpenseRow(expense, row.name);
+      //   });
+      // });
+
+      // renderTotalExpenses(grandTotal.toFixed(2), goalTotal.toFixed(2));
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+/**
+ * function to render categories and expenses
+ * @param {number} userId the user's id
+ */
 const getCategoriesAll = userId => {
   axios
     .get(`/api/category/all/${userId}`)
     .then(res => {
+      console.log('res.data :', res.data);
       let grandTotal = 0;
       let goalTotal = 0;
       res.data.forEach(row => {
@@ -138,4 +172,7 @@ $(document).ready(() => {
     window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
   getCategoriesAll(userId);
+
+  // TEST
+  getCategoriesAllByDate(userId, '2013-01-01', '2020-01-02');
 });

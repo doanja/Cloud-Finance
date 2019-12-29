@@ -16,6 +16,32 @@ module.exports = (app, db) => {
       });
   });
 
+  // get all the Category's (with expenses) belonging to the user's id by date
+  app.get('/api/category/all/:id/:startDate/:endDate', (req, res) => {
+    const { id, startDate, endDate } = req.params;
+
+    db.Category.findAll({
+      include: [
+        {
+          model: db.Expense,
+          where: {
+            date: '2014-01-01'
+          }
+        }
+      ],
+      where: {
+        UserId: id
+      }
+    })
+      .then(data => {
+        res.status(200).json(data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(400).json({ error: err });
+      });
+  });
+
   // get all catergories belonging to the user
   app.get('/api/category/:id', (req, res) => {
     db.Category.findAll({ where: { UserId: req.params.id } })
