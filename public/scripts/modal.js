@@ -365,8 +365,6 @@ function deleteExpenseClicked() {
   renderConfirmationModal('Are you sure you want to delete the Expense?', () => {
     deleteExpense(deleteId);
   });
-
-  // deleteExpense(deleteId);
 }
 
 // function to pass current data to a modal
