@@ -45,7 +45,7 @@ const isValidCategoryName = str => {
  * @return {boolean} true of str passes the regex test, false otherwise
  */
 const isValidName = str => {
-  const pattern = new RegExp(/^[a-zA-Z]+$/);
+  const pattern = new RegExp(/^([a-zA-Z0-9_-]){2,20}$/);
   return pattern.test(str);
 };
 
