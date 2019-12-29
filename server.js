@@ -30,7 +30,7 @@ require('./routes/expenses')(app, db);
 require('./routes/html')(app, path);
 
 // Syncing our sequelize models and then starting our Express app
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   app.listen(PORT, () =>
     console.log(`Server started on port ${PORT}. Visit http://localhost:${PORT}/`)
   );
