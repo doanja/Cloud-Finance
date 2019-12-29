@@ -3,6 +3,8 @@ const Joi = require('@hapi/joi');
 module.exports = (app, db) => {
   // get all the Category's (with expenses) belonging to the user's id
   app.get('/api/category/all/:id', (req, res) => {
+    // console.log('db :', db);
+    console.log('db.Op :', db.Op);
     db.Category.findAll({
       include: [db.Expense],
       where: { UserId: req.params.id }
@@ -25,7 +27,9 @@ module.exports = (app, db) => {
         {
           model: db.Expense,
           where: {
-            date: '2014-01-01'
+            date: {
+              [db.Op.between]: [startDate, endDate]
+            }
           }
         }
       ],

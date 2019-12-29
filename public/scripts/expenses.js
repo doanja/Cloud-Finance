@@ -174,5 +174,5 @@ $(document).ready(() => {
   getCategoriesAll(userId);
 
   // TEST
-  getCategoriesAllByDate(userId, '2013-01-01', '2020-01-02');
+  getCategoriesAllByDate(userId, '2014-02-01', '2014-03-02');
 });
