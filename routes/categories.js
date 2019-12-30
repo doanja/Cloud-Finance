@@ -16,8 +16,9 @@ module.exports = (app, db, joi) => {
   });
 
   // get all the Category's (with expenses) belonging to the user's id by date
-  app.get('/api/category/all/:id/:startDate/:endDate', (req, res) => {
-    const { id, startDate, endDate } = req.params;
+  app.get('/api/category/all/:id/', (req, res) => {
+    const { startDate, endDate } = req.body;
+    const { id } = req.params;
 
     console.log('startDate :', startDate);
     console.log('endDate :', endDate);

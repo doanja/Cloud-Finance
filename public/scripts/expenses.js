@@ -8,7 +8,7 @@ const getCategoriesAllByDate = (userId, startDate, endDate) => {
   console.log('startDate :', startDate);
   console.log('endDate :', endDate);
   axios
-    .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
+    .get(`/api/category/all/${userId}`, { startDate, endDate })
     .then(res => {
       console.log('res.data :', res.data);
 
