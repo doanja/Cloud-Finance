@@ -5,6 +5,8 @@
  * @param {number} userId the user's id
  */
 const getCategoriesAllByDate = (userId, startDate, endDate) => {
+  console.log('startDate :', startDate);
+  console.log('endDate :', endDate);
   axios
     .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
     .then(res => {
@@ -29,7 +31,14 @@ const getCategoriesAllByDate = (userId, startDate, endDate) => {
       // renderTotalExpenses(grandTotal.toFixed(2), goalTotal.toFixed(2));
     })
     .catch(err => {
-      console.log(err);
+      if (err.response) {
+        // render alert if there is an error
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
+      } else {
+        console.log('Error', err.message);
+      }
     });
 };
 
@@ -166,11 +175,83 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   tdButtons.append(categoryEditButton, categoryDeleteButton);
 };
 
+const filterDateClicked = () => {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+
+  renderModal('Filter by Date', userId);
+};
+
+// function to create a cateogry
+const createCategory = () => {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+
+  renderModal('Create Category', userId);
+};
+
+// function to create an expense
+const createExpense = () => {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+
+  renderModal('Create Expense', userId);
+};
+
+// function to pass current data to a modal
+function editExpenseClicked() {
+  const editId = parseInt($(this).attr('editId')); // get the edit button id
+  const description = $(`.description-${editId}`).attr('value'); // get the description
+  const amount = parseFloat($(`.amount-${editId}`).attr('value')); // get the amount
+  const date = $(`.date-${editId}`).attr('value'); // get the amount
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+  const categoryValue = $(this).attr('categoryValue'); // get the category text
+
+  renderModal('Edit Expense', userId, {
+    description,
+    amount,
+    date,
+    categoryValue,
+    editId
+  });
+}
+
+// function to pass current data to a modal
+function deleteExpenseClicked() {
+  const deleteId = parseInt($(this).attr('deleteId'));
+  renderConfirmationModal('Are you sure you want to delete the Expense?', () => {
+    deleteExpense(deleteId);
+  });
+}
+
+// function to pass current data to a modal
+function deleteCategoryClicked() {
+  const deleteId = parseInt($(this).attr('deleteId'));
+  renderConfirmationModal('Are you sure you want to delete the category?', () => {
+    deleteCategory(deleteId);
+  });
+}
+
 $(document).ready(() => {
   const userId = parseInt(
     window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
+
+  // render the table
   getCategoriesAll(userId);
+
+  // click listeners
+  $(document).on('click', '.delete-category-button', deleteCategoryClicked);
+  $(document).on('click', '.edit-button', editExpenseClicked);
+  $(document).on('click', '.delete-button', deleteExpenseClicked);
+  $(document).on('click', '.create-category', createCategory);
+  $(document).on('click', '.create-expense', createExpense);
+  $(document).on('click', '.filter-date', filterDateClicked);
 
   // TEST
   getCategoriesAllByDate(userId, '2014-02-01', '2014-03-02');

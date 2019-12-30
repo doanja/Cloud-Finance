@@ -1,10 +1,7 @@
-const Joi = require('@hapi/joi');
-
-module.exports = (app, db) => {
+module.exports = (app, db, joi) => {
   // get all the Category's (with expenses) belonging to the user's id
   app.get('/api/category/all/:id', (req, res) => {
     // console.log('db :', db);
-    console.log('db.Op :', db.Op);
     db.Category.findAll({
       include: [db.Expense],
       where: { UserId: req.params.id }
@@ -21,6 +18,24 @@ module.exports = (app, db) => {
   // get all the Category's (with expenses) belonging to the user's id by date
   app.get('/api/category/all/:id/:startDate/:endDate', (req, res) => {
     const { id, startDate, endDate } = req.params;
+
+    console.log('startDate :', startDate);
+    console.log('endDate :', endDate);
+
+    // define joi schema
+    const schema = joi.object({
+      startDate: joi.date().required(),
+      endDate: joi.date().required()
+    });
+
+    // compare schema with req.body
+    const validate = schema.validate(req.body);
+
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
 
     db.Category.findAll({
       include: [
@@ -64,12 +79,14 @@ module.exports = (app, db) => {
     const { id } = req.params;
 
     // define joi schema
-    const schema = Joi.object({
-      name: Joi.string()
+    const schema = joi.object({
+      name: joi
+        .string()
         .min(1)
         .max(20)
         .required(),
-      goal: Joi.number()
+      goal: joi
+        .number()
         .positive()
         .max(999999999)
         .required()
@@ -102,16 +119,19 @@ module.exports = (app, db) => {
     const { name, goal, id } = req.body;
 
     // define joi schema
-    const schema = Joi.object({
-      name: Joi.string()
+    const schema = joi.object({
+      name: joi
+        .string()
         .min(1)
         .max(20)
         .required(),
-      goal: Joi.number()
+      goal: joi
+        .number()
         .positive()
         .max(999999999)
         .required(),
-      id: Joi.number()
+      id: joi
+        .number()
         .positive()
         .required()
     });

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const joi = require('@hapi/joi');
 const db = require('./models');
 
 // Passport
@@ -23,10 +24,10 @@ require('./config/middleware/passport')(passport, db);
 
 // Routes
 require('./routes/auth')(app, path, passport);
-require('./routes/users')(app, db);
+require('./routes/users')(app, db, joi);
 require('./routes/remainder')(app, db);
-require('./routes/categories')(app, db);
-require('./routes/expenses')(app, db);
+require('./routes/categories')(app, db, joi);
+require('./routes/expenses')(app, db, joi);
 require('./routes/html')(app, path);
 
 // Syncing our sequelize models and then starting our Express app
