@@ -1,6 +1,4 @@
-const Joi = require('@hapi/joi');
-
-module.exports = (app, db) => {
+module.exports = (app, db, joi) => {
   // get all expenses belonging to the category
   app.get('/api/expense/:id', (req, res) => {
     db.Expense.findAll({ where: { CategoryId: req.params.id } })
@@ -18,18 +16,20 @@ module.exports = (app, db) => {
     const { amount, description, date, CategoryId } = req.body;
 
     // define joi schema
-    const schema = Joi.object({
-      description: Joi.string()
+    const schema = joi.object({
+      description: joi
+        .string()
         .min(1)
         .max(50)
         .required(),
-      amount: Joi.number()
+      amount: joi
+        .number()
         .positive()
         .max(999999999)
         .required(),
-
-      date: Joi.date().required(),
-      CategoryId: Joi.number()
+      date: joi.date().required(),
+      CategoryId: joi
+        .number()
         .integer()
         .required()
     });
@@ -42,6 +42,7 @@ module.exports = (app, db) => {
       res.status(400).send(validate.error.details[0].message);
       return;
     }
+
     db.Expense.create({
       amount,
       description,
@@ -63,17 +64,20 @@ module.exports = (app, db) => {
     const { id } = req.params;
 
     // define joi schema
-    const schema = Joi.object({
-      description: Joi.string()
+    const schema = joi.object({
+      description: joi
+        .string()
         .min(1)
         .max(50)
         .required(),
-      amount: Joi.number()
+      amount: joi
+        .number()
         .positive()
         .max(999999999)
         .required(),
-      date: Joi.date().required(),
-      CategoryId: Joi.number()
+      date: joi.date().required(),
+      CategoryId: joi
+        .number()
         .integer()
         .required()
     });

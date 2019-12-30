@@ -36,7 +36,7 @@
                         <i class="fas fa-bars fa-1x" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
                             role="button" aria-haspopup="true" aria-expanded="false"></i>
                         <div class="dropdown-menu dropdown-menu-right" id="menu">
-
+                            <!-- dropdown options rendered here -->
                         </div>
                     </li>
                 </ul>
@@ -53,6 +53,21 @@
                     Expenses
                 </h3>
 
+                <!-- create expense / category buttons -->
+                <div class="text-center mt-5">
+                    <div class="btn btn-primary text-white create-category"><i class="fas fa-plus fa-1x"></i>
+                        Create
+                        Category
+                    </div>
+                    <div class="btn btn-primary text-white create-expense"><i class="fas fa-plus fa-1x"></i>
+                        Create
+                        Expense
+                    </div>
+                    <div class="btn btn-primary text-white filter-date"><i class="fas fa-plus fa-1x"></i>
+                        Filter Date
+                    </div>
+                </div>
+
                 <!-- expense table -->
                 <table class="table table-hover bg-white budget-data mx-auto my-5" id="table">
                     <thead class="thead bg-primary text-light">
@@ -68,17 +83,7 @@
                         <!-- expenses rendered here -->
                     </tbody>
                 </table>
-                <!-- create expense / category buttons -->
-                <div class="text-center my-5">
-                    <div class="btn btn-primary btn-lg text-white create-category"><i class="fas fa-plus fa-1x"></i>
-                        Create
-                        Category
-                    </div>
-                    <div class="btn btn-primary btn-lg text-white create-expense"><i class="fas fa-plus fa-1x"></i>
-                        Create
-                        Expense
-                    </div>
-                </div>
+
             </div>
 
         </div>

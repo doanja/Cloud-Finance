@@ -56,24 +56,6 @@ const renderConfirmationModal = (title, callback) => {
   });
 };
 
-// function to create a cateogry
-const createCategory = () => {
-  const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
-  );
-
-  renderModal('Create Category', userId);
-};
-
-// function to create an expense
-const createExpense = () => {
-  const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
-  );
-
-  renderModal('Create Expense', userId);
-};
-
 /**
  * function to render list of categories
  * @param {string} text the name of each category
@@ -227,6 +209,15 @@ const renderModalContent = (title, userId, data, modalBody) => {
         renderModalFormFields('First name', 'modal-firstName', data.firstName),
         renderModalFormFields('Last name', 'modal-lastName', data.lastName)
       );
+      break;
+
+    case 'Filter by Date':
+      // render form fields with prefilled text
+      modalBody.append(
+        renderModalFormFields('Start Date', 'modal-startDate', '', 'date'),
+        renderModalFormFields('End Date', 'modal-endDate', '', 'date')
+      );
+      break;
 
     default:
       break;
@@ -334,40 +325,24 @@ const listenForModalSubmission = (option, userId, obj) => {
 
       break;
 
+    case 'Filter by Date':
+      // grab the form fields from the modal
+      const startDate = $('#modal-startDate')
+        .val()
+        .trim();
+      const endDate = $('#modal-endDate')
+        .val()
+        .trim();
+      console.log('start :', startDate);
+      console.log('end :', endDate);
+      getCategoriesAllByDate(userId, startDate, endDate);
+
+      break;
+
     default:
       break;
   }
 };
-
-// function to pass current data to a modal
-function editExpenseClicked() {
-  const editId = parseInt($(this).attr('editId')); // get the edit button id
-  const description = $(`.description-${editId}`).attr('value'); // get the description
-  const amount = parseFloat($(`.amount-${editId}`).attr('value')); // get the amount
-  const date = $(`.date-${editId}`).attr('value'); // get the amount
-  const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
-  );
-  const categoryValue = $(this).attr('categoryValue'); // get the category text
-
-  renderModal('Edit Expense', userId, {
-    description,
-    amount,
-    date,
-    categoryValue,
-    editId
-  });
-}
-
-// function to pass current data to a modal
-function deleteExpenseClicked() {
-  const deleteId = parseInt($(this).attr('deleteId'));
-  renderConfirmationModal('Are you sure you want to delete the Expense?', () => {
-    deleteExpense(deleteId);
-  });
-
-  // deleteExpense(deleteId);
-}
 
 // function to pass current data to a modal
 function editCategoryClicked() {
@@ -381,19 +356,6 @@ function editCategoryClicked() {
   renderModal('Edit Category', userId, { categoryValue, goalValue, editId });
 }
 
-// function to pass current data to a modal
-function deleteCategoryClicked() {
-  const deleteId = parseInt($(this).attr('deleteId'));
-  renderConfirmationModal('Are you sure you want to delete the category?', () => {
-    deleteCategory(deleteId);
-  });
-}
-
 $(document).ready(() => {
   $(document).on('click', '.edit-category-button', editCategoryClicked);
-  $(document).on('click', '.delete-category-button', deleteCategoryClicked);
-  $(document).on('click', '.edit-button', editExpenseClicked);
-  $(document).on('click', '.delete-button', deleteExpenseClicked);
-  $(document).on('click', '.create-category', createCategory);
-  $(document).on('click', '.create-expense', createExpense);
 });

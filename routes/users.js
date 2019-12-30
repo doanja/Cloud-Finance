@@ -1,6 +1,4 @@
-const Joi = require('@hapi/joi');
-
-module.exports = (app, db) => {
+module.exports = (app, db, joi) => {
   // get all the user's info
   app.get('/api/user/:id', (req, res) => {
     db.User.findOne({
@@ -20,13 +18,15 @@ module.exports = (app, db) => {
     const { firstName, lastName } = req.body;
 
     // define joi schema
-    const schema = Joi.object({
-      firstName: Joi.string()
+    const schema = joi.object({
+      firstName: joi
+        .string()
         .alphanum()
         .min(2)
         .max(20)
         .required(),
-      lastName: Joi.string()
+      lastName: joi
+        .string()
         .alphanum()
         .min(2)
         .max(20)
@@ -65,8 +65,9 @@ module.exports = (app, db) => {
     const { income } = req.body;
 
     // define joi schema
-    const schema = Joi.object({
-      income: Joi.number()
+    const schema = joi.object({
+      income: joi
+        .number()
         .positive()
         .max(999999999)
         .required()

@@ -1,6 +1,53 @@
 // API REQUESTS
 
 /**
+ * function to render categories and expenses between the start and end date
+ * @param {number} userId the user's id
+ * @param {startDate} startDate the start date
+ * @param {endDate} endDate the end date
+ */
+const getCategoriesAllByDate = (userId, startDate, endDate) => {
+  axios
+    .get(`/api/category/date/${userId}/${startDate}/${endDate}`, { startDate, endDate })
+    .then(res => {
+      if (res.data.length === 0) {
+        renderAlert('No expenses found...');
+        return;
+      }
+      $('#tbody').empty(); // empty the table
+      $('#modal').remove();
+
+      let grandTotal = 0;
+      let goalTotal = 0;
+      res.data.forEach(row => {
+        let total = 0;
+        goalTotal += parseFloat(row.goal);
+        row.Expenses.forEach(expense => {
+          total += parseFloat(expense.amount);
+        });
+        grandTotal += total;
+        renderCategoryRow(row, total.toFixed(2));
+        row.Expenses.forEach(expense => {
+          total += parseFloat(expense.amount);
+          renderExpenseRow(expense, row.name);
+        });
+      });
+
+      renderTotalExpenses(grandTotal.toFixed(2), goalTotal.toFixed(2));
+    })
+    .catch(err => {
+      if (err.response) {
+        // render alert if there is an error
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
+      } else {
+        console.log('Error', err.message);
+      }
+    });
+};
+
+/**
  * function to render categories and expenses
  * @param {number} userId the user's id
  */
@@ -133,9 +180,82 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   tdButtons.append(categoryEditButton, categoryDeleteButton);
 };
 
+// function to render date filter modals
+const filterDateClicked = () => {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+
+  renderModal('Filter by Date', userId);
+};
+
+// function to create a cateogry
+const createCategory = () => {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+
+  renderModal('Create Category', userId);
+};
+
+// function to create an expense
+const createExpense = () => {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+
+  renderModal('Create Expense', userId);
+};
+
+// function to pass current data to a modal
+function editExpenseClicked() {
+  const editId = parseInt($(this).attr('editId')); // get the edit button id
+  const description = $(`.description-${editId}`).attr('value'); // get the description
+  const amount = parseFloat($(`.amount-${editId}`).attr('value')); // get the amount
+  const date = $(`.date-${editId}`).attr('value'); // get the amount
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+  const categoryValue = $(this).attr('categoryValue'); // get the category text
+
+  renderModal('Edit Expense', userId, {
+    description,
+    amount,
+    date,
+    categoryValue,
+    editId
+  });
+}
+
+// function to pass current data to a modal
+function deleteExpenseClicked() {
+  const deleteId = parseInt($(this).attr('deleteId'));
+  renderConfirmationModal('Are you sure you want to delete the Expense?', () => {
+    deleteExpense(deleteId);
+  });
+}
+
+// function to pass current data to a modal
+function deleteCategoryClicked() {
+  const deleteId = parseInt($(this).attr('deleteId'));
+  renderConfirmationModal('Are you sure you want to delete the category?', () => {
+    deleteCategory(deleteId);
+  });
+}
+
 $(document).ready(() => {
   const userId = parseInt(
     window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
+
+  // render the table
   getCategoriesAll(userId);
+
+  // click listeners
+  $(document).on('click', '.delete-category-button', deleteCategoryClicked);
+  $(document).on('click', '.edit-button', editExpenseClicked);
+  $(document).on('click', '.delete-button', deleteExpenseClicked);
+  $(document).on('click', '.create-category', createCategory);
+  $(document).on('click', '.create-expense', createExpense);
+  $(document).on('click', '.filter-date', filterDateClicked);
 });

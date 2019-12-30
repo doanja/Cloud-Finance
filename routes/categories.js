@@ -1,11 +1,54 @@
-const Joi = require('@hapi/joi');
-
-module.exports = (app, db) => {
+module.exports = (app, db, joi) => {
   // get all the Category's (with expenses) belonging to the user's id
   app.get('/api/category/all/:id', (req, res) => {
+    // console.log('db :', db);
     db.Category.findAll({
       include: [db.Expense],
       where: { UserId: req.params.id }
+    })
+      .then(data => {
+        res.status(200).json(data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(400).json({ error: err });
+      });
+  });
+
+  // get all the Category's (with expenses) belonging to the user's id by date
+  app.get('/api/category/date/:id/:startDate/:endDate', (req, res) => {
+    // const {  } = req.body;
+    const { id, startDate, endDate } = req.params;
+
+    // define joi schema
+    const schema = joi.object({
+      startDate: joi.date().required(),
+      endDate: joi.date().required()
+    });
+
+    // compare schema with req.body
+    const validate = schema.validate({ startDate, endDate });
+
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
+
+    db.Category.findAll({
+      include: [
+        {
+          model: db.Expense,
+          where: {
+            date: {
+              [db.Op.between]: [startDate, endDate]
+            }
+          }
+        }
+      ],
+      where: {
+        UserId: id
+      }
     })
       .then(data => {
         res.status(200).json(data);
@@ -34,12 +77,14 @@ module.exports = (app, db) => {
     const { id } = req.params;
 
     // define joi schema
-    const schema = Joi.object({
-      name: Joi.string()
+    const schema = joi.object({
+      name: joi
+        .string()
         .min(1)
         .max(20)
         .required(),
-      goal: Joi.number()
+      goal: joi
+        .number()
         .positive()
         .max(999999999)
         .required()
@@ -72,16 +117,19 @@ module.exports = (app, db) => {
     const { name, goal, id } = req.body;
 
     // define joi schema
-    const schema = Joi.object({
-      name: Joi.string()
+    const schema = joi.object({
+      name: joi
+        .string()
         .min(1)
         .max(20)
         .required(),
-      goal: Joi.number()
+      goal: joi
+        .number()
         .positive()
         .max(999999999)
         .required(),
-      id: Joi.number()
+      id: joi
+        .number()
         .positive()
         .required()
     });
