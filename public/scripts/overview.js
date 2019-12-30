@@ -24,12 +24,11 @@ const getRemainder = userId => {
  * @param {endDate} endDate the end date
  */
 const getOverviewByDate = (userId, startDate, endDate) => {
-  let spentTotal = 0;
-  let goalTotal = 0;
   axios
     .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
     .then(res => {
-      console.log('res.data :', res.data);
+      let spentTotal = 0;
+      let goalTotal = 0;
 
       // if there wasn't any data for that date range
       if (res.data.length === 0) {
@@ -39,10 +38,11 @@ const getOverviewByDate = (userId, startDate, endDate) => {
 
       $('#tbody').empty(); // empty the table
       $('#modal').remove();
+
       res.data.forEach(category => {
         goalTotal += parseFloat(category.goal);
         let categoryTotalSpent = 0;
-        // calculate the sum of expenses for each category
+
         category.Expenses.forEach(expense => {
           spentTotal += parseFloat(expense.amount);
           categoryTotalSpent += parseFloat(expense.amount);
