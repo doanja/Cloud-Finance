@@ -48,7 +48,7 @@ const renderConfirmationModal = (title, callback) => {
   modalprefooter.append(button, submit);
 
   // listen when to close the modal
-  closeModalListener();
+  closeModalOn();
 
   // listen for form submission
   $('#modal-submit').click(() => {
@@ -141,11 +141,11 @@ const renderModal = (title, userId, data) => {
   renderModalContent(title, userId, data, modalBody);
 
   // listen when to close the modal
-  closeModalListener();
+  closeModalOn();
 
   // listen for form submission
   $('#modal-submit').click(() => {
-    modalSubmit(title, userId, data);
+    modalSubmitOn(title, userId, data);
   });
 };
 
@@ -225,7 +225,7 @@ const renderModalContent = (title, userId, data, modalBody) => {
 };
 
 // function to close the modal
-const closeModalListener = () => {
+const closeModalOn = () => {
   // when the user clicks the close button in the modal, close modal
   $('#modal-button').click(() => {
     $('#modal').remove();
@@ -238,7 +238,7 @@ const closeModalListener = () => {
  * @param {string} userId the id of the the user
  * @param {object} data the object containing required fields for expense/category
  */
-const modalSubmit = (option, userId, data) => {
+const modalSubmitOn = (option, userId, data) => {
   $('.alert ').remove(); // clear any alerts
 
   // determine what to the submit button does
@@ -321,9 +321,15 @@ const modalSubmit = (option, userId, data) => {
       const endDate = $('#modal-endDate')
         .val()
         .trim();
-      console.log('start :', startDate);
-      console.log('end :', endDate);
-      getCategoriesAllByDate(userId, startDate, endDate);
+
+      // validate dates
+      if (!isValidDate(startDate)) {
+        renderAlert('Enter a valid Start Date');
+      } else if (!isValidDate(endDate)) {
+        renderAlert('Enter a valid End Date');
+      } else {
+        getCategoriesAllByDate(userId, startDate, endDate);
+      }
       break;
 
     default:
