@@ -48,7 +48,7 @@ const renderConfirmationModal = (title, callback) => {
   modalprefooter.append(button, submit);
 
   // listen when to close the modal
-  listenForModalClick();
+  closeModalListener();
 
   // listen for form submission
   $('#modal-submit').click(() => {
@@ -141,11 +141,11 @@ const renderModal = (title, userId, data) => {
   renderModalContent(title, userId, data, modalBody);
 
   // listen when to close the modal
-  listenForModalClick();
+  closeModalListener();
 
   // listen for form submission
   $('#modal-submit').click(() => {
-    listenForModalSubmission(title, userId, data);
+    modalSubmit(title, userId, data);
   });
 };
 
@@ -225,7 +225,7 @@ const renderModalContent = (title, userId, data, modalBody) => {
 };
 
 // function to close the modal
-const listenForModalClick = () => {
+const closeModalListener = () => {
   // when the user clicks the close button in the modal, close modal
   $('#modal-button').click(() => {
     $('#modal').remove();
@@ -236,10 +236,10 @@ const listenForModalClick = () => {
  * function to determine what the submit button does base on the option passed in
  * @param {string} option determines which case and what submit does
  * @param {string} userId the id of the the user
- * @param {object} obj the object containing required fields for expense/category
+ * @param {object} data the object containing required fields for expense/category
  */
-const listenForModalSubmission = (option, userId, obj) => {
-  $('.alert ').remove();
+const modalSubmit = (option, userId, data) => {
+  $('.alert ').remove(); // clear any alerts
 
   // determine what to the submit button does
   switch (option) {
@@ -255,9 +255,7 @@ const listenForModalSubmission = (option, userId, obj) => {
         .val()
         .trim();
       const category = $('#categories option:selected').attr('categoryId');
-
-      updateExpense(obj.editId, description, amount, date, category);
-
+      updateExpense(data.editId, description, amount, date, category);
       break;
 
     case 'Edit Category':
@@ -268,9 +266,7 @@ const listenForModalSubmission = (option, userId, obj) => {
       const goal = $('#modal-goal')
         .val()
         .trim();
-
-      updateCategory(obj.editId, name, goal);
-
+      updateCategory(data.editId, name, goal);
       break;
 
     case 'Create Category':
@@ -280,9 +276,7 @@ const listenForModalSubmission = (option, userId, obj) => {
       const categoryGoal = $('#modal-goal')
         .val()
         .trim();
-
       postCategory(userId, categoryName, categoryGoal);
-
       break;
 
     case 'Create Expense':
@@ -297,9 +291,7 @@ const listenForModalSubmission = (option, userId, obj) => {
         .val()
         .trim();
       const expenseCategory = $('#categories option:selected').attr('categoryId');
-
       postExpense(expenseAmount, expenseDescription, expenseDate, expenseCategory);
-
       break;
 
     case 'Edit Income':
@@ -307,9 +299,7 @@ const listenForModalSubmission = (option, userId, obj) => {
       const income = $('#modal-income')
         .val()
         .trim();
-
       updateUserIncome(userId, income);
-
       break;
 
     case 'Edit Profile':
@@ -320,9 +310,7 @@ const listenForModalSubmission = (option, userId, obj) => {
       const lastName = $('#modal-lastName')
         .val()
         .trim();
-
       updateUser(userId, firstName, lastName);
-
       break;
 
     case 'Filter by Date':
@@ -336,25 +324,12 @@ const listenForModalSubmission = (option, userId, obj) => {
       console.log('start :', startDate);
       console.log('end :', endDate);
       getCategoriesAllByDate(userId, startDate, endDate);
-
       break;
 
     default:
       break;
   }
 };
-
-// function to pass current data to a modal
-function editCategoryClicked() {
-  const editId = parseInt($(this).attr('editId')); // get the edit button id
-  const categoryValue = $(this).attr('categoryValue'); // get the category text
-  const goalValue = parseFloat($(this).attr('goalValue')); // get the goal value
-  const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
-  );
-
-  renderModal('Edit Category', userId, { categoryValue, goalValue, editId });
-}
 
 $(document).ready(() => {
   $(document).on('click', '.edit-category-button', editCategoryClicked);

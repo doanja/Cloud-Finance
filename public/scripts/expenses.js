@@ -8,8 +8,9 @@
  */
 const getCategoriesAllByDate = (userId, startDate, endDate) => {
   axios
-    .get(`/api/category/date/${userId}/${startDate}/${endDate}`, { startDate, endDate })
+    .get(`/api/category/all/${userId}/${startDate}/${endDate}`, { startDate, endDate })
     .then(res => {
+      // if there wasn't any data for that date range
       if (res.data.length === 0) {
         renderAlert('No expenses found...');
         return;
@@ -96,9 +97,7 @@ const renderTotalExpenses = (totalExpensesValue, totalExpenseGoal) => {
   const tdBlank1 = $('<td>');
   const tdBlank2 = $('<td>');
 
-  totalExpenseGoal > totalExpensesValue
-    ? tdTotalExpenseGoal.addClass('text-green')
-    : tdTotalExpenseAmount.addClass('text-red');
+  setTextColor(totalExpenseGoal, totalExpensesValue, tdTotalExpenseAmount);
 
   $('#tbody').append(tr);
   tr.append(tdTotalExpenses, tdTotalExpenseGoal, tdTotalExpenseAmount, tdBlank1, tdBlank2);
@@ -166,13 +165,7 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
     deleteId: categoryData.id
   });
 
-  categoryData.goal > totalExpenseCat
-    ? tdCategoryGoal.addClass('text-green font-weight-bold')
-    : tdCategoryTotal.addClass('text-red font-weight-bold');
-
-  categoryData.goal < totalExpenseCat
-    ? tdCategoryGoal.removeClass('text-green font-weight-bold')
-    : tdCategoryTotal.removeClass('text-red font-weight-bold');
+  setTextColor(categoryData.goal, totalExpenseCat, tdCategoryTotal);
 
   // append to html
   $('#tbody').append(tBody, tr);
@@ -180,68 +173,17 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   tdButtons.append(categoryEditButton, categoryDeleteButton);
 };
 
-// function to render date filter modals
-const filterDateClicked = () => {
-  const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
-  );
-
-  renderModal('Filter by Date', userId);
+/**
+ * function to set the text color of the element
+ * @param {number} valueOne the first value used for comparision
+ * @param {number} valueTwo the second value used for comparision
+ * @param {object} element the element to set the text color
+ */
+const setTextColor = (valueOne, valueTwo, element) => {
+  valueOne < valueTwo
+    ? element.addClass('text-red font-weight-bold')
+    : element.addClass('text-green font-weight-bold');
 };
-
-// function to create a cateogry
-const createCategory = () => {
-  const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
-  );
-
-  renderModal('Create Category', userId);
-};
-
-// function to create an expense
-const createExpense = () => {
-  const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
-  );
-
-  renderModal('Create Expense', userId);
-};
-
-// function to pass current data to a modal
-function editExpenseClicked() {
-  const editId = parseInt($(this).attr('editId')); // get the edit button id
-  const description = $(`.description-${editId}`).attr('value'); // get the description
-  const amount = parseFloat($(`.amount-${editId}`).attr('value')); // get the amount
-  const date = $(`.date-${editId}`).attr('value'); // get the amount
-  const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
-  );
-  const categoryValue = $(this).attr('categoryValue'); // get the category text
-
-  renderModal('Edit Expense', userId, {
-    description,
-    amount,
-    date,
-    categoryValue,
-    editId
-  });
-}
-
-// function to pass current data to a modal
-function deleteExpenseClicked() {
-  const deleteId = parseInt($(this).attr('deleteId'));
-  renderConfirmationModal('Are you sure you want to delete the Expense?', () => {
-    deleteExpense(deleteId);
-  });
-}
-
-// function to pass current data to a modal
-function deleteCategoryClicked() {
-  const deleteId = parseInt($(this).attr('deleteId'));
-  renderConfirmationModal('Are you sure you want to delete the category?', () => {
-    deleteCategory(deleteId);
-  });
-}
 
 $(document).ready(() => {
   const userId = parseInt(

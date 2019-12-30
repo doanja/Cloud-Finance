@@ -1,7 +1,6 @@
 module.exports = (app, db, joi) => {
   // get all the Category's (with expenses) belonging to the user's id
   app.get('/api/category/all/:id', (req, res) => {
-    // console.log('db :', db);
     db.Category.findAll({
       include: [db.Expense],
       where: { UserId: req.params.id }
@@ -16,9 +15,11 @@ module.exports = (app, db, joi) => {
   });
 
   // get all the Category's (with expenses) belonging to the user's id by date
-  app.get('/api/category/date/:id/:startDate/:endDate', (req, res) => {
-    // const {  } = req.body;
+  app.get('/api/category/all/:id/:startDate/:endDate', (req, res) => {
     const { id, startDate, endDate } = req.params;
+
+    console.log('startDate :', startDate);
+    console.log('endDate :', endDate);
 
     // define joi schema
     const schema = joi.object({

@@ -1,6 +1,70 @@
 // API REQUESTS
 
 /**
+ * function to calculate and render the remainder
+ * @param {number} userId the user's id
+ */
+const getRemainder = userId => {
+  axios
+    .get(`/api/remainder/${userId}`)
+    .then(res => {
+      res.data.forEach(remainder => {
+        renderRemainderRow(remainder);
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+/**
+ * function to get total category goal and total expense
+ * @param {number} userId the user's id
+ */
+const getBudgetCategoriesTotals = userId => {
+  let expenseTotal = 0;
+  let categoryTotal = 0;
+  axios
+    .get(`/api/category/all/${userId}`)
+    .then(res => {
+      res.data.forEach(category => {
+        categoryTotal += parseFloat(category.goal);
+        category.Expenses.forEach(expense => {
+          expenseTotal += parseFloat(expense.amount);
+        });
+      });
+      renderTotals(parseFloat(categoryTotal).toFixed(2), expenseTotal.toFixed(2));
+      getRemainder(userId);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+/**
+ * function to get all category and expense totals
+ * @param {number} userId the user's id
+ */
+const getBudgetCategories = userId => {
+  axios
+    .get(`/api/category/all/${userId}`)
+    .then(res => {
+      res.data.forEach(category => {
+        let categoryTotal = 0;
+        // calculate the sum of expenses for each category
+        category.Expenses.forEach(expense => {
+          categoryTotal += parseFloat(expense.amount);
+        });
+        renderCategoryRow(category, categoryTotal.toFixed(2));
+      });
+      getBudgetCategoriesTotals(userId);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+/**
  * function to update the user's income
  * @param {number} userId the user's id
  * @param {number} income the uesr's new income
@@ -39,71 +103,37 @@ const getIncome = userId => {
     });
 };
 
-/**
- * function to get all category and expense totals
- * @param {number} userId the user's id
- */
-const getBudgetCategories = userId => {
-  axios
-    .get(`/api/category/all/${userId}`)
-    .then(res => {
-      res.data.forEach(category => {
-        let categoryTotal = 0;
-        // calculate the sum of expenses for each category
-        category.Expenses.forEach(expense => {
-          categoryTotal += parseFloat(expense.amount);
-        });
-        renderCategoryRow(category, categoryTotal.toFixed(2));
-      });
-      getBudgetCategoriesTotals(userId);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
-/**
- * function to get total category goal and total expense
- * @param {number} userId the user's id
- */
-const getBudgetCategoriesTotals = userId => {
-  let expenseTotal = 0;
-  let categoryTotal = 0;
-  axios
-    .get(`/api/category/all/${userId}`)
-    .then(res => {
-      res.data.forEach(category => {
-        categoryTotal += parseFloat(category.goal);
-        category.Expenses.forEach(expense => {
-          expenseTotal += parseFloat(expense.amount);
-        });
-      });
-      renderTotals(parseFloat(categoryTotal).toFixed(2), expenseTotal.toFixed(2));
-      getRemainder(userId);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
-/**
- * function to calculate and render the remainder
- * @param {number} userId the user's id
- */
-const getRemainder = userId => {
-  axios
-    .get(`/api/remainder/${userId}`)
-    .then(res => {
-      res.data.forEach(remainder => {
-        renderRemainderRow(remainder);
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
 // RENDER FUNCTIONS
+
+/**
+ * function to render the category and expense total
+ * @param {number} categoryTotal the category total
+ * @param {number} expenseTotal the expense total
+ */
+const renderTotals = (categoryTotal, expenseTotal) => {
+  // calculate over under
+  const overUnder = parseFloat(categoryTotal - expenseTotal).toFixed(2);
+
+  const tr = $('<tr>', { class: 'bg-secondary text-light' });
+  const tdCategoryName = $('<td>').text('Totals');
+  const tdCategoryGoalTotal = $('<td>').text('$' + categoryTotal);
+  const tdExpenseTotal = $('<td>').text('$' + expenseTotal);
+  const tdOverUnder = $('<td>').text(
+    overUnder < 0 ? '-$' + Math.abs(overUnder).toFixed(2) : '$' + overUnder
+  );
+  const tdBlank = $('<td>').text('');
+
+  overUnder < 0
+    ? tdOverUnder.addClass('text-red font-weight-bold')
+    : tdOverUnder.addClass('text-green font-weight-bold');
+
+  overUnder > 0
+    ? tdOverUnder.removeClass('text-red font-weight-bold')
+    : tdOverUnder.removeClass('text-green font-weight-bold');
+
+  $('#tbody').append(tr);
+  tr.append(tdCategoryName, tdCategoryGoalTotal, tdExpenseTotal, tdOverUnder, tdBlank);
+};
 
 /**
  * function to render category rows
@@ -139,36 +169,6 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   $('#tbody').append(tr);
   tr.append(tdCategoryName, tdCategoryGoal, tdCategoryTotal, tdOverUnder, tdButtons);
   tdButtons.append(editButton);
-};
-
-/**
- * function to render the category and expense total
- * @param {number} categoryTotal the category total
- * @param {number} expenseTotal the expense total
- */
-const renderTotals = (categoryTotal, expenseTotal) => {
-  // calculate over under
-  const overUnder = parseFloat(categoryTotal - expenseTotal).toFixed(2);
-
-  const tr = $('<tr>', { class: 'bg-secondary text-light' });
-  const tdCategoryName = $('<td>').text('Totals');
-  const tdCategoryGoalTotal = $('<td>').text('$' + categoryTotal);
-  const tdExpenseTotal = $('<td>').text('$' + expenseTotal);
-  const tdOverUnder = $('<td>').text(
-    overUnder < 0 ? '-$' + Math.abs(overUnder).toFixed(2) : '$' + overUnder
-  );
-  const tdBlank = $('<td>').text('');
-
-  overUnder < 0
-    ? tdOverUnder.addClass('text-red font-weight-bold')
-    : tdOverUnder.addClass('text-green font-weight-bold');
-
-  overUnder > 0
-    ? tdOverUnder.removeClass('text-red font-weight-bold')
-    : tdOverUnder.removeClass('text-green font-weight-bold');
-
-  $('#tbody').append(tr);
-  tr.append(tdCategoryName, tdCategoryGoalTotal, tdExpenseTotal, tdOverUnder, tdBlank);
 };
 
 /**
@@ -213,18 +213,6 @@ const renderIncome = userData => {
   $('#income').val(userData.income);
   $('#income').attr('value', userData.income);
 };
-
-// function to pass current data to a modal
-function updateIncomeClicked() {
-  const userIncome = $('#income')
-    .val()
-    .trim();
-  const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
-  );
-
-  renderModal('Edit Income', userId, { income: userIncome });
-}
 
 $(document).ready(() => {
   const userId = parseInt(
