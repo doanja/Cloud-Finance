@@ -1,34 +1,40 @@
 // API REQUESTS
 
 /**
- * function to render categories and expenses
+ * function to render categories and expenses between the start and end date
  * @param {number} userId the user's id
+ * @param {startDate} startDate the start date
+ * @param {endDate} endDate the end date
  */
 const getCategoriesAllByDate = (userId, startDate, endDate) => {
-  console.log('startDate :', startDate);
-  console.log('endDate :', endDate);
   axios
-    .get(`/api/category/all/${userId}`, { startDate, endDate })
+    .get(`/api/category/date/${userId}`, { startDate, endDate })
     .then(res => {
+      if (res.data.length === 0) {
+        renderAlert('No expenses found...');
+        return;
+      }
+      $('#tbody').empty(); // empty the table
+      // $('#modal').remove();
       console.log('res.data :', res.data);
 
-      // let grandTotal = 0;
-      // let goalTotal = 0;
-      // res.data.forEach(row => {
-      //   let total = 0;
-      //   goalTotal += parseFloat(row.goal);
-      //   row.Expenses.forEach(expense => {
-      //     total += parseFloat(expense.amount);
-      //   });
-      //   grandTotal += total;
-      //   renderCategoryRow(row, total.toFixed(2));
-      //   row.Expenses.forEach(expense => {
-      //     total += parseFloat(expense.amount);
-      //     renderExpenseRow(expense, row.name);
-      //   });
-      // });
+      let grandTotal = 0;
+      let goalTotal = 0;
+      res.data.forEach(row => {
+        let total = 0;
+        goalTotal += parseFloat(row.goal);
+        row.Expenses.forEach(expense => {
+          total += parseFloat(expense.amount);
+        });
+        grandTotal += total;
+        renderCategoryRow(row, total.toFixed(2));
+        row.Expenses.forEach(expense => {
+          total += parseFloat(expense.amount);
+          renderExpenseRow(expense, row.name);
+        });
+      });
 
-      // renderTotalExpenses(grandTotal.toFixed(2), goalTotal.toFixed(2));
+      renderTotalExpenses(grandTotal.toFixed(2), goalTotal.toFixed(2));
     })
     .catch(err => {
       if (err.response) {
@@ -175,6 +181,7 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
   tdButtons.append(categoryEditButton, categoryDeleteButton);
 };
 
+// function to render date filter modals
 const filterDateClicked = () => {
   const userId = parseInt(
     window.location.href.split('/')[window.location.href.split('/').length - 1]
@@ -252,7 +259,4 @@ $(document).ready(() => {
   $(document).on('click', '.create-category', createCategory);
   $(document).on('click', '.create-expense', createExpense);
   $(document).on('click', '.filter-date', filterDateClicked);
-
-  // TEST
-  getCategoriesAllByDate(userId, '2014-02-01', '2014-03-02');
 });

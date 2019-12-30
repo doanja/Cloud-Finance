@@ -209,6 +209,7 @@ const renderModalContent = (title, userId, data, modalBody) => {
         renderModalFormFields('First name', 'modal-firstName', data.firstName),
         renderModalFormFields('Last name', 'modal-lastName', data.lastName)
       );
+      break;
 
     case 'Filter by Date':
       // render form fields with prefilled text
@@ -216,6 +217,7 @@ const renderModalContent = (title, userId, data, modalBody) => {
         renderModalFormFields('Start Date', 'modal-startDate', '', 'date'),
         renderModalFormFields('End Date', 'modal-endDate', '', 'date')
       );
+      break;
 
     default:
       break;
@@ -331,7 +333,8 @@ const listenForModalSubmission = (option, userId, obj) => {
       const endDate = $('#modal-endDate')
         .val()
         .trim();
-
+      console.log('start :', startDate);
+      console.log('end :', endDate);
       getCategoriesAllByDate(userId, startDate, endDate);
 
       break;
