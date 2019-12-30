@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: profile.js</title>
+    <title>JSDoc: Source: clickListeners.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: profile.js</h1>
+    <h1 class="page-title">Source: clickListeners.js</h1>
 
     
 
@@ -26,118 +26,89 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// API REQUESTS
-
-/**
- * function to get the user's information
- * @param {number} userId the user's id
+            <pre class="prettyprint source linenums"><code>/**
+ * function to render date filter modals
+ * @param {string} option the option to determine which function to run when the modal is submitted
  */
-const getUserInfo = userId => {
-  axios
-    .get(`/api/user/${userId}`)
-    .then(res => {
-      renderFormField('First name', 'text', 'fname', res.data.firstName);
-      renderFormField('Last name', 'text', 'lname', res.data.lastName);
-      renderButtons();
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
-/**
- * function to update the user's information
- * @param {number} userId the user's id
- * @param {string} firstName the user's first name
- * @param {string} lastName the user's last name
- */
-const updateUser = (userId, firstName, lastName) => {
-  axios
-    .put(`/api/user/${userId}`, { firstName, lastName })
-    .then(res => {
-      location.reload();
-    })
-    .catch(err => {
-      if (err.response) {
-        // render alert if there is an error
-        renderAlert(err.response.data);
-      } else if (err.request) {
-        console.log(err.request);
-      } else {
-        console.log('Error', err.message);
-      }
-    });
-};
-
-// RENDER FUNCTIONS
-
-// function to render the submit button
-const renderButtons = () => {
-  // create html elements
-  const formGroup = $('&lt;div>', { class: 'btn-group w-100' });
-  const resetButton = $('&lt;button>', {
-    class: 'btn btn-outline-primary',
-    type: 'button',
-    id: 'reset-button'
-  }).text('Reset');
-  const editButton = $('&lt;button>', {
-    class: 'btn btn-primary',
-    type: 'button',
-    id: 'edit-button'
-  }).text('Edit');
-
-  // append and render html elements
-  $('.wrap').append(formGroup);
-  formGroup.append(resetButton, editButton);
-};
-
-const renderFormField = (text, type, elementId, value) => {
-  // create html elements
-  const formGroup = $('&lt;div>', { class: 'form-group' });
-  const label = $('&lt;label>', { for: type }).text(text);
-  const input = $('&lt;input>', {
-    class: 'form-control profile-form',
-    type: type,
-    id: elementId
-  }).val(value);
-
-  // append and render html elements
-  $('.wrap').append(formGroup);
-  formGroup.append(label, input);
-};
-
-/**
- * function to parse the form and update the uesr's information
- */
-const parseFormData = userId => {
-  const firstName = $('#fname').val();
-  const lastName = $('#lname').val();
-
-  renderModal('Edit Profile', userId, { firstName, lastName });
-};
-
-$(document).ready(() => {
+const filterDateClicked = option => {
   const userId = parseInt(
     window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
+  renderModal('Filter by Date', userId, option);
+};
 
-  // get the user's information from the url
-  getUserInfo(userId);
+// function to pass current data to a modal
+function updateIncomeClicked() {
+  const userIncome = $('#income')
+    .val()
+    .trim();
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+  renderModal('Edit Income', userId, { income: userIncome });
+}
 
-  //  listen for form submission
-  $(document).on('click', '#edit-button', () => {
-    parseFormData(userId);
+// function to create a cateogry
+const createCategory = () => {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+  renderModal('Create Category', userId);
+};
+
+// function to create an expense
+const createExpense = () => {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+  renderModal('Create Expense', userId);
+};
+
+// function to pass current data to a modal
+function editExpenseClicked() {
+  const editId = parseInt($(this).attr('editId')); // get the edit button id
+  const description = $(`.description-${editId}`).attr('value'); // get the description
+  const amount = parseFloat($(`.amount-${editId}`).attr('value')); // get the amount
+  const date = $(`.date-${editId}`).attr('value'); // get the amount
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+  const categoryValue = $(this).attr('categoryValue'); // get the category text
+  renderModal('Edit Expense', userId, {
+    description,
+    amount,
+    date,
+    categoryValue,
+    editId
   });
-  $(document).on('click', '#fname', () => {
-    parseFormData(userId);
+}
+
+// function to pass current data to a modal
+function editCategoryClicked() {
+  const editId = parseInt($(this).attr('editId')); // get the edit button id
+  const categoryValue = $(this).attr('categoryValue'); // get the category text
+  const goalValue = parseFloat($(this).attr('goalValue')); // get the goal value
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 1]
+  );
+  renderModal('Edit Category', userId, { categoryValue, goalValue, editId });
+}
+
+// function to pass current data to a modal
+function deleteExpenseClicked() {
+  const deleteId = parseInt($(this).attr('deleteId'));
+  renderConfirmationModal('Are you sure you want to delete the Expense?', () => {
+    deleteExpense(deleteId);
   });
-  $(document).on('click', '#lname', () => {
-    parseFormData(userId);
+}
+
+// function to pass current data to a modal
+function deleteCategoryClicked() {
+  const deleteId = parseInt($(this).attr('deleteId'));
+  renderConfirmationModal('Are you sure you want to delete the category?', () => {
+    deleteCategory(deleteId);
   });
-  $(document).on('click', '#reset-button', () => {
-    location.reload();
-  });
-});
+}
 </code></pre>
         </article>
     </section>

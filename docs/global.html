@@ -378,7 +378,7 @@
     
 
     
-    <h4 class="name" id="getBudgetCategories"><span class="type-signature"></span>getBudgetCategories<span class="signature">(userId)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="filterDateClicked"><span class="type-signature"></span>filterDateClicked<span class="signature">(option)</span><span class="type-signature"></span></h4>
     
 
     
@@ -386,7 +386,7 @@
 
 
 <div class="description">
-    <p>function to get all category and expense totals</p>
+    <p>function to render date filter modals</p>
 </div>
 
 
@@ -422,13 +422,13 @@
 
         <tr>
             
-                <td class="name"><code>userId</code></td>
+                <td class="name"><code>option</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
             
@@ -438,7 +438,7 @@
 
             
 
-            <td class="description last"><p>the user's id</p></td>
+            <td class="description last"><p>the option to determine which function to run when the modal is submitted</p></td>
         </tr>
 
     
@@ -479,144 +479,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line46">line 46</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="getBudgetCategoriesTotals"><span class="type-signature"></span>getBudgetCategoriesTotals<span class="signature">(userId)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>function to get total category goal and total expense</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>userId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>the user's id</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line69">line 69</a>
+        <a href="clickListeners.js.html">clickListeners.js</a>, <a href="clickListeners.js.html#line5">line 5</a>
     </li></ul></dd>
     
 
@@ -936,7 +799,190 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="expenses.js.html">expenses.js</a>, <a href="expenses.js.html#line7">line 7</a>
+        <a href="expenses.js.html">expenses.js</a>, <a href="expenses.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getCategoriesAllByDate"><span class="type-signature"></span>getCategoriesAllByDate<span class="signature">(userId, startDate, endDate)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>function to render categories and expenses between the start and end date</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>userId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the user's id</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>startDate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">startDate</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the start date</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>endDate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">endDate</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the end date</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="expenses.js.html">expenses.js</a>, <a href="expenses.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -1210,7 +1256,327 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line31">line 31</a>
+        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line116">line 116</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getOverview"><span class="type-signature"></span>getOverview<span class="signature">(userId)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>function to get all category and expense totals</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>userId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the user's id</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line64">line 64</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getOverviewByDate"><span class="type-signature"></span>getOverviewByDate<span class="signature">(userId, startDate, endDate)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>function to get total category goal and total expense</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>userId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the user's id</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>startDate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">startDate</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the start date</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>endDate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">endDate</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the end date</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line26">line 26</a>
     </li></ul></dd>
     
 
@@ -1347,7 +1713,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line93">line 93</a>
+        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line7">line 7</a>
     </li></ul></dd>
     
 
@@ -2633,7 +2999,7 @@
     
 
     
-    <h4 class="name" id="listenForModalSubmission"><span class="type-signature"></span>listenForModalSubmission<span class="signature">(option, userId, obj)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="modalSubmitOn"><span class="type-signature"></span>modalSubmitOn<span class="signature">(option, userId, data)</span><span class="type-signature"></span></h4>
     
 
     
@@ -2723,7 +3089,7 @@
 
         <tr>
             
-                <td class="name"><code>obj</code></td>
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
@@ -2780,7 +3146,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line250">line 250</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line241">line 241</a>
     </li></ul></dd>
     
 
@@ -3353,7 +3719,7 @@
 
             
 
-            <td class="description last"><p>the total expense for the category</p></td>
+            <td class="description last"><p>the total expense of the category</p></td>
         </tr>
 
     
@@ -3394,7 +3760,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line113">line 113</a>
+        <a href="expenses.js.html">expenses.js</a>, <a href="expenses.js.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -3513,7 +3879,7 @@
 
             
 
-            <td class="description last"><p>the total expense of the category</p></td>
+            <td class="description last"><p>the total expense for the category</p></td>
         </tr>
 
     
@@ -3554,7 +3920,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="expenses.js.html">expenses.js</a>, <a href="expenses.js.html#line100">line 100</a>
+        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line158">line 158</a>
     </li></ul></dd>
     
 
@@ -4167,7 +4533,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line96">line 96</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line78">line 78</a>
     </li></ul></dd>
     
 
@@ -4349,7 +4715,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line82">line 82</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line64">line 64</a>
     </li></ul></dd>
     
 
@@ -4509,7 +4875,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="expenses.js.html">expenses.js</a>, <a href="expenses.js.html#line63">line 63</a>
+        <a href="expenses.js.html">expenses.js</a>, <a href="expenses.js.html#line112">line 112</a>
     </li></ul></dd>
     
 
@@ -4646,7 +5012,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line190">line 190</a>
+        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line215">line 215</a>
     </li></ul></dd>
     
 
@@ -4829,7 +5195,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line133">line 133</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line115">line 115</a>
     </li></ul></dd>
     
 
@@ -5035,7 +5401,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line177">line 177</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line159">line 159</a>
     </li></ul></dd>
     
 
@@ -5218,7 +5584,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line111">line 111</a>
+        <a href="modal.js.html">modal.js</a>, <a href="modal.js.html#line93">line 93</a>
     </li></ul></dd>
     
 
@@ -5583,7 +5949,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line166">line 166</a>
+        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line187">line 187</a>
     </li></ul></dd>
     
 
@@ -5903,7 +6269,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="expenses.js.html">expenses.js</a>, <a href="expenses.js.html#line40">line 40</a>
+        <a href="expenses.js.html">expenses.js</a>, <a href="expenses.js.html#line89">line 89</a>
     </li></ul></dd>
     
 
@@ -6063,7 +6429,373 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line143">line 143</a>
+        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line134">line 134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setTextColor"><span class="type-signature"></span>setTextColor<span class="signature">(valueOne, valueTwo, element)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>function to set the text color of the element</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>valueOne</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the first value used for comparision</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>valueTwo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the second value used for comparision</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the element to set the text color</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line226">line 226</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setTextColor"><span class="type-signature"></span>setTextColor<span class="signature">(valueOne, valueTwo, element)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>function to set the text color of the element</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>valueOne</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the first value used for comparision</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>valueTwo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the second value used for comparision</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the element to set the text color</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="expenses.js.html">expenses.js</a>, <a href="expenses.js.html#line183">line 183</a>
     </li></ul></dd>
     
 
@@ -6795,7 +7527,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line8">line 8</a>
+        <a href="overview.js.html">overview.js</a>, <a href="overview.js.html#line93">line 93</a>
     </li></ul></dd>
     
 
@@ -6841,13 +7573,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#getBudgetCategories">getBudgetCategories</a></li><li><a href="global.html#getBudgetCategoriesTotals">getBudgetCategoriesTotals</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategorySum">getCategorySum</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#isValidCategoryName">isValidCategoryName</a></li><li><a href="global.html#isValidDate">isValidDate</a></li><li><a href="global.html#isValidDecimal">isValidDecimal</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidExpenseDescription">isValidExpenseDescription</a></li><li><a href="global.html#isValidName">isValidName</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#listenForModalSubmission">listenForModalSubmission</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#filterDateClicked">filterDateClicked</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategoriesAllByDate">getCategoriesAllByDate</a></li><li><a href="global.html#getCategorySum">getCategorySum</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getOverview">getOverview</a></li><li><a href="global.html#getOverviewByDate">getOverviewByDate</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#isValidCategoryName">isValidCategoryName</a></li><li><a href="global.html#isValidDate">isValidDate</a></li><li><a href="global.html#isValidDecimal">isValidDecimal</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidExpenseDescription">isValidExpenseDescription</a></li><li><a href="global.html#isValidName">isValidName</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#modalSubmitOn">modalSubmitOn</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#setTextColor">setTextColor</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Dec 27 2019 20:01:11 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Dec 30 2019 12:53:28 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
