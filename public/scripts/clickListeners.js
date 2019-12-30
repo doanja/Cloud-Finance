@@ -1,9 +1,12 @@
-// function to render date filter modals
-const filterDateClicked = () => {
+/**
+ * function to render date filter modals
+ * @param {string} option the option to determine which function to run when the modal is submitted
+ */
+const filterDateClicked = option => {
   const userId = parseInt(
     window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
-  renderModal('Filter by Date', userId);
+  renderModal('Filter by Date', userId, option);
 };
 
 // function to pass current data to a modal

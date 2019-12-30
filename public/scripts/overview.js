@@ -20,20 +20,36 @@ const getRemainder = userId => {
 /**
  * function to get total category goal and total expense
  * @param {number} userId the user's id
+ * @param {startDate} startDate the start date
+ * @param {endDate} endDate the end date
  */
-const getBudgetCategoriesTotals = userId => {
-  let expenseTotal = 0;
-  let categoryTotal = 0;
+const getOverviewByDate = (userId, startDate, endDate) => {
+  let spentTotal = 0;
+  let goalTotal = 0;
   axios
-    .get(`/api/category/all/${userId}`)
+    .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
     .then(res => {
+      console.log('res.data :', res.data);
+
+      // if there wasn't any data for that date range
+      if (res.data.length === 0) {
+        renderAlert('No expenses found...');
+        return;
+      }
+
+      $('#tbody').empty(); // empty the table
+      $('#modal').remove();
       res.data.forEach(category => {
-        categoryTotal += parseFloat(category.goal);
+        goalTotal += parseFloat(category.goal);
+        let categoryTotalSpent = 0;
+        // calculate the sum of expenses for each category
         category.Expenses.forEach(expense => {
-          expenseTotal += parseFloat(expense.amount);
+          spentTotal += parseFloat(expense.amount);
+          categoryTotalSpent += parseFloat(expense.amount);
         });
+        renderCategoryRow(category, categoryTotalSpent.toFixed(2));
       });
-      renderTotals(parseFloat(categoryTotal).toFixed(2), expenseTotal.toFixed(2));
+      renderTotals(parseFloat(goalTotal).toFixed(2), spentTotal.toFixed(2));
       getRemainder(userId);
     })
     .catch(err => {
@@ -45,19 +61,24 @@ const getBudgetCategoriesTotals = userId => {
  * function to get all category and expense totals
  * @param {number} userId the user's id
  */
-const getBudgetCategories = userId => {
+const getOverview = userId => {
+  let spentTotal = 0;
+  let goalTotal = 0;
   axios
     .get(`/api/category/all/${userId}`)
     .then(res => {
       res.data.forEach(category => {
-        let categoryTotal = 0;
+        goalTotal += parseFloat(category.goal);
+        let categoryTotalSpent = 0;
         // calculate the sum of expenses for each category
         category.Expenses.forEach(expense => {
-          categoryTotal += parseFloat(expense.amount);
+          spentTotal += parseFloat(expense.amount);
+          categoryTotalSpent += parseFloat(expense.amount);
         });
-        renderCategoryRow(category, categoryTotal.toFixed(2));
+        renderCategoryRow(category, categoryTotalSpent.toFixed(2));
       });
-      getBudgetCategoriesTotals(userId);
+      renderTotals(parseFloat(goalTotal).toFixed(2), spentTotal.toFixed(2));
+      getRemainder(userId);
     })
     .catch(err => {
       console.log(err);
@@ -214,8 +235,11 @@ $(document).ready(() => {
   );
 
   getIncome(userId);
-  getBudgetCategories(userId);
+  getOverview(userId);
 
   $(document).on('click', '#income', updateIncomeClicked);
   $(document).on('click', '.edit-category-button', editCategoryClicked);
+  $(document).on('click', '.filter-date', () => {
+    filterDateClicked('Overview');
+  });
 });

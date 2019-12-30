@@ -8,13 +8,14 @@
  */
 const getCategoriesAllByDate = (userId, startDate, endDate) => {
   axios
-    .get(`/api/category/all/${userId}/${startDate}/${endDate}`, { startDate, endDate })
+    .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
     .then(res => {
       // if there wasn't any data for that date range
       if (res.data.length === 0) {
         renderAlert('No expenses found...');
         return;
       }
+
       $('#tbody').empty(); // empty the table
       $('#modal').remove();
 
@@ -200,5 +201,7 @@ $(document).ready(() => {
   $(document).on('click', '.edit-button', editExpenseClicked);
   $(document).on('click', '.create-category', createCategory);
   $(document).on('click', '.create-expense', createExpense);
-  $(document).on('click', '.filter-date', filterDateClicked);
+  $(document).on('click', '.filter-date', () => {
+    filterDateClicked('Expenses');
+  });
 });

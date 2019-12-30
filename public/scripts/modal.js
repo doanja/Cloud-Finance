@@ -328,7 +328,9 @@ const modalSubmitOn = (option, userId, data) => {
       } else if (!isValidDate(endDate)) {
         renderAlert('Enter a valid End Date');
       } else {
-        getCategoriesAllByDate(userId, startDate, endDate);
+        data === 'Expense'
+          ? getCategoriesAllByDate(userId, startDate, endDate)
+          : getOverviewByDate(userId, startDate, endDate);
       }
       break;
 
