@@ -195,8 +195,9 @@ $(document).ready(() => {
 
   // click listeners
   $(document).on('click', '.delete-category-button', deleteCategoryClicked);
-  $(document).on('click', '.edit-button', editExpenseClicked);
   $(document).on('click', '.delete-button', deleteExpenseClicked);
+  $(document).on('click', '.edit-category-button', editCategoryClicked);
+  $(document).on('click', '.edit-button', editExpenseClicked);
   $(document).on('click', '.create-category', createCategory);
   $(document).on('click', '.create-expense', createExpense);
   $(document).on('click', '.filter-date', filterDateClicked);

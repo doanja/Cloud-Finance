@@ -123,13 +123,7 @@ const renderTotals = (categoryTotal, expenseTotal) => {
   );
   const tdBlank = $('<td>').text('');
 
-  overUnder < 0
-    ? tdOverUnder.addClass('text-red font-weight-bold')
-    : tdOverUnder.addClass('text-green font-weight-bold');
-
-  overUnder > 0
-    ? tdOverUnder.removeClass('text-red font-weight-bold')
-    : tdOverUnder.removeClass('text-green font-weight-bold');
+  setTextColor(overUnder, 0, tdOverUnder);
 
   $('#tbody').append(tr);
   tr.append(tdCategoryName, tdCategoryGoalTotal, tdExpenseTotal, tdOverUnder, tdBlank);
@@ -158,13 +152,7 @@ const renderCategoryRow = (categoryData, totalExpenseCat) => {
     goalValue: categoryData.goal
   });
 
-  overUnder < 0
-    ? tdOverUnder.addClass('text-red font-weight-bold')
-    : tdOverUnder.addClass('text-green font-weight-bold');
-
-  overUnder > 0
-    ? tdOverUnder.removeClass('text-red font-weight-bold')
-    : tdOverUnder.removeClass('text-green font-weight-bold');
+  setTextColor(overUnder, 0, tdOverUnder);
 
   $('#tbody').append(tr);
   tr.append(tdCategoryName, tdCategoryGoal, tdCategoryTotal, tdOverUnder, tdButtons);
@@ -193,13 +181,7 @@ const renderRemainderRow = remainderData => {
   const tdBlank1 = $('<td>').text('');
   const tdBlank2 = $('<td>').text('');
 
-  remainder <= 0
-    ? tdRemainder.addClass('text-red font-weight-bold')
-    : tdRemainder.addClass('text-green font-weight-bold');
-
-  remainder > 0
-    ? tdRemainder.removeClass('text-red font-weight-bold')
-    : tdRemainder.removeClass('text-green font-weight-bold');
+  setTextColor(remainder, 0, tdRemainder);
 
   $('#tbody').append(tr);
   tr.append(tdIncomeLeft, tdRemainder, tdBlank0, tdBlank1, tdBlank2);
@@ -214,6 +196,18 @@ const renderIncome = userData => {
   $('#income').attr('value', userData.income);
 };
 
+/**
+ * function to set the text color of the element
+ * @param {number} valueOne the first value used for comparision
+ * @param {number} valueTwo the second value used for comparision
+ * @param {object} element the element to set the text color
+ */
+const setTextColor = (valueOne, valueTwo, element) => {
+  valueOne < valueTwo
+    ? element.addClass('text-red font-weight-bold')
+    : element.addClass('text-green font-weight-bold');
+};
+
 $(document).ready(() => {
   const userId = parseInt(
     window.location.href.split('/')[window.location.href.split('/').length - 1]
@@ -223,4 +217,5 @@ $(document).ready(() => {
   getBudgetCategories(userId);
 
   $(document).on('click', '#income', updateIncomeClicked);
+  $(document).on('click', '.edit-category-button', editCategoryClicked);
 });

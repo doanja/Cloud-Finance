@@ -330,7 +330,3 @@ const modalSubmit = (option, userId, data) => {
       break;
   }
 };
-
-$(document).ready(() => {
-  $(document).on('click', '.edit-category-button', editCategoryClicked);
-});
