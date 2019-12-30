@@ -16,13 +16,9 @@ module.exports = (app, db, joi) => {
   });
 
   // get all the Category's (with expenses) belonging to the user's id by date
-  app.get('/api/category/date/:id', (req, res) => {
-    const { startDate, endDate } = req.body;
-    const { id } = req.params;
-
-    console.log('get catergories and expenses by date');
-    console.log('id :', id);
-    console.log('req.body :', req.body);
+  app.get('/api/category/date/:id/:startDate/:endDate', (req, res) => {
+    // const {  } = req.body;
+    const { id, startDate, endDate } = req.params;
 
     // define joi schema
     const schema = joi.object({
@@ -31,7 +27,7 @@ module.exports = (app, db, joi) => {
     });
 
     // compare schema with req.body
-    const validate = schema.validate(req.body);
+    const validate = schema.validate({ startDate, endDate });
 
     // if there are errors, send them
     if (validate.error) {

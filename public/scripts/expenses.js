@@ -8,15 +8,14 @@
  */
 const getCategoriesAllByDate = (userId, startDate, endDate) => {
   axios
-    .get(`/api/category/date/${userId}`, { startDate, endDate })
+    .get(`/api/category/date/${userId}/${startDate}/${endDate}`, { startDate, endDate })
     .then(res => {
       if (res.data.length === 0) {
         renderAlert('No expenses found...');
         return;
       }
       $('#tbody').empty(); // empty the table
-      // $('#modal').remove();
-      console.log('res.data :', res.data);
+      $('#modal').remove();
 
       let grandTotal = 0;
       let goalTotal = 0;
