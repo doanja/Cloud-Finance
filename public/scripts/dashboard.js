@@ -1,6 +1,8 @@
 /**
- * function to render the user's total expenses per category vs. goal as a graph
+ * function to render the user's total expenses per category vs. goal as a graph by date
  * @param {number} userId the user's id
+ * @param {startDate} startDate the start date
+ * @param {endDate} endDate the end date
  */
 const getCategoryTotalsByDate = (userId, startDate, endDate) => {
   // handle to the canvas
