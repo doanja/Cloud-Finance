@@ -142,6 +142,22 @@ const getCategoryTotals = userId => {
 };
 
 /**
+ * function to render a card containing the canvas
+ * @param {string} canvasId the id of the canvas
+ */
+const renderCard = canvasId => {
+  const col = $('<div>', { class: 'col-sm-12 col-md-12 col-lg-6 my-3' });
+  const card = $('<div>', { class: 'card dashboard-card' });
+  const cardBody = $('<div>', { class: 'card-body text-center' });
+  const canvas = $('<canvas>', { id: canvasId });
+
+  $('.row').append(col);
+  col.append(card);
+  card.append(cardBody);
+  cardBody.append(canvas);
+};
+
+/**
  *
  * @param {object} canvas the canvas object (dom element)
  * @param {string} chartType the type of chart to be rendered
