@@ -48,20 +48,77 @@ const renderCard = (canvasId, title) => {
 /**
  * function to render the user's total expenses per category vs. goal as a graph by date
  * @param {number} userId the user's id
+ * @param {startDate} startDate the start date
+ * @param {endDate} endDate the end date
+ */
+const getTotalsByDate = (userId, startDate, endDate) => {
+  // handle to the canvas
+  const canvas1 = $('#chart1')[0].getContext('2d');
+
+  const labels = [];
+
+  const expenseTotals = {
+    label: 'Actual Dollars Spent',
+    data: [],
+    backgroundColor: '#418a66'
+  };
+
+  const categoryGoals = {
+    label: 'Goal Dollar Amount',
+    data: [],
+    backgroundColor: '#564d48'
+  };
+
+  axios
+    .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
+    .then(res => {
+      if (res.data.length === 0) {
+        renderCardtitle('No data found. Click here to add expenses.', userId);
+        return;
+      }
+
+      $('canvas').empty(); // empty the canvases
+      $('#modal').remove();
+
+      // for each category...
+      res.data.forEach(category => {
+        let categoryTotal = 0; // counter for category total (sum of all expenses)
+
+        // calculate the sum of expenses for each category
+        category.Expenses.forEach(expense => {
+          categoryTotal += parseFloat(expense.amount);
+        });
+
+        // add data to the arrays
+        labels.push(category.name); // name of each category
+        categoryGoals.data.push(category.goal); // goals
+        expenseTotals.data.push(parseFloat(categoryTotal.toFixed(2))); // category totals
+      });
+
+      // create dataset object
+      const dataset = {
+        labels,
+        datasets: [expenseTotals, categoryGoals]
+      };
+
+      // render the chart
+      renderChart(canvas1, 'bar', dataset);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+/**
+ * function to render the user's total expenses per category vs. goal as a graph by date
+ * @param {number} userId the user's id
  * @param {integer} canvasId the id of the canvas
  * @param {string} title the graph title
  * @param {string} timeframe the time frame of the dates
  * @param {object} firstDateSet the first set of dates
  * @param {object} secondDateSet the second set of dates
  */
-const getCategoryTotalsByDate = (
-  userId,
-  canvasId,
-  title,
-  timeframe,
-  firstDateSet,
-  secondDateSet
-) => {
+const getTotalsByTwoDates = (userId, canvasId, title, timeframe, firstDateSet, secondDateSet) => {
   // render a card
   renderCard(`graph-${canvasId}`, title);
 
@@ -109,9 +166,6 @@ const getCategoryTotalsByDate = (
           renderCardtitle('No data found. Click here to add expenses.', userId);
           return;
         }
-
-        $('canvas').empty(); // empty the canvases
-        $('#modal').remove();
 
         // for each category...
         firstRes.data.forEach(category => {
@@ -174,7 +228,7 @@ $(document).ready(() => {
     filterDateClicked('Dashboard');
   });
 
-  getCategoryTotalsByDate(
+  getTotalsByTwoDates(
     userId,
     0,
     "Today vs. Yesterday's Goal vs. Actuals",
@@ -183,7 +237,7 @@ $(document).ready(() => {
     { startDate2: yesterday, endDate2: yesterday }
   );
 
-  getCategoryTotalsByDate(
+  getTotalsByTwoDates(
     userId,
     1,
     "This Week vs. Last Week's Goal vs. Actuals",
@@ -192,7 +246,7 @@ $(document).ready(() => {
     { startDate2: thisWeekStart, endDate2: thisWeekEnd }
   );
 
-  getCategoryTotalsByDate(
+  getTotalsByTwoDates(
     userId,
     2,
     "This Month vs. Last Month's Goal vs. Actuals",
@@ -201,7 +255,7 @@ $(document).ready(() => {
     { startDate2: thisMonthStart, endDate2: thisMonthEnd }
   );
 
-  getCategoryTotalsByDate(
+  getTotalsByTwoDates(
     userId,
     3,
     "This Year vs. Last Year's Goal vs. Actuals",
