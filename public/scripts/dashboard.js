@@ -34,7 +34,7 @@ const renderCardtitle = (title, userId, canvasId) => {
  * @param {string} title the title of the card
  */
 const renderCard = (canvasId, title) => {
-  const col = $('<div>', { class: 'col-sm-12 col-md-12 col-lg-6 my-3' });
+  const col = $('<div>', { class: 'col-sm-12 col-md-12 col-lg-6 my-3', id: `card-${canvasId}` });
   const card = $('<div>', { class: 'card dashboard-card', id: `dashboard-${canvasId}` });
   const cardBody = $('<div>', { class: 'card-body text-center' });
   const cardTitle = $('<div>', { class: 'card-title' }).text(title);
@@ -53,6 +53,10 @@ const renderCard = (canvasId, title) => {
  * @param {endDate} endDate the end date
  */
 const getTotalsByDate = (userId, startDate, endDate) => {
+  $('#card-graph-0').remove();
+
+  $('#modal').remove();
+
   // render a card
   renderCard(`graph-0`, `Data from ${startDate} to ${endDate}`);
 
@@ -77,15 +81,9 @@ const getTotalsByDate = (userId, startDate, endDate) => {
     .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
     .then(res => {
       if (res.data.length === 0) {
-        console.log('res 0');
         renderCardtitle('No data found. Click here to add expenses.', userId, 'graph-0');
-        $('#graph-0').empty(); // empty the canvas
-        $('#modal').remove();
         return;
       }
-
-      // $('#dashboard-graph-0').empty(); // empty the canvas
-      $('#modal').remove();
 
       // for each category...
       res.data.forEach(category => {
