@@ -1,6 +1,6 @@
 # Cloud Finance
 
-Cloud Finance is a full stack application that allows users to login and track their expenses and goals.
+Cloud Finance is a full stack application that allows users track their expenses and goals. Users can create categories and expenses. Categories can be assigned a goal amount. Expenses can be assigned an amount, date, and assigned to a category. Users can view their expensees in a tabular view or barchart. With date filters, the data can be summarized in a variety of different ways.
 
 ## Usage
 
@@ -11,10 +11,10 @@ View live demo [here]().
 
 ## Built With
 
-- jQuery / JavaScript / Node.js / Express
-- Bootstrap / CSS / SASS
-- Sequelize / MySQL
-- Authentication: Passport / Bcrypt
+- Back End: Node.js / Express.js
+- Front End: jQuery, Bootstrap / CSS / Sass
+- Database: Sequelize / MySQL
+- Authentication: Passport.js / Bcrypt.js
 
 ## License
 
