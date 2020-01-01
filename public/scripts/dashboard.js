@@ -1,4 +1,51 @@
 /**
+ *
+ * @param {object} canvas the canvas object (dom element)
+ * @param {string} chartType the type of chart to be rendered
+ * @param {object} data the data to be rendered
+ */
+const renderChart = (canvas, chartType, data) => {
+  const chart = new Chart(canvas, {
+    type: chartType,
+    data,
+    options: {}
+  });
+};
+
+/**
+ * function to render a link to expenses if there is no existing expenses
+ * @param {string} title the card title
+ * @param {number} userId the user's id
+ */
+const renderCardtitle = (title, userId) => {
+  const cardTitle = $('<a>', {
+    class: 'card-title text-center my-auto',
+    href: `/expenses/${userId}`
+  }).text(title);
+
+  $('.dashboard-card').empty();
+  $('.dashboard-card').prepend(cardTitle);
+};
+
+/**
+ * function to render a card containing the canvas
+ * @param {string} canvasId the id of the canvas
+ * @param {string} title the title of the card
+ */
+const renderCard = (canvasId, title) => {
+  const col = $('<div>', { class: 'col-sm-12 col-md-12 col-lg-6 my-3' });
+  const card = $('<div>', { class: 'card dashboard-card' });
+  const cardBody = $('<div>', { class: 'card-body text-center' });
+  const cardTitle = $('<div>', { class: 'card-title' }).text(title);
+  const canvas = $('<canvas>', { id: canvasId });
+
+  $('.row').append(col);
+  col.append(card);
+  card.append(cardBody);
+  cardBody.append(cardTitle, canvas);
+};
+
+/**
  * function to render the user's total expenses per category vs. goal as a graph by date
  * @param {number} userId the user's id
  * @param {integer} canvasId the id of the canvas
@@ -27,25 +74,25 @@ const getCategoryTotalsByDate = (
 
   const labels = []; // labels for the x-axis
 
-  const expenseTotals1 = {
+  const firstExpenseTotals = {
     label: `Total Spent Previous ${timeframe}`,
     data: [],
     backgroundColor: '#418a66'
   };
 
-  const categoryGoals1 = {
+  const firstCategoryGoals = {
     label: `Goal Previous ${timeframe}`,
     data: [],
     backgroundColor: '#564d48'
   };
 
-  const expenseTotals2 = {
+  const secondExpenseTotals = {
     label: `Total Spent Current ${timeframe}`,
     data: [],
     backgroundColor: '#88c8ba'
   };
 
-  const categoryGoals2 = {
+  const secondCategoryGoals = {
     label: `Goal Current ${timeframe}`,
     data: [],
     backgroundColor: '#797067'
@@ -57,12 +104,12 @@ const getCategoryTotalsByDate = (
       axios.get(`/api/category/all/${userId}/${startDate2}/${endDate2}`)
     ])
     .then(
-      axios.spread((res1, res2) => {
+      axios.spread((firstRes, secondRes) => {
         $('canvas').empty(); // empty the canvases
         $('#modal').remove();
 
         // for each category...
-        res1.data.forEach(category => {
+        firstRes.data.forEach(category => {
           let categoryTotal = 0; // counter for category total (sum of all expenses)
 
           // calculate the sum of expenses for each category
@@ -72,12 +119,12 @@ const getCategoryTotalsByDate = (
 
           // add data to the arrays
           labels.push(category.name); // name of each category
-          categoryGoals1.data.push(category.goal); // goals
-          expenseTotals1.data.push(parseFloat(categoryTotal.toFixed(2))); // category totals
+          firstCategoryGoals.data.push(category.goal); // goals
+          firstExpenseTotals.data.push(parseFloat(categoryTotal.toFixed(2))); // category totals
         });
 
         // for each category...
-        res2.data.forEach(category => {
+        secondRes.data.forEach(category => {
           let categoryTotal = 0; // counter for category total (sum of all expenses)
 
           // calculate the sum of expenses for each category
@@ -89,14 +136,19 @@ const getCategoryTotalsByDate = (
           if (!labels.includes(category.name)) {
             labels.push(category.name); // name of each category
           }
-          categoryGoals2.data.push(category.goal); // goals
-          expenseTotals2.data.push(parseFloat(categoryTotal.toFixed(2))); // category totals
+          secondCategoryGoals.data.push(category.goal); // goals
+          secondExpenseTotals.data.push(parseFloat(categoryTotal.toFixed(2))); // category totals
         });
 
         // create dataset object to pass to renderChart
         const dataset = {
           labels,
-          datasets: [expenseTotals1, categoryGoals1, expenseTotals2, categoryGoals2]
+          datasets: [
+            firstExpenseTotals,
+            firstCategoryGoals,
+            secondExpenseTotals,
+            secondCategoryGoals
+          ]
         };
 
         // render the chart
@@ -106,49 +158,6 @@ const getCategoryTotalsByDate = (
     .catch(err => {
       console.log(err);
     });
-};
-
-/**
- * function to render a card containing the canvas
- * @param {string} canvasId the id of the canvas
- * @param {string} title the title of the card
- */
-const renderCard = (canvasId, title) => {
-  console.log('card rendered');
-  const col = $('<div>', { class: 'col-sm-12 col-md-12 col-lg-6 my-3' });
-  const card = $('<div>', { class: 'card dashboard-card' });
-  const cardBody = $('<div>', { class: 'card-body text-center' });
-  const cardTitle = $('<div>', { class: 'card-title' }).text(title);
-  const canvas = $('<canvas>', { id: canvasId });
-
-  $('.row').append(col);
-  col.append(card);
-  card.append(cardBody);
-  cardBody.append(cardTitle, canvas);
-};
-
-/**
- *
- * @param {object} canvas the canvas object (dom element)
- * @param {string} chartType the type of chart to be rendered
- * @param {object} data the data to be rendered
- */
-const renderChart = (canvas, chartType, data) => {
-  const chart = new Chart(canvas, {
-    type: chartType,
-    data,
-    options: {}
-  });
-};
-
-const renderCardtitle = (titleText, userId) => {
-  const title = $('<a>', {
-    class: 'card-title text-center my-auto',
-    href: `/expenses/${userId}`
-  }).text(titleText);
-
-  $('.dashboard-card').empty();
-  $('.dashboard-card').prepend(title);
 };
 
 $(document).ready(() => {
