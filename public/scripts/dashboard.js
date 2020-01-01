@@ -18,7 +18,7 @@ const renderChart = (canvas, chartType, data) => {
  * @param {number} userId the user's id
  * @param {string} canvasId the id of the canvas
  */
-const renderCardtitle = (title, userId, canvasId) => {
+const renderCardAlert = (title, userId, canvasId) => {
   const cardTitle = $('<a>', {
     class: 'card-title text-center my-auto',
     href: `/expenses/${userId}`
@@ -81,7 +81,7 @@ const getTotalsByDate = (userId, startDate, endDate) => {
     .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
     .then(res => {
       if (res.data.length === 0) {
-        renderCardtitle('No data found. Click here to add expenses.', userId, 'graph-0');
+        renderCardAlert('No data found. Click here to add expenses.', userId, 'graph-0');
         return;
       }
 
@@ -168,7 +168,7 @@ const getTotalsByTwoDates = (userId, canvasId, title, timeframe, firstDateSet, s
     .then(
       axios.spread((firstRes, secondRes) => {
         if (firstRes.data.length === 0 && secondRes.data.length === 0) {
-          renderCardtitle(
+          renderCardAlert(
             'No data found. Click here to add expenses.',
             userId,
             `graph-${canvasId}`
