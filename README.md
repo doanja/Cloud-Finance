@@ -4,7 +4,7 @@ Cloud Finance is a full stack application that allows users track their expenses
 
 ## Usage
 
-View live demo [here]().
+View live demo [here](https://doanja-finance.herokuapp.com/).
 
 1. Sign up and login with an account.
 2. Click **add category** and **add expense** to start.
