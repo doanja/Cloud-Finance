@@ -16,15 +16,16 @@ const renderChart = (canvas, chartType, data) => {
  * function to render a link to expenses if there is no existing expenses
  * @param {string} title the card title
  * @param {number} userId the user's id
+ * @param {string} canvasId the id of the canvas
  */
-const renderCardtitle = (title, userId) => {
+const renderCardtitle = (title, userId, canvasId) => {
   const cardTitle = $('<a>', {
     class: 'card-title text-center my-auto',
     href: `/expenses/${userId}`
   }).text(title);
 
-  $('.dashboard-card').empty();
-  $('.dashboard-card').prepend(cardTitle);
+  $(`#dashboard-${canvasId}`).empty();
+  $(`#dashboard-${canvasId}`).prepend(cardTitle);
 };
 
 /**
@@ -34,12 +35,12 @@ const renderCardtitle = (title, userId) => {
  */
 const renderCard = (canvasId, title) => {
   const col = $('<div>', { class: 'col-sm-12 col-md-12 col-lg-6 my-3' });
-  const card = $('<div>', { class: 'card dashboard-card' });
+  const card = $('<div>', { class: 'card dashboard-card', id: `dashboard-${canvasId}` });
   const cardBody = $('<div>', { class: 'card-body text-center' });
   const cardTitle = $('<div>', { class: 'card-title' }).text(title);
   const canvas = $('<canvas>', { id: canvasId });
 
-  $('.row').append(col);
+  $('.row').prepend(col);
   col.append(card);
   card.append(cardBody);
   cardBody.append(cardTitle, canvas);
@@ -52,8 +53,11 @@ const renderCard = (canvasId, title) => {
  * @param {endDate} endDate the end date
  */
 const getTotalsByDate = (userId, startDate, endDate) => {
+  // render a card
+  renderCard(`graph-0`, `Data from ${startDate} to ${endDate}`);
+
   // handle to the canvas
-  const canvas1 = $('#chart1')[0].getContext('2d');
+  const canvas = $(`#graph-0`)[0].getContext('2d');
 
   const labels = [];
 
@@ -73,11 +77,14 @@ const getTotalsByDate = (userId, startDate, endDate) => {
     .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
     .then(res => {
       if (res.data.length === 0) {
-        renderCardtitle('No data found. Click here to add expenses.', userId);
+        console.log('res 0');
+        renderCardtitle('No data found. Click here to add expenses.', userId, 'graph-0');
+        $('#graph-0').empty(); // empty the canvas
+        $('#modal').remove();
         return;
       }
 
-      $('canvas').empty(); // empty the canvases
+      // $('#dashboard-graph-0').empty(); // empty the canvas
       $('#modal').remove();
 
       // for each category...
@@ -102,7 +109,7 @@ const getTotalsByDate = (userId, startDate, endDate) => {
       };
 
       // render the chart
-      renderChart(canvas1, 'bar', dataset);
+      renderChart(canvas, 'bar', dataset);
     })
     .catch(err => {
       console.log(err);
@@ -163,7 +170,11 @@ const getTotalsByTwoDates = (userId, canvasId, title, timeframe, firstDateSet, s
     .then(
       axios.spread((firstRes, secondRes) => {
         if (firstRes.data.length === 0 && secondRes.data.length === 0) {
-          renderCardtitle('No data found. Click here to add expenses.', userId);
+          renderCardtitle(
+            'No data found. Click here to add expenses.',
+            userId,
+            `graph-${canvasId}`
+          );
           return;
         }
 
@@ -230,25 +241,16 @@ $(document).ready(() => {
 
   getTotalsByTwoDates(
     userId,
-    0,
-    "Today vs. Yesterday's Goal vs. Actuals",
-    'Day',
-    { startDate1: today, endDate1: today },
-    { startDate2: yesterday, endDate2: yesterday }
+    4,
+    "This Year vs. Last Year's Goal vs. Actuals",
+    'Year',
+    { startDate1: lastYearStart, endDate1: lastYearEnd },
+    { startDate2: thisYearStart, endDate2: thisYearEnd }
   );
 
   getTotalsByTwoDates(
     userId,
-    1,
-    "This Week vs. Last Week's Goal vs. Actuals",
-    'Week',
-    { startDate1: lastWeekStart, endDate1: lastWeekEnd },
-    { startDate2: thisWeekStart, endDate2: thisWeekEnd }
-  );
-
-  getTotalsByTwoDates(
-    userId,
-    2,
+    3,
     "This Month vs. Last Month's Goal vs. Actuals",
     'Month',
     { startDate1: lastMonthStart, endDate1: lastMonthEnd },
@@ -257,10 +259,19 @@ $(document).ready(() => {
 
   getTotalsByTwoDates(
     userId,
-    3,
-    "This Year vs. Last Year's Goal vs. Actuals",
-    'Year',
-    { startDate1: lastYearStart, endDate1: lastYearEnd },
-    { startDate2: thisYearStart, endDate2: thisYearEnd }
+    2,
+    "This Week vs. Last Week's Goal vs. Actuals",
+    'Week',
+    { startDate1: lastWeekStart, endDate1: lastWeekEnd },
+    { startDate2: thisWeekStart, endDate2: thisWeekEnd }
+  );
+
+  getTotalsByTwoDates(
+    userId,
+    1,
+    "Today vs. Yesterday's Goal vs. Actuals",
+    'Day',
+    { startDate1: today, endDate1: today },
+    { startDate2: yesterday, endDate2: yesterday }
   );
 });

@@ -333,7 +333,7 @@ const modalSubmitOn = (option, userId, data) => {
         } else if (data === 'Overview') {
           getOverviewByDate(userId, startDate, endDate);
         } else {
-          getCategoryTotalsByDate(userId, startDate, endDate);
+          getTotalsByDate(userId, startDate, endDate);
         }
       }
       break;
