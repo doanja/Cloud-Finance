@@ -61,6 +61,24 @@ module.exports = (app, db, joi) => {
   app.post('/api/expense/csv', (req, res) => {
     // TODO: check if there is a 'none' category, else create 'none' category
     // for each row from req.body, create a new expense
+    const { data } = req.body;
+
+    // create a new category
+    db.Category.create({
+      name,
+      goal,
+      UserId: id
+    })
+      .then(newCategory => {
+        data.forEach(row => {
+          console.log('row :', row);
+          // call create here
+          res.status(200).json(newCategory);
+        });
+      })
+      .catch(err => {
+        res.status(400).json({ error: err });
+      });
   });
 
   // update a single Expense
