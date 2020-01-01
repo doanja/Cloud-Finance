@@ -105,6 +105,11 @@ const getCategoryTotalsByDate = (
     ])
     .then(
       axios.spread((firstRes, secondRes) => {
+        if (firstRes.data.length === 0 && secondRes.data.length === 0) {
+          renderCardtitle('No data found. Click here to add expenses.', userId);
+          return;
+        }
+
         $('canvas').empty(); // empty the canvases
         $('#modal').remove();
 
