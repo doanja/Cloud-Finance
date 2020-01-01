@@ -1,8 +1,11 @@
 /**
  * function to render the user's total expenses per category vs. goal as a graph by date
  * @param {number} userId the user's id
- * @param {startDate} startDate the start date
- * @param {endDate} endDate the end date
+ * @param {integer} canvasId the id of the canvas
+ * @param {string} title the graph title
+ * @param {string} timeframe the time frame of the dates
+ * @param {object} firstDateSet the first set of dates
+ * @param {object} secondDateSet the second set of dates
  */
 const getCategoryTotalsByDate = (
   userId,
@@ -161,7 +164,7 @@ $(document).ready(() => {
     userId,
     0,
     "Today vs. Yesterday's Goal vs. Actuals",
-    'Week',
+    'Day',
     { startDate1: today, endDate1: today },
     { startDate2: yesterday, endDate2: yesterday }
   );
