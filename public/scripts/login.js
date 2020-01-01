@@ -16,7 +16,7 @@ $(document).ready(() => {
       renderAlert('Enter in a valid Email address', '#login-form');
     } else if (!isValidPassword(password)) {
       e.preventDefault();
-      renderAlert('Enter in a valid Password', '#login-form');
+      renderAlert('Enter in a valid Password between 10 - 30 characters', '#login-form');
     }
   });
 });

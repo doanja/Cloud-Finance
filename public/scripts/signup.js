@@ -24,7 +24,7 @@ $(document).ready(() => {
       renderAlert('Enter in a valid Email address', '#signup-form');
     } else if (!isValidPassword(password)) {
       e.preventDefault();
-      renderAlert('Enter in a valid Password', '#signup-form');
+      renderAlert('Enter in a valid Password between 10 - 30 characters', '#signup-form');
     } else if (!isValidName(firstName)) {
       e.preventDefault();
       renderAlert('Enter in a valid First name', '#signup-form');
