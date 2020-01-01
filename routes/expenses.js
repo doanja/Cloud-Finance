@@ -58,6 +58,11 @@ module.exports = (app, db, joi) => {
       });
   });
 
+  app.post('/api/expense/csv', (req, res) => {
+    // TODO: check if there is a 'none' category, else create 'none' category
+    // for each row from req.body, create a new expense
+  });
+
   // update a single Expense
   app.put('/api/expense/:id', (req, res) => {
     const { amount, description, date, CategoryId } = req.body;
