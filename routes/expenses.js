@@ -59,22 +59,32 @@ module.exports = (app, db, joi) => {
   });
 
   app.post('/api/expense/csv', (req, res) => {
-    // TODO: check if there is a 'none' category, else create 'none' category
-    // for each row from req.body, create a new expense
-    const { data } = req.body;
+    const { id, data } = req.body;
 
-    // create a new category
+    // create a new category (temp category for the new rows)
     db.Category.create({
-      name,
-      goal,
+      name: 'N/A',
+      goal: 0,
       UserId: id
     })
       .then(newCategory => {
+        // get the new CategoryId
+        const CategoryId = newCategory.id;
+
+        // add the CategoryId to each row
         data.forEach(row => {
-          console.log('row :', row);
-          // call create here
-          res.status(200).json(newCategory);
+          row.CategoryId = CategoryId;
         });
+
+        // create expense using the csv
+        db.Expense.bulkCreate(data)
+          .then(newExpense => {
+            res.status(200).json(newExpense);
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(400).json({ error: err });
+          });
       })
       .catch(err => {
         res.status(400).json({ error: err });

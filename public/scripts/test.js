@@ -1,7 +1,7 @@
-const postCSV = data => {
+const postCSV = (id, data) => {
   // make put request to update a single category
   axios
-    .post(`/api/expense/csv`, { data })
+    .post(`/api/expense/csv`, { id, data })
     .then(res => {
       // location.reload();
       console.log('csv posted');
@@ -18,34 +18,21 @@ const postCSV = data => {
     });
 };
 
-const formatRow = (value, headerName) => {
-  switch (headerName) {
-    case 'amount':
-      return value.replace(/,/g, '');
-    case 'date':
-      return value.replace(/\//g, '-');
-    default:
-      return value;
-  }
-};
-
 const parseCSV = () => {
   const file = $('#files')[0].files[0];
 
   Papa.parse(file, {
     download: true,
     header: true,
-    transform: (value, headerName) => {
-      return formatRow(value, headerName);
-    },
-    step: row => {
-      console.log('Row:', row.data);
-    },
-    complete: results => {
-      const { data } = results;
+    complete: res => {
+      const { data } = res;
+      const userId = 2;
+      // TODO: change route to use user's id
+      // parseInt(
+      //   window.location.href.split('/')[window.location.href.split('/').length - 1]
+      // );
 
-      // postCSV(data);
-      console.log('DONE PARSING CSV', data);
+      postCSV(userId, data);
     }
   });
 };
