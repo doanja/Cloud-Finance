@@ -24,11 +24,9 @@ const parseCSV = () => {
     header: true,
     complete: res => {
       const { data } = res;
-      const userId = 2;
-      // TODO: change route to use user's id
-      // parseInt(
-      //   window.location.href.split('/')[window.location.href.split('/').length - 1]
-      // );
+      const userId = parseInt(
+        window.location.href.split('/')[window.location.href.split('/').length - 1]
+      );
 
       postCSV(userId, data);
     }
