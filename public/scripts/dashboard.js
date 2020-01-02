@@ -18,14 +18,11 @@ const renderChart = (canvas, chartType, data) => {
  * @param {number} userId the user's id
  * @param {string} canvasId the id of the canvas
  */
-const renderCardAlert = (title, userId, canvasId) => {
-  const cardTitle = $('<a>', {
-    class: 'card-title text-center my-auto',
-    href: `/expenses/${userId}`
-  }).text(title);
-
-  $(`#dashboard-${canvasId}`).empty();
-  $(`#dashboard-${canvasId}`).prepend(cardTitle);
+const renderDashboardAlert = (title, userId, canvasId) => {
+  console.log('canvasId :', canvasId);
+  const cardTitle = $('<a>', { class: 'text-center', href: `/expenses/${userId}` }).text(title);
+  $(`#${canvasId}`).remove();
+  $(`#dashboard-${canvasId}`).append(cardTitle);
 };
 
 /**
@@ -33,10 +30,10 @@ const renderCardAlert = (title, userId, canvasId) => {
  * @param {string} canvasId the id of the canvas
  * @param {string} title the title of the card
  */
-const renderCard = (canvasId, title) => {
+const renderDashboardCard = (canvasId, title) => {
   const col = $('<div>', { class: 'col-sm-12 col-md-12 col-lg-6 my-3', id: `card-${canvasId}` });
-  const card = $('<div>', { class: 'card dashboard-card', id: `dashboard-${canvasId}` });
-  const cardBody = $('<div>', { class: 'card-body text-center' });
+  const card = $('<div>', { class: 'card dashboard-card' });
+  const cardBody = $('<div>', { class: 'card-body text-center', id: `dashboard-${canvasId}` });
   const cardTitle = $('<div>', { class: 'card-title' }).text(title);
   const canvas = $('<canvas>', { id: canvasId });
 
@@ -58,7 +55,7 @@ const getTotalsByDate = (userId, startDate, endDate) => {
   $('#modal').remove();
 
   // render a card
-  renderCard(`graph-0`, `Data from ${startDate} to ${endDate}`);
+  renderDashboardCard(`graph-0`, `Data from ${startDate} to ${endDate}`);
 
   // handle to the canvas
   const canvas = $(`#graph-0`)[0].getContext('2d');
@@ -81,7 +78,7 @@ const getTotalsByDate = (userId, startDate, endDate) => {
     .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
     .then(res => {
       if (res.data.length === 0) {
-        renderCardAlert('No data found. Click here to add expenses.', userId, 'graph-0');
+        renderDashboardAlert('No data found. Click here to add expenses.', userId, 'graph-0');
         return;
       }
 
@@ -125,7 +122,8 @@ const getTotalsByDate = (userId, startDate, endDate) => {
  */
 const getTotalsByTwoDates = (userId, canvasId, title, timeframe, firstDateSet, secondDateSet) => {
   // render a card
-  renderCard(`graph-${canvasId}`, title);
+  renderDashboardCard(`graph-${canvasId}`, title);
+  console.log(title);
 
   // handle to the canvas
   const canvas = $(`#graph-${canvasId}`)[0].getContext('2d');
@@ -168,7 +166,7 @@ const getTotalsByTwoDates = (userId, canvasId, title, timeframe, firstDateSet, s
     .then(
       axios.spread((firstRes, secondRes) => {
         if (firstRes.data.length === 0 && secondRes.data.length === 0) {
-          renderCardAlert(
+          renderDashboardAlert(
             'No data found. Click here to add expenses.',
             userId,
             `graph-${canvasId}`
