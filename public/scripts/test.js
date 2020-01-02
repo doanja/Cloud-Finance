@@ -1,25 +1,24 @@
-const postCSV = (id, data) => {
+/**
+ * function to send the parsed CSV to the API
+ * @param {*} userId the id of the user
+ * @param {*} data the CSV data to be imported
+ */
+const postCSV = (userId, data) => {
   // make put request to update a single category
   axios
-    .post(`/api/expense/csv`, { id, data })
+    .post(`/api/expense/csv`, { id: userId, data })
     .then(res => {
       // location.reload();
       console.log('csv posted');
     })
     .catch(err => {
-      if (err.response) {
-        // render alert if there is an error
-        renderAlert(err.response.data);
-      } else if (err.request) {
-        console.log(err.request);
-      } else {
-        console.log('Error', err.message);
-      }
+      console.log(err);
     });
 };
 
+// function to parse CSV using papaparse
 const parseCSV = () => {
-  const file = $('#files')[0].files[0];
+  const file = $('#files')[0].files[0]; // reference to the DOM file
 
   Papa.parse(file, {
     download: true,
