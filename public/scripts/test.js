@@ -1,7 +1,7 @@
 /**
  * function to send the parsed CSV to the API
- * @param {*} userId the id of the user
- * @param {*} data the CSV data to be imported
+ * @param {number} userId the id of the user
+ * @param {object} data the CSV data to be imported
  */
 const postCSV = (userId, data) => {
   // make put request to update a single category
