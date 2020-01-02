@@ -49,27 +49,28 @@
             <div class="blur p-0 overflow-auto">
 
                 <!-- page header -->
-                <h3 class="pb-2 my-3 mx-auto border-bottom text-light budget-data page-header">
+                <h3 class="pb-2 my-3 mx-auto border-bottom text-light table-data page-header">
                     Overview
                 </h3>
 
                 <!-- income -->
-                <div class="input-group mx-auto budget-data mt-5 mb-0">
+                <div class="input-group mx-auto table-data mt-5 mb-0">
                     <div class="input-group-prepend">
                         <span class="input-group-text bg-primary text-light">Income</span>
                     </div>
                     <input type="text" class="form-control" id="income" readonly>
                 </div>
 
-                <!-- create expense / category buttons -->
-                <div class="text-center mt-5">
-                    <div class="btn btn-primary text-white filter-date"><i class="fas fa-plus fa-1x"></i>
-                        Filter Date
+                <!-- filter date buttons -->
+                <div class="text-center mx-auto mt-5 table-data">
+                    <div class="btn-group w-100">
+                        <div class="btn btn-primary text-white filter-date"><i class="far fa-calendar-alt fa-1x"></i>
+                            Filter Dates</div>
                     </div>
                 </div>
 
                 <!-- budget overview -->
-                <table class="table table-hover bg-white budget-data mx-auto my-5" id="table">
+                <table class="table table-hover bg-white table-data mx-auto my-5" id="table">
                     <thead class="thead bg-primary text-light">
                         <tr>
                             <th>Category</th>
@@ -97,8 +98,6 @@
         </footer>
     </div>
 
-
-    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

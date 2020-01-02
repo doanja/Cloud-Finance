@@ -1,9 +1,14 @@
-const renderAlert = (text, parentElement = '.modal-body') => {
+/**
+ * function to render an alert in the modal
+ * @param {string} alertText the text to be displayed in the alert
+ * @param {string} parentElement the element class or id
+ */
+const renderAlert = (alertText, parentElement = '.modal-body') => {
   const alert = $('<div>', {
     class: 'alert alert-danger alert-dismissible fade show',
     role: 'alert'
   });
-  const alertText = $('<strong>').text(text);
+  const text = $('<strong>').text(alertText);
   const dismissButton = $('<button>', {
     type: 'button',
     class: 'close',
@@ -13,7 +18,7 @@ const renderAlert = (text, parentElement = '.modal-body') => {
   const dismissIcon = $('<span>', { 'aria-hidden': true }).text('\u{2A2F}');
 
   $(parentElement).prepend(alert);
-  alert.append(alertText, dismissButton);
+  alert.append(text, dismissButton);
   dismissButton.append(dismissIcon);
 };
 
@@ -90,7 +95,7 @@ const renderDropdown = elementId => {
  * @param {string} inputText the text to be displayed in the input
  * @return {object} the form group
  */
-const renderModalFormFields = (labelType, elementId, inputText, inputType = 'test') => {
+const renderModalFormFields = (labelType, elementId, inputText, inputType) => {
   // create the elements
   const formGroup = $('<div>', { class: 'form-group' });
   const label = $('<label>', { for: labelType }).text(labelType);
@@ -219,6 +224,11 @@ const renderModalContent = (title, userId, data, modalBody) => {
       );
       break;
 
+    case 'Import CSV':
+      const csvLink = $('<a>', { href: '../csv/small_dataset.csv' }).text('Download sample CSV ');
+      modalBody.append(renderModalFormFields('Import CSV', 'modal-csv', '', 'file'), csvLink);
+      break;
+
     default:
       break;
   }
@@ -336,6 +346,10 @@ const modalSubmitOn = (option, userId, data) => {
           getTotalsByDate(userId, startDate, endDate);
         }
       }
+      break;
+
+    case 'Import CSV':
+      parseCSV();
       break;
 
     default:

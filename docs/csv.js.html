@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: profile.js</title>
+    <title>JSDoc: Source: csv.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: profile.js</h1>
+    <h1 class="page-title">Source: csv.js</h1>
 
     
 
@@ -26,116 +26,44 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// API REQUESTS
-
-/**
- * function to get the user's information
- * @param {number} userId the user's id
+            <pre class="prettyprint source linenums"><code>/**
+ * function to send the parsed CSV to the API
+ * @param {number} userId the id of the user
+ * @param {object} data the CSV data to be imported
  */
-const getUserInfo = userId => {
+const postCSV = (userId, data) => {
+  // make put request to update a single category
   axios
-    .get(`/api/user/${userId}`)
+    .post(`/api/expense/csv`, { id: userId, data })
     .then(res => {
-      renderFormField('First name', 'text', 'fname', res.data.firstName);
-      renderFormField('Last name', 'text', 'lname', res.data.lastName);
-      renderButtons();
+      location.reload();
     })
     .catch(err => {
       console.log(err);
     });
 };
 
-/**
- * function to update the user's information
- * @param {number} userId the user's id
- * @param {string} firstName the user's first name
- * @param {string} lastName the user's last name
- */
-const updateUser = (userId, firstName, lastName) => {
-  axios
-    .put(`/api/user/${userId}`, { firstName, lastName })
-    .then(res => {
-      location.reload();
-    })
-    .catch(err => {
-      if (err.response) {
-        // render alert if there is an error
-        renderAlert(err.response.data);
-      } else if (err.request) {
-        console.log(err.request);
-      } else {
-        console.log('Error', err.message);
-      }
-    });
-};
+// function to parse CSV using papaparse
+const parseCSV = () => {
+  const file = $('#modal-csv')[0].files[0]; // reference to the DOM file
 
-// RENDER FUNCTIONS
+  Papa.parse(file, {
+    download: true,
+    header: true,
+    complete: res => {
+      const { data } = res;
+      const userId = parseInt(
+        window.location.href.split('/')[window.location.href.split('/').length - 1]
+      );
 
-// function to render the submit button
-const renderButtons = () => {
-  // create html elements
-  const formGroup = $('&lt;div>', { class: 'btn-group w-100' });
-  const resetButton = $('&lt;button>', {
-    class: 'btn btn-outline-primary',
-    type: 'button',
-    id: 'reset-button'
-  }).text('Reset');
-  const editButton = $('&lt;button>', {
-    class: 'btn btn-primary',
-    type: 'button',
-    id: 'edit-button'
-  }).text('Edit');
-
-  // append and render html elements
-  $('.wrap').append(formGroup);
-  formGroup.append(resetButton, editButton);
-};
-
-const renderFormField = (text, type, elementId, value) => {
-  // create html elements
-  const formGroup = $('&lt;div>', { class: 'form-group' });
-  const label = $('&lt;label>', { for: type }).text(text);
-  const input = $('&lt;input>', {
-    class: 'form-control profile-form',
-    type: type,
-    id: elementId
-  }).val(value);
-
-  // append and render html elements
-  $('.wrap').append(formGroup);
-  formGroup.append(label, input);
-};
-
-/**
- * function to parse the form and update the uesr's information
- */
-const parseFormData = userId => {
-  const firstName = $('#fname').val();
-  const lastName = $('#lname').val();
-
-  renderModal('Edit Profile', userId, { firstName, lastName });
+      postCSV(userId, data);
+    }
+  });
 };
 
 $(document).ready(() => {
-  const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
-  );
-
-  // get the user's information from the url
-  getUserInfo(userId);
-
-  //  listen for form submission
-  $(document).on('click', '#edit-button', () => {
-    parseFormData(userId);
-  });
-  $(document).on('click', '#fname', () => {
-    parseFormData(userId);
-  });
-  $(document).on('click', '#lname', () => {
-    parseFormData(userId);
-  });
-  $(document).on('click', '#reset-button', () => {
-    location.reload();
+  $(document).on('click', '.import-csv', () => {
+    renderModal('Import CSV');
   });
 });
 </code></pre>

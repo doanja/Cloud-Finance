@@ -49,27 +49,26 @@
             <div class="blur p-0 overflow-auto">
 
                 <!-- page header -->
-                <h3 class="pb-2 my-3 mx-auto border-bottom text-light budget-data page-header">
+                <h3 class="pb-2 my-3 mx-auto border-bottom text-light table-data page-header">
                     Expenses
                 </h3>
 
-                <!-- create expense / category buttons / filter button -->
-                <div class="text-center mt-5">
-                    <div class="btn btn-primary text-white create-category"><i class="fas fa-plus fa-1x"></i>
-                        Create
-                        Category
-                    </div>
-                    <div class="btn btn-primary text-white create-expense"><i class="fas fa-plus fa-1x"></i>
-                        Create
-                        Expense
-                    </div>
-                    <div class="btn btn-primary text-white filter-date"><i class="fas fa-plus fa-1x"></i>
-                        Filter Date
+                <!-- create expense / category buttons / filter button / import csv button -->
+                <div class="text-center mx-auto mt-5 table-data">
+                    <div class="btn-group w-100">
+                        <div class="btn btn-primary text-white create-category"><i class="fas fa-plus fa-1x"></i>
+                            Category</div>
+                        <div class="btn btn-primary text-white create-expense"><i class="fas fa-plus fa-1x"></i> Expense
+                        </div>
+                        <div class="btn btn-primary text-white filter-date"><i class="far fa-calendar-alt fa-1x"></i>
+                            Filter Dates</div>
+                        <div class="btn btn-primary text-white import-csv"><i class="fas fa-file-upload fa-1x"></i>
+                            Import CSV</div>
                     </div>
                 </div>
 
                 <!-- expense table -->
-                <table class="table table-hover bg-white budget-data mx-auto my-5" id="table">
+                <table class="table table-hover bg-white table-data mx-auto my-5" id="table">
                     <thead class="thead bg-primary text-light">
                         <tr>
                             <th scope="col">Category</th>
@@ -97,8 +96,6 @@
         </footer>
     </div>
 
-
-    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -110,6 +107,9 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 
+    <!-- papaparse CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+
     <!-- axios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 
@@ -120,6 +120,7 @@
     <script type="text/javascript" src="../scripts/modal.js"></script>
     <script type="text/javascript" src="../scripts/nav.js"></script>
     <script type="text/javascript" src="../scripts/validatation.js"></script>
+    <script type="text/javascript" src="../scripts/csv.js"></script>
 </body>
 
 </html>
