@@ -8,8 +8,7 @@ const postCSV = (userId, data) => {
   axios
     .post(`/api/expense/csv`, { id: userId, data })
     .then(res => {
-      // location.reload();
-      console.log('csv posted');
+      location.reload();
     })
     .catch(err => {
       console.log(err);
@@ -18,7 +17,7 @@ const postCSV = (userId, data) => {
 
 // function to parse CSV using papaparse
 const parseCSV = () => {
-  const file = $('#files')[0].files[0]; // reference to the DOM file
+  const file = $('#modal-csv')[0].files[0]; // reference to the DOM file
 
   Papa.parse(file, {
     download: true,
@@ -37,5 +36,7 @@ const parseCSV = () => {
 };
 
 $(document).ready(() => {
-  $('#parse-button').click(parseCSV);
+  $(document).on('click', '.import-csv', () => {
+    renderModal('Import CSV');
+  });
 });

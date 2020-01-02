@@ -90,7 +90,7 @@ const renderDropdown = elementId => {
  * @param {string} inputText the text to be displayed in the input
  * @return {object} the form group
  */
-const renderModalFormFields = (labelType, elementId, inputText, inputType = 'test') => {
+const renderModalFormFields = (labelType, elementId, inputText, inputType) => {
   // create the elements
   const formGroup = $('<div>', { class: 'form-group' });
   const label = $('<label>', { for: labelType }).text(labelType);
@@ -219,6 +219,11 @@ const renderModalContent = (title, userId, data, modalBody) => {
       );
       break;
 
+    case 'Import CSV':
+      // render form fields with prefilled text
+      modalBody.append(renderModalFormFields('Import CSV', 'modal-csv', '', 'file'));
+      break;
+
     default:
       break;
   }
@@ -336,6 +341,10 @@ const modalSubmitOn = (option, userId, data) => {
           getTotalsByDate(userId, startDate, endDate);
         }
       }
+      break;
+
+    case 'Import CSV':
+      parseCSV();
       break;
 
     default:
