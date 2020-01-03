@@ -122,42 +122,4 @@ module.exports = (passport, db) => {
       }
     )
   );
-
-  passport.use(
-    new JWTStrategy(
-      {
-        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-        secretOrKey: 'secret',
-        passReqToCallback: true
-      },
-      (req, jwtPayload, done) => {
-        // if the token id does not match the
-        if (req.params.id !== jwtPayload.user.id.toString()) {
-          console.log('########## id and token mismatch ##########');
-          return done(null, false, {
-            message: 'Token id mismatch'
-          });
-        }
-        // otherwise confirm the token.id exists in the Users table
-        else {
-          console.log('########## finding token id in db ##########');
-          return db.User.findOne({
-            where: {
-              id: jwtPayload.user.id
-            }
-          })
-            .then(user => {
-              return done(null, user);
-            })
-            .catch(err => {
-              console.log('Error:', err);
-
-              return done(null, false, {
-                message: 'Something went wrong with your authorization token'
-              });
-            });
-        }
-      }
-    )
-  );
 };

@@ -1,6 +1,6 @@
-module.exports = (app, db, joi, passport) => {
+module.exports = (app, db, joi) => {
   // get all the Category's (with expenses) belonging to the user's id
-  app.get('/api/category/all/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.get('/api/category/all/:id', (req, res) => {
     // console.log('db :', db);
     db.Category.findAll({
       include: [db.Expense],
@@ -18,7 +18,7 @@ module.exports = (app, db, joi, passport) => {
   // get all the Category's (with expenses) belonging to the user's id by date
   app.get(
     '/api/category/all/:id/:startDate/:endDate',
-    passport.authenticate('jwt', { session: false }),
+
     (req, res) => {
       const { id, startDate, endDate } = req.params;
 
@@ -63,7 +63,7 @@ module.exports = (app, db, joi, passport) => {
   );
 
   // get all catergories belonging to the user
-  app.get('/api/category/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.get('/api/category/:id', (req, res) => {
     db.Category.findAll({ where: { UserId: req.params.id } })
       .then(data => {
         res.status(200).json(data);
@@ -75,7 +75,7 @@ module.exports = (app, db, joi, passport) => {
   });
 
   // create a single category
-  app.post('/api/category/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.post('/api/category/:id', (req, res) => {
     const { name, goal } = req.body;
     const { id } = req.params;
 
@@ -116,7 +116,7 @@ module.exports = (app, db, joi, passport) => {
   });
 
   // update a single Category
-  app.put('/api/category/', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.put('/api/category/', (req, res) => {
     const { name, goal, id } = req.body;
 
     // define joi schema
@@ -165,7 +165,7 @@ module.exports = (app, db, joi, passport) => {
   });
 
   // delete a single Category
-  app.delete('/api/category/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.delete('/api/category/:id', (req, res) => {
     db.Category.destroy({
       where: { id: req.params.id }
     })

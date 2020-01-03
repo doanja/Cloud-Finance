@@ -72,7 +72,7 @@ const renderNavLinks = (linkTitle, pageName, userId, parentElement) => {
 };
 
 $(document).ready(() => {
-  const userId = window.location.href.split('/')[window.location.href.split('/').length - 1];
+  const userId = window.location.href.split('/')[window.location.href.split('/').length - 2];
 
   $('.navbar-brand').attr('href', '/dashboard/' + userId);
 

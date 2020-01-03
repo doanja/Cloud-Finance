@@ -1,7 +1,6 @@
 const verifyToken = require('../config/middleware/verifyToken');
-const jwt = require('jsonwebtoken');
 
-module.exports = (app, path, passport) => {
+module.exports = (app, path, jwt) => {
   app.get('/', (req, res) => {
     // if (req.user) {
     //   console.log('logged in already');
@@ -10,25 +9,98 @@ module.exports = (app, path, passport) => {
     res.sendFile(path.join(__dirname, '../public/html/index.html'));
   });
 
-  app.get('/dashboard/:userId', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/html/dashboard.html'));
-  });
-
-  app.get('/overview/:userId', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/html/overview.html'));
-  });
-
-  app.get('/expenses/:userId', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/html/expenses.html'));
-  });
-
-  app.get('/profile/:userId/:token', (req, res) => {
+  app.get('/dashboard/:userId/:token', verifyToken, (req, res) => {
     jwt.verify(req.token, 'secret', (err, tokenData) => {
-      if (err || tokenData.user.id.toString() !== req.params.userId) {
-        console.log('token doesnt match usesr id');
-        res.sendStatus(403);
-      } else {
-        console.log('token matched --> redirecting...');
+      // check to see if user is not an id
+      if (
+        req.params.userId === 'styles' ||
+        req.params.userId === 'scripts' ||
+        req.params.userId === 'images'
+      ) {
+        // send the requested file
+        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.params.token}`));
+      }
+
+      // check for token id and user id mismatch
+      else if (err || tokenData.user.id.toString() !== req.params.userId) {
+        res.sendFile(path.join(__dirname, '../public/html/401.html'));
+      }
+
+      // all checks past, send the html file
+      else {
+        res.sendFile(path.join(__dirname, '../public/html/dashboard.html'));
+      }
+    });
+  });
+
+  app.get('/overview/:userId/:token', verifyToken, (req, res) => {
+    console.log('req.params :', req.params);
+    jwt.verify(req.token, 'secret', (err, tokenData) => {
+      // check to see if user is not an id
+      if (
+        req.params.userId === 'styles' ||
+        req.params.userId === 'scripts' ||
+        req.params.userId === 'images'
+      ) {
+        // send the requested file
+        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.params.token}`));
+      }
+
+      // check for token id and user id mismatch
+      else if (err || tokenData.user.id.toString() !== req.params.userId) {
+        res.sendFile(path.join(__dirname, '../public/html/401.html'));
+      }
+
+      // all checks past, send the html file
+      else {
+        res.sendFile(path.join(__dirname, '../public/html/overview.html'));
+      }
+    });
+  });
+
+  app.get('/expenses/:userId/:token', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secret', (err, tokenData) => {
+      // check to see if user is not an id
+      if (
+        req.params.userId === 'styles' ||
+        req.params.userId === 'scripts' ||
+        req.params.userId === 'images'
+      ) {
+        // send the requested file
+        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.params.token}`));
+      }
+
+      // check for token id and user id mismatch
+      else if (err || tokenData.user.id.toString() !== req.params.userId) {
+        res.sendFile(path.join(__dirname, '../public/html/401.html'));
+      }
+
+      // all checks past, send the html file
+      else {
+        res.sendFile(path.join(__dirname, '../public/html/expenses.html'));
+      }
+    });
+  });
+
+  app.get('/profile/:userId/:token', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secret', (err, tokenData) => {
+      // check to see if user is not an id
+      if (
+        req.params.userId === 'styles' ||
+        req.params.userId === 'scripts' ||
+        req.params.userId === 'images'
+      ) {
+        // send the requested file
+        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.params.token}`));
+      }
+
+      // check for token id and user id mismatch
+      else if (err || tokenData.user.id.toString() !== req.params.userId) {
+        res.sendFile(path.join(__dirname, '../public/html/401.html'));
+      }
+
+      // all checks past, send the html file
+      else {
         res.sendFile(path.join(__dirname, '../public/html/profile.html'));
       }
     });

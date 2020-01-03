@@ -1,6 +1,6 @@
-module.exports = (app, db, joi, passport) => {
+module.exports = (app, db, joi) => {
   // create a single expense
-  app.post('/api/expense/', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.post('/api/expense/', (req, res) => {
     const { amount, description, date, CategoryId } = req.body;
 
     // define joi schema
@@ -47,7 +47,7 @@ module.exports = (app, db, joi, passport) => {
   });
 
   // post route for bulk creating expenses from a csv file
-  app.post('/api/expense/csv', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.post('/api/expense/csv', (req, res) => {
     const { id, data } = req.body;
 
     // check to see if "N/A" category already exists
@@ -110,7 +110,7 @@ module.exports = (app, db, joi, passport) => {
   });
 
   // update a single Expense
-  app.put('/api/expense/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.put('/api/expense/:id', (req, res) => {
     const { amount, description, date, CategoryId } = req.body;
     const { id } = req.params;
 
@@ -163,7 +163,7 @@ module.exports = (app, db, joi, passport) => {
   });
 
   // delete a single expense
-  app.delete('/api/expense/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.delete('/api/expense/:id', (req, res) => {
     db.Expense.destroy({
       where: { id: req.params.id }
     })

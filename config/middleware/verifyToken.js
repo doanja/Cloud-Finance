@@ -1,19 +1,15 @@
 module.exports = (req, res, next) => {
-  // console.log('############### verifying token ###################', req.params);
-  // Get auth header value
+  // get token from req.params
   const bearerToken = req.params.token;
 
-  // Check if bearer is undefined
+  // check if bearer is undefined
   if (typeof bearerToken !== 'undefined') {
-    console.log('############### checking token ###################');
-
     req.token = bearerToken;
 
-    // Next middleware
+    // next middleware
     next();
   } else {
-    console.log('############### forbidden sent ###################');
-    // Forbidden
-    res.sendStatus(403);
+    // forbidden
+    res.sendFile(path.join(__dirname, '../public/html/401.html'));
   }
 };

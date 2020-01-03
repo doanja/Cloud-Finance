@@ -18,10 +18,22 @@ const renderSettingsLink = (page, userId, parentElement) => {
 };
 
 /**
+ * function to render logout link in nav
+ * @param {string} parentElement the class or id name to append this to
+ */
+const renderLogoutLink = (parentElement = '#menu') => {
+  const a = $('<a>', {
+    class: 'dropdown-item',
+    href: '/logout'
+  }).text('Logout');
+  $(parentElement).append(a);
+};
+
+/**
  * function to render a dropdown divider
  * @param {string} parentElement the class or id name to append this to
  */
-const renderDivider = parentElement => {
+const renderDivider = (parentElement = '#menu') => {
   const divider = $('<div>', { class: 'dropdown-divider' });
 
   $(parentElement).append(divider);
@@ -43,7 +55,7 @@ const renderNavLinks = (linkTitle, pageName, userId, token, parentElement = '#me
 };
 
 $(document).ready(() => {
-  const userId = window.location.href.split('/')[window.location.href.split('/').length - 1];
+  const userId = window.location.href.split('/')[window.location.href.split('/').length - 2];
 
   // grab the jwt token from local storage
   const token = localStorage.getItem('token');
@@ -54,6 +66,6 @@ $(document).ready(() => {
   renderNavLinks('Dashboard', 'dashboard', userId, token);
   renderNavLinks('Overview', 'overview', userId, token);
   renderNavLinks('Expenses', 'expenses', userId, token);
-  renderDivider('#menu');
-  renderNavLinks('Logout', 'logout', '');
+  renderDivider();
+  renderLogoutLink();
 });

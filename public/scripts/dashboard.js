@@ -226,7 +226,7 @@ const getTotalsByTwoDates = (userId, canvasId, title, timeframe, firstDateSet, s
 
 $(document).ready(() => {
   const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
 
   // grab the jwt token from local storage

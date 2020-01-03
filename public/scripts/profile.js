@@ -93,12 +93,6 @@ $(document).ready(() => {
     window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
 
-  // grab the jwt token from local storage
-  const token = localStorage.getItem('token');
-
-  // set all axios requests headers
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-
   // get the user's information from the url
   getUserInfo(userId);
 

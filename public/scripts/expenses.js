@@ -188,14 +188,8 @@ const setTextColor = (valueOne, valueTwo, element) => {
 
 $(document).ready(() => {
   const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
-
-  // grab the jwt token from local storage
-  const token = localStorage.getItem('token');
-
-  // set all axios requests headers
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
   // render the table
   getCategoriesAll(userId);
@@ -208,6 +202,6 @@ $(document).ready(() => {
   $(document).on('click', '.create-category', createCategory);
   $(document).on('click', '.create-expense', createExpense);
   $(document).on('click', '.filter-date', () => {
-    filterDateClicked('Expenses');
+    filterDateClicked('Expense');
   });
 });
