@@ -11,7 +11,7 @@ const login = (email, password) => {
       window.localStorage.token = res.data.token;
 
       // redirect user to the dashboard
-      window.location = `/dashboard/${res.data.user.id}`;
+      window.location = `/dashboard/${res.data.user.id}/${res.data.token}`;
     })
     .catch(err => {
       console.log('Error', err.message);
