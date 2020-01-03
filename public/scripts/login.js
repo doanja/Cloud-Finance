@@ -4,6 +4,7 @@ const login = (email, password) => {
     .then(res => {
       // location.reload();
       console.log(res);
+      window.localStorage.token = res.data.token;
       window.location = `/dashboard/${res.data.user.id}`;
     })
     .catch(err => {
