@@ -1,6 +1,6 @@
 const isLoggedIn = require('../config/middleware/isLoggedIn');
 
-module.exports = (app, path) => {
+module.exports = (app, path, passport) => {
   app.get('/', (req, res) => {
     // if (req.user) {
     //   console.log('logged in already');
@@ -9,7 +9,7 @@ module.exports = (app, path) => {
     res.sendFile(path.join(__dirname, '../public/html/index.html'));
   });
 
-  app.get('/dashboard/:userId', isLoggedIn, (req, res) => {
+  app.get('/dashboard/:userId', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/html/dashboard.html'));
   });
 

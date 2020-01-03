@@ -1,5 +1,9 @@
 const LocalStrategy = require('passport-local').Strategy;
-const Bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt-nodejs');
+
+const passportJWT = require('passport-jwt');
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
 module.exports = (passport, db) => {
   // for sigining up new user
@@ -16,7 +20,7 @@ module.exports = (passport, db) => {
       (req, email, password, done) => {
         // function to generate hash password
         const hashPassword = password => {
-          return Bcrypt.hashSync(password, Bcrypt.genSaltSync(8), null);
+          return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
         };
 
         // check to see if user already exists
@@ -76,8 +80,9 @@ module.exports = (passport, db) => {
         passReqToCallback: true // allows us to pass back the entire request to the callback
       },
       (req, email, password, done) => {
+        console.log('checking password######################');
         const isValidPassword = (userpass, password) => {
-          return Bcrypt.compareSync(password, userpass);
+          return bcrypt.compareSync(password, userpass);
         };
 
         db.User.findOne({
@@ -86,6 +91,7 @@ module.exports = (passport, db) => {
           }
         })
           .then(user => {
+            console.log('#################### user found');
             if (!user) {
               return done(null, false, {
                 message: 'Email does not exist'
@@ -112,27 +118,47 @@ module.exports = (passport, db) => {
     )
   );
 
-  // for sessions
-
-  //serialize
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
-
-  // deserialize user
-  passport.deserializeUser((id, done) => {
-    db.User.findOne({
-      where: {
-        id
+  passport.use(
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey: 'secret'
+      },
+      function(jwtPayload, cb) {
+        console.log('jwtPayload :', jwtPayload);
+        //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+        return db.User.findOne({ where: { id: jwtPayload.id } })
+          .then(user => {
+            return cb(null, user);
+          })
+          .catch(err => {
+            return cb(err);
+          });
       }
-    })
-      .then(user => {
-        if (user) {
-          done(null, user.get());
-        }
-      })
-      .catch(err => {
-        done(err, null);
-      });
-  });
+    )
+  );
+
+  //   // for sessions
+
+  //   //serialize
+  //   passport.serializeUser((user, done) => {
+  //     done(null, user.id);
+  //   });
+
+  //   // deserialize user
+  //   passport.deserializeUser((id, done) => {
+  //     db.User.findOne({
+  //       where: {
+  //         id
+  //       }
+  //     })
+  //       .then(user => {
+  //         if (user) {
+  //           done(null, user.get());
+  //         }
+  //       })
+  //       .catch(err => {
+  //         done(err, null);
+  //       });
+  //   });
 };

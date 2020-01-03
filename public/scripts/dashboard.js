@@ -19,7 +19,6 @@ const renderChart = (canvas, chartType, data) => {
  * @param {string} canvasId the id of the canvas
  */
 const renderDashboardAlert = (title, userId, canvasId) => {
-  console.log('canvasId :', canvasId);
   const cardTitle = $('<a>', { class: 'text-center', href: `/expenses/${userId}` }).text(title);
   $(`#${canvasId}`).remove();
   $(`#dashboard-${canvasId}`).append(cardTitle);
@@ -123,7 +122,6 @@ const getTotalsByDate = (userId, startDate, endDate) => {
 const getTotalsByTwoDates = (userId, canvasId, title, timeframe, firstDateSet, secondDateSet) => {
   // render a card
   renderDashboardCard(`graph-${canvasId}`, title);
-  console.log(title);
 
   // handle to the canvas
   const canvas = $(`#graph-${canvasId}`)[0].getContext('2d');

@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 module.exports = (app, path, passport) => {
   app.get('/signup', (req, res) => {
     // redirect user to dashboard if they're already logged in
@@ -35,18 +37,20 @@ module.exports = (app, path, passport) => {
   );
 
   app.post('/login', (req, res, next) => {
-    passport.authenticate('local-login', (err, user, info) => {
-      if (err) {
-        return next(err);
+    passport.authenticate('local-login', { session: false }, (err, user, info) => {
+      console.log('user :', user);
+      if (!user || err) {
+        return res.redirect(403, '/login/err');
       }
-      if (!user) {
-        return res.redirect('/login/err');
-      }
-      req.login(user, err => {
+      req.login(user, { session: false }, err => {
         if (err) {
-          return next(err);
+          res.send(err);
         }
-        return res.redirect('/dashboard/' + user.id);
+        // generate a signed son web token with the contents of user object and return it in the response
+        const token = jwt.sign({ user }, 'secret');
+
+        // return res.redirect(`/dashboard/${user.id}`);
+        return res.json({ user, token });
       });
     })(req, res, next);
   });
