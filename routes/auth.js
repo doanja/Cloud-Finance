@@ -38,7 +38,6 @@ module.exports = (app, path, passport) => {
 
   app.post('/login', (req, res, next) => {
     passport.authenticate('local-login', { session: false }, (err, user, info) => {
-      console.log('user :', user);
       if (!user || err) {
         return res.redirect(403, '/login/err');
       }

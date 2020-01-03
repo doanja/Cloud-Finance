@@ -191,8 +191,6 @@ $(document).ready(() => {
     window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
-  const token = localStorage.getItem('token');
-
   // render the table
   getCategoriesAll(userId);
 

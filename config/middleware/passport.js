@@ -80,7 +80,6 @@ module.exports = (passport, db) => {
         passReqToCallback: true // allows us to pass back the entire request to the callback
       },
       (req, email, password, done) => {
-        console.log('checking password######################');
         const isValidPassword = (userpass, password) => {
           return bcrypt.compareSync(password, userpass);
         };
@@ -91,7 +90,6 @@ module.exports = (passport, db) => {
           }
         })
           .then(user => {
-            console.log('#################### user found');
             if (!user) {
               return done(null, false, {
                 message: 'Email does not exist'
@@ -117,48 +115,4 @@ module.exports = (passport, db) => {
       }
     )
   );
-
-  passport.use(
-    new JWTStrategy(
-      {
-        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-        secretOrKey: 'secret'
-      },
-      function(jwtPayload, cb) {
-        console.log('jwtPayload :', jwtPayload);
-        //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-        return db.User.findOne({ where: { id: jwtPayload.id } })
-          .then(user => {
-            return cb(null, user);
-          })
-          .catch(err => {
-            return cb(err);
-          });
-      }
-    )
-  );
-
-  //   // for sessions
-
-  //   //serialize
-  //   passport.serializeUser((user, done) => {
-  //     done(null, user.id);
-  //   });
-
-  //   // deserialize user
-  //   passport.deserializeUser((id, done) => {
-  //     db.User.findOne({
-  //       where: {
-  //         id
-  //       }
-  //     })
-  //       .then(user => {
-  //         if (user) {
-  //           done(null, user.get());
-  //         }
-  //       })
-  //       .catch(err => {
-  //         done(err, null);
-  //       });
-  //   });
 };
