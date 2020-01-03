@@ -1,10 +1,16 @@
+/**
+ * function send post request to the API to login
+ * @param {string} email the user's email
+ * @param {string} password the user's password
+ */
 const login = (email, password) => {
   axios
     .post(`/login`, { email, password })
     .then(res => {
-      // location.reload();
-      console.log(res);
+      // store the token in local storage
       window.localStorage.token = res.data.token;
+
+      // redirect user to the dashboard
       window.location = `/dashboard/${res.data.user.id}`;
     })
     .catch(err => {
@@ -13,9 +19,11 @@ const login = (email, password) => {
 };
 
 $(document).ready(() => {
+  // when the login button is clicked...
   $('#login-button').click(e => {
     e.preventDefault();
 
+    // clear any alerts
     $('.alert ').remove();
 
     const email = $('#email')
