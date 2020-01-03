@@ -88,6 +88,10 @@ const renderDropdown = elementId => {
   });
 };
 
+/**
+ * function to render an input type file
+ * @return {object} the the div containing the file input
+ */
 const renderModalFileUpload = () => {
   const div = $('<div>', { class: 'custom-file mb-3' });
   const label = $('<label>', { class: 'custom-file-label', for: 'csv' }).text('Choose File');
