@@ -1,6 +1,4 @@
-const jwt = require('jsonwebtoken');
-
-module.exports = (app, path, passport) => {
+module.exports = (app, path, passport, jwt) => {
   app.get('/signup', (req, res) => {
     // redirect user to dashboard if they're already logged in
     if (req.user) {

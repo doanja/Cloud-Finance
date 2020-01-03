@@ -115,4 +115,30 @@ module.exports = (passport, db) => {
       }
     )
   );
+
+  passport.use(
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey: 'secret'
+      },
+      (jwtPayload, done) => {
+        return db.User.findOne({
+          where: {
+            id: jwtPayload.user.id
+          }
+        })
+          .then(user => {
+            return done(null, user);
+          })
+          .catch(err => {
+            console.log('Error:', err);
+
+            return done(null, false, {
+              message: 'Something went wrong with your authorization token'
+            });
+          });
+      }
+    )
+  );
 };

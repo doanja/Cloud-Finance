@@ -1,61 +1,49 @@
-const jwt = require('jsonwebtoken');
-const verifyToken = require('../config/middleware/verifyToken');
-
-module.exports = (app, db, joi) => {
+module.exports = (app, db, joi, passport) => {
   // create a single expense
-  app.post('/api/expense/', verifyToken, (req, res) => {
-    console.log('POSTING TO EXPENSE');
-    jwt.verify(req.token, 'secret', (err, authData) => {
-      if (err) {
-        console.log('error detected');
-        res.sendStatus(403);
-      } else {
-        console.log('in else');
-        const { amount, description, date, CategoryId } = req.body;
+  app.post('/api/expense/', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { amount, description, date, CategoryId } = req.body;
 
-        // define joi schema
-        const schema = joi.object({
-          description: joi
-            .string()
-            .min(1)
-            .max(50)
-            .required(),
-          amount: joi
-            .number()
-            .positive()
-            .max(999999999)
-            .required(),
-          date: joi.date().required(),
-          CategoryId: joi
-            .number()
-            .integer()
-            .required()
-        });
-
-        // compare schema with req.body
-        const validate = schema.validate(req.body);
-
-        // if there are errors, send them
-        if (validate.error) {
-          res.status(400).send(validate.error.details[0].message);
-          return;
-        }
-
-        db.Expense.create({
-          amount,
-          description,
-          date,
-          CategoryId
-        })
-          .then(newExpense => {
-            res.status(200).json(newExpense);
-          })
-          .catch(err => {
-            console.log(err);
-            res.status(400).json({ error: err });
-          });
-      }
+    // define joi schema
+    const schema = joi.object({
+      description: joi
+        .string()
+        .min(1)
+        .max(50)
+        .required(),
+      amount: joi
+        .number()
+        .positive()
+        .max(999999999)
+        .required(),
+      date: joi.date().required(),
+      CategoryId: joi
+        .number()
+        .integer()
+        .required()
     });
+
+    // compare schema with req.body
+    const validate = schema.validate(req.body);
+
+    // if there are errors, send them
+    if (validate.error) {
+      res.status(400).send(validate.error.details[0].message);
+      return;
+    }
+
+    db.Expense.create({
+      amount,
+      description,
+      date,
+      CategoryId
+    })
+      .then(newExpense => {
+        res.status(200).json(newExpense);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(400).json({ error: err });
+      });
   });
 
   // post route for bulk creating expenses from a csv file
