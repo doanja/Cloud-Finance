@@ -229,6 +229,8 @@ $(document).ready(() => {
     window.location.href.split('/')[window.location.href.split('/').length - 1]
   );
 
+  const token = localStorage.getItem('token');
+
   $(document).on('click', '.filter-date', () => {
     filterDateClicked('Dashboard');
   });

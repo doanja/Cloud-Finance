@@ -47,10 +47,9 @@ module.exports = (app, path, passport) => {
           res.send(err);
         }
         // generate a signed son web token with the contents of user object and return it in the response
-        const token = jwt.sign({ user }, 'secret');
-
-        // return res.redirect(`/dashboard/${user.id}`);
-        return res.json({ user, token });
+        jwt.sign({ user }, 'secret', (err, token) => {
+          return res.json({ user, token });
+        });
       });
     })(req, res, next);
   });
