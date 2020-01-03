@@ -1,4 +1,5 @@
 module.exports = (req, res, next) => {
+  console.log('req :', req.params.userId);
   // Get auth header value
   const bearerHeader = req.headers['authorization'];
 
