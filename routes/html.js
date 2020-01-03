@@ -34,7 +34,6 @@ module.exports = (app, path, jwt) => {
   });
 
   app.get('/overview/:userId/:token', verifyToken, (req, res) => {
-    console.log('req.params :', req.params);
     jwt.verify(req.token, 'secret', (err, tokenData) => {
       // check to see if user is not an id
       if (
