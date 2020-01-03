@@ -88,6 +88,20 @@ const renderDropdown = elementId => {
   });
 };
 
+const renderModalFileUpload = () => {
+  const div = $('<div>', { class: 'custom-file mb-3' });
+  const label = $('<label>', { class: 'custom-file-label', for: 'csv' }).text('Choose File');
+  const input = $('<input>', {
+    type: 'file',
+    class: 'custom-file-input',
+    id: 'modal-csv'
+  });
+
+  div.append(input, label);
+
+  return div;
+};
+
 /**
  * function to render form input with prefilled text
  * @param {string} labelType the label for the input
@@ -225,8 +239,10 @@ const renderModalContent = (title, userId, data, modalBody) => {
       break;
 
     case 'Import CSV':
-      const csvLink = $('<a>', { href: '../csv/small_dataset.csv' }).text('Download sample CSV ');
-      modalBody.append(renderModalFormFields('Import CSV', 'modal-csv', '', 'file'), csvLink);
+      const csvLink = $('<a>', { class: 'p-1', href: '../csv/small_dataset.csv' }).text(
+        'Download sample CSV '
+      );
+      modalBody.append(renderModalFileUpload(), csvLink);
       break;
 
     default:
