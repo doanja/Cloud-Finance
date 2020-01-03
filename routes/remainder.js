@@ -1,6 +1,6 @@
-module.exports = (app, db) => {
+module.exports = (app, db, passport) => {
   // returns the user's income and remainder (total expenses across all categories)
-  app.get('/api/remainder/:id', (req, res) => {
+  app.get('/api/remainder/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     const { id } = req.params;
 
     db.sequelize

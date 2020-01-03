@@ -25,9 +25,9 @@ require('./config/middleware/passport')(passport, db);
 
 // Routes
 require('./routes/auth')(app, path, passport, jwt);
-require('./routes/users')(app, db, joi);
-require('./routes/remainder')(app, db);
-require('./routes/categories')(app, db, joi);
+require('./routes/users')(app, db, joi, passport);
+require('./routes/remainder')(app, db, passport);
+require('./routes/categories')(app, db, joi, passport);
 require('./routes/expenses')(app, db, joi, passport);
 require('./routes/html')(app, path, passport);
 
