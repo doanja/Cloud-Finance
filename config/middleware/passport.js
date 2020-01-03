@@ -18,6 +18,9 @@ module.exports = (passport, db) => {
       },
       // required callback function
       (req, email, password, done) => {
+        console.log('email :', email);
+        console.log('password :', password);
+
         // function to generate hash password
         const hashPassword = password => {
           return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
@@ -31,6 +34,7 @@ module.exports = (passport, db) => {
         }).then(user => {
           // if an email was found already --> means email is used by someone
           if (user) {
+            console.log('user found');
             return done(null, false, {
               message: 'That email is already taken'
             });
@@ -48,16 +52,19 @@ module.exports = (passport, db) => {
               lastName
             };
 
+            console.log('no user found, creating one');
             // use sequelize to create the new user passing in the newUser object
             db.User.create(newUser).then((newUser, created) => {
               // unsuccessful in creating user
               if (!newUser) {
+                console.log('cant create user');
                 return done(null, false, {
                   message: 'Unsuccessful in creating new user'
                 });
               }
               // new user created successfully
               if (newUser) {
+                console.log('user creation success');
                 return done(null, newUser, {
                   message: 'User created successfully'
                 });
@@ -123,6 +130,7 @@ module.exports = (passport, db) => {
         secretOrKey: 'secret'
       },
       (jwtPayload, done) => {
+        console.log('jwtPayload.user.id :', jwtPayload.user.id);
         return db.User.findOne({
           where: {
             id: jwtPayload.user.id

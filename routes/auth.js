@@ -29,6 +29,7 @@ module.exports = (app, path, passport, jwt) => {
   app.post(
     '/signup',
     passport.authenticate('local-signup', {
+      session: false,
       successRedirect: '/login',
       failureRedirect: '/signup'
     })

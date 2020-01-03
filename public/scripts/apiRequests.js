@@ -144,7 +144,7 @@ const updateExpense = (expenseId, description, amount, date, CategoryId) => {
  * @param {string} description the expense description
  * @param {number} CategoryId the id of the category
  */
-const postExpense = (amount, description, date, CategoryId, config) => {
+const postExpense = (amount, description, date, CategoryId) => {
   // send post request to create a single expense
   axios
     .post(`/api/expense/`, { amount, description, date, CategoryId })
@@ -164,8 +164,9 @@ const postExpense = (amount, description, date, CategoryId, config) => {
 };
 
 $(document).ready(() => {
+  // grab the jwt token from local storage
   const token = localStorage.getItem('token');
-  console.log(token);
 
+  // set all axios requests headers
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 });
