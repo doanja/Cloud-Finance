@@ -135,7 +135,7 @@ module.exports = (passport, db) => {
         if (req.params.id !== jwtPayload.user.id.toString()) {
           console.log('########## id and token mismatch ##########');
           return done(null, false, {
-            message: 'Something went wrong with your authorization token'
+            message: 'Token id mismatch'
           });
         }
         // otherwise confirm the token.id exists in the Users table

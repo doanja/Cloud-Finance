@@ -1,6 +1,6 @@
-module.exports = (app, db, joi, passport) => {
+module.exports = (app, db, joi) => {
   // get all the user's info
-  app.get('/api/user/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.get('/api/user/:id', (req, res) => {
     db.User.findOne({
       where: { id: req.params.id }
     })
@@ -14,7 +14,7 @@ module.exports = (app, db, joi, passport) => {
   });
 
   // update a single user
-  app.put('/api/user/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.put('/api/user/:id', (req, res) => {
     const { firstName, lastName } = req.body;
 
     // define joi schema
@@ -61,7 +61,7 @@ module.exports = (app, db, joi, passport) => {
   });
 
   // update a single user's income
-  app.put('/api/user/income/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.put('/api/user/income/:id', (req, res) => {
     const { income } = req.body;
 
     // define joi schema
@@ -99,7 +99,7 @@ module.exports = (app, db, joi, passport) => {
   });
 
   // delete a single user
-  app.delete('/api/user/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.delete('/api/user/:id', (req, res) => {
     db.User.destroy({
       where: { id: req.params.id }
     })
