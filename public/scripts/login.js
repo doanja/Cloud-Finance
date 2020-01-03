@@ -1,3 +1,16 @@
+const login = (email, password) => {
+  axios
+    .post(`/login`, { email, password })
+    .then(res => {
+      // location.reload();
+      console.log(res);
+      window.location = `/dashboard/${res.data.user.id}`;
+    })
+    .catch(err => {
+      console.log('Error', err.message);
+    });
+};
+
 $(document).ready(() => {
   $('#login-button').click(e => {
     e.preventDefault();
@@ -24,15 +37,3 @@ $(document).ready(() => {
     }
   });
 });
-
-const login = (email, password) => {
-  axios
-    .post(`/login`, { email, password })
-    .then(res => {
-      // location.reload();
-      console.log(res);
-    })
-    .catch(err => {
-      console.log('Error', err.message);
-    });
-};
