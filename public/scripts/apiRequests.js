@@ -66,12 +66,13 @@ const postCategory = (userId, name, goal) => {
 
 /**
  * function to delete a single expense
+ * @param {number} userId the id of the user
  * @param {number} expenseId the id of the expense to be deleted
  */
-const deleteExpense = expenseId => {
+const deleteExpense = (userId, expenseId) => {
   // send delete request to delete a single expense
   axios
-    .delete(`/api/expense/${expenseId}`)
+    .delete(`/api/expense/${userId}/${expenseId}`)
     .then(res => {
       location.reload();
     })
@@ -114,15 +115,16 @@ const getCategories = (userId, parentElement, defaultValue) => {
 
 /**
  * function to update the expense by sending a put request
+ * @param {number} userId the id of the user
  * @param {number} expenseId the id of the expense
  * @param {string} description the description of the expense
  * @param {number} amount the amount of the expense
  * @param {number} CategoryId the id of the category
  */
-const updateExpense = (expenseId, description, amount, date, CategoryId) => {
+const updateExpense = (userId, expenseId, description, amount, date, CategoryId) => {
   // make put request to update a single expense
   axios
-    .put(`/api/expense/${expenseId}`, { description, amount, date, CategoryId })
+    .put(`/api/expense/${userId}`, { expenseId, description, amount, date, CategoryId })
     .then(res => {
       location.reload();
     })
@@ -140,14 +142,15 @@ const updateExpense = (expenseId, description, amount, date, CategoryId) => {
 
 /**
  * function to create a new expense
+ * @param {number} userId the id of the user
  * @param {string} amount the expense amount
  * @param {string} description the expense description
  * @param {number} CategoryId the id of the category
  */
-const postExpense = (amount, description, date, CategoryId) => {
+const postExpense = (userId, amount, description, date, CategoryId) => {
   // send post request to create a single expense
   axios
-    .post(`/api/expense/`, { amount, description, date, CategoryId })
+    .post(`/api/expense/${userId}`, { amount, description, date, CategoryId })
     .then(res => {
       location.reload();
     })

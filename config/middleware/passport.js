@@ -1,6 +1,10 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt-nodejs');
 
+const passportJWT = require('passport-jwt');
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
+
 module.exports = (passport, db) => {
   // for sigining up new user
   passport.use(
@@ -108,6 +112,46 @@ module.exports = (passport, db) => {
               message: 'Something went wrong with your Signin'
             });
           });
+      }
+    )
+  );
+
+  passport.use(
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey: 'secret',
+        passReqToCallback: true
+      },
+      (req, jwtPayload, done) => {
+        console.log('req.params.id :', req.params.id);
+        console.log('jwtPayload.user.id.toString() :', jwtPayload.user.id.toString());
+        // if the token id does not match the
+        if (req.params.id !== jwtPayload.user.id.toString()) {
+          console.log('########## id and token mismatch ##########');
+          return done(null, false, {
+            message: 'Token id mismatch'
+          });
+        }
+        // otherwise confirm the token.id exists in the Users table
+        else {
+          console.log('########## finding token id in db ##########');
+          return db.User.findOne({
+            where: {
+              id: jwtPayload.user.id
+            }
+          })
+            .then(user => {
+              return done(null, user);
+            })
+            .catch(err => {
+              console.log('Error:', err);
+
+              return done(null, false, {
+                message: 'Something went wrong with your authorization token'
+              });
+            });
+        }
       }
     )
   );

@@ -51,7 +51,7 @@ module.exports = (app, path, passport, jwt) => {
         }
 
         // generate a signed son web token with the contents of user object and return it in the response
-        jwt.sign({ user }, 'secret', { expiresIn: '30m' }, (err, token) => {
+        jwt.sign({ user }, 'secret', { expiresIn: '1d' }, (err, token) => {
           return res.json({ user, token });
         });
       });

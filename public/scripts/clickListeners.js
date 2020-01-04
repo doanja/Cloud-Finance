@@ -34,7 +34,6 @@ const createExpense = () => {
     window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
 
-  console.log('userId :', userId);
   renderModal('Create Expense', userId);
 };
 
@@ -70,9 +69,14 @@ function editCategoryClicked() {
 
 // function to pass current data to a modal
 function deleteExpenseClicked() {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
+  );
+
   const deleteId = parseInt($(this).attr('deleteId'));
+
   renderConfirmationModal('Are you sure you want to delete the Expense?', () => {
-    deleteExpense(deleteId);
+    deleteExpense(userId, deleteId);
   });
 }
 

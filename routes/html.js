@@ -1,16 +1,14 @@
 const verifyToken = require('../config/middleware/verifyToken');
 
 module.exports = (app, path, jwt) => {
+  // index
   app.get('/', (req, res) => {
-    // if (req.user) {
-    //   console.log('logged in already');
-    //   res.redirect('/dashboard/' + req.user.id);
-    // }
     res.sendFile(path.join(__dirname, '../public/html/index.html'));
   });
 
   app.get('/dashboard/:userId/:token', verifyToken, (req, res) => {
     jwt.verify(req.token, 'secret', (err, tokenData) => {
+      console.log('req.token :', req.token);
       // check to see if user is not an id
       if (
         req.params.userId === 'styles' ||
@@ -18,7 +16,7 @@ module.exports = (app, path, jwt) => {
         req.params.userId === 'images'
       ) {
         // send the requested file
-        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.params.token}`));
+        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.token}`));
       }
 
       // check for token id and user id mismatch
@@ -42,7 +40,7 @@ module.exports = (app, path, jwt) => {
         req.params.userId === 'images'
       ) {
         // send the requested file
-        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.params.token}`));
+        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.token}`));
       }
 
       // check for token id and user id mismatch
@@ -66,7 +64,7 @@ module.exports = (app, path, jwt) => {
         req.params.userId === 'images'
       ) {
         // send the requested file
-        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.params.token}`));
+        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.token}`));
       }
 
       // check for token id and user id mismatch
@@ -90,7 +88,7 @@ module.exports = (app, path, jwt) => {
         req.params.userId === 'images'
       ) {
         // send the requested file
-        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.params.token}`));
+        res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.token}`));
       }
 
       // check for token id and user id mismatch

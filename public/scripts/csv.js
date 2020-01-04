@@ -4,9 +4,10 @@
  * @param {object} data the CSV data to be imported
  */
 const postCSV = (userId, data) => {
+  console.log('userId :', userId);
   // make put request to update a single category
   axios
-    .post(`/api/expense/csv`, { id: userId, data })
+    .post(`/api/expense/csv/${userId}`, { data })
     .then(res => {
       location.reload();
     })
@@ -25,7 +26,7 @@ const parseCSV = () => {
     complete: res => {
       const { data } = res;
       const userId = parseInt(
-        window.location.href.split('/')[window.location.href.split('/').length - 1]
+        window.location.href.split('/')[window.location.href.split('/').length - 2]
       );
 
       postCSV(userId, data);

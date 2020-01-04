@@ -28,7 +28,7 @@ require('./routes/auth')(app, path, passport, jwt);
 require('./routes/users')(app, db, joi);
 require('./routes/remainder')(app, db);
 require('./routes/categories')(app, db, joi);
-require('./routes/expenses')(app, db, joi);
+require('./routes/expenses')(app, db, joi, passport);
 require('./routes/html')(app, path, jwt);
 
 // Syncing our sequelize models and then starting our Express app
