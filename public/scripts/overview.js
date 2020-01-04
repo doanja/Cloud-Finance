@@ -97,14 +97,14 @@ const updateUserIncome = (userId, income) => {
     .then(res => {
       location.reload();
     })
-    .catch(error => {
-      if (error.response) {
+    .catch(err => {
+      if (err.response) {
         // render alert if there is an error
-        renderAlert(error.response.data);
-      } else if (error.request) {
-        console.log(error.request);
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
       } else {
-        console.log('Error', error.message);
+        console.log('Error', err.message);
       }
     });
 };

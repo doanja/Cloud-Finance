@@ -1,6 +1,6 @@
-module.exports = (app, db, joi) => {
+module.exports = (app, db, joi, passport) => {
   // get all the user's info
-  app.get('/api/user/:id', (req, res) => {
+  app.get('/api/user/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     db.User.findOne({
       where: { id: req.params.id }
     })
@@ -14,7 +14,7 @@ module.exports = (app, db, joi) => {
   });
 
   // update a single user
-  app.put('/api/user/:id', (req, res) => {
+  app.put('/api/user/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     const { firstName, lastName } = req.body;
 
     // define joi schema
@@ -61,15 +61,15 @@ module.exports = (app, db, joi) => {
   });
 
   // update a single user's income
-  app.put('/api/user/income/:id', (req, res) => {
+  app.put('/api/user/income/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     const { income } = req.body;
-
+    console.log('income :', income);
     // define joi schema
     const schema = joi.object({
       income: joi
         .number()
         .positive()
-        .max(999999999)
+        .max(99999999)
         .required()
     });
 
@@ -98,11 +98,35 @@ module.exports = (app, db, joi) => {
       });
   });
 
-  // delete a single user
-  app.delete('/api/user/:id', (req, res) => {
+  // delete a single user (not used)
+  app.delete('/api/user/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     db.User.destroy({
       where: { id: req.params.id }
     })
+      .then(data => {
+        res.status(200).json(data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(400).json({ error: err });
+      });
+  });
+
+  // returns the user's income and remainder (total expenses across all categories)
+  app.get('/api/remainder/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { id } = req.params;
+
+    db.sequelize
+      .query(
+        `SELECT 
+          u.income, 
+          sum(amount) AS remainder 
+        FROM Users AS u 
+          LEFT JOIN Categories AS cat ON cat.UserID = u.id 
+          LEFT JOIN Expenses AS exp ON exp.CategoryId = cat.id 
+        WHERE u.id = ${id}`,
+        { type: db.sequelize.QueryTypes.SELECT, where: { id } }
+      )
       .then(data => {
         res.status(200).json(data);
       })
