@@ -12,7 +12,14 @@ const postCSV = (userId, data) => {
       location.reload();
     })
     .catch(err => {
-      console.log(err);
+      if (err.response) {
+        // render alert if there is an error
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
+      } else {
+        console.log('Error', err.message);
+      }
     });
 };
 
@@ -20,45 +27,20 @@ const postCSV = (userId, data) => {
 const parseCSV = () => {
   const file = $('#modal-csv')[0].files[0]; // reference to the DOM file
 
-  let headers = false; // flag
-
   Papa.parse(file, {
     download: true,
     header: true,
-    step: function(row, parser) {
-      if (!headers) {
-        // Only chek if flag is not set, i.e, for the first time
-        parser.pause(); // pause the parser
-        let firstRow = row.data;
-
-        // check object keys
-        if ('description' in firstRow && 'amount' in firstRow && 'date' in firstRow) {
-          //every required key is present
-          headers = true;
-
-          // Do your data processing here
-          console.log('test');
-
-          parser.resume();
-        } else {
-          console.log('key missing');
-          renderAlert('first row must contain "description", "amount", and "date"');
-          //some key is missing, abort parsing
-          parser.abort();
-        }
-      } else {
-        console.log(row.data);
-        // we already match the header, all required key is present
-        // Do the Data processing here
-      }
+    skipEmptyLines: true,
+    error: (err, file) => {
+      renderAlert(err);
     },
     complete: res => {
       const { data } = res;
       const userId = parseInt(
         window.location.href.split('/')[window.location.href.split('/').length - 2]
       );
-      console.log('completed');
-      // postCSV(userId, data);
+
+      postCSV(userId, data);
     }
   });
 };
