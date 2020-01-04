@@ -8,7 +8,6 @@ module.exports = (app, path, jwt) => {
 
   app.get('/dashboard/:userId/:token', verifyToken, (req, res) => {
     jwt.verify(req.token, 'secret', (err, tokenData) => {
-      console.log('req.token :', req.token);
       // check to see if user is not an id
       if (
         req.params.userId === 'styles' ||

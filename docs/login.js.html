@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: csv.js</title>
+    <title>JSDoc: Source: login.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: csv.js</h1>
+    <h1 class="page-title">Source: login.js</h1>
 
     
 
@@ -27,44 +27,51 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * function to send the parsed CSV to the API
- * @param {number} userId the id of the user
- * @param {object} data the CSV data to be imported
+ * function send post request to the API to login
+ * @param {string} email the user's email
+ * @param {string} password the user's password
  */
-const postCSV = (userId, data) => {
-  console.log('userId :', userId);
-  // make put request to update a single category
+const login = (email, password) => {
   axios
-    .post(`/api/expense/csv/${userId}`, { data })
+    .post(`/login`, { email, password })
     .then(res => {
-      location.reload();
+      // store the token in local storage
+      window.localStorage.token = res.data.token;
+
+      // redirect user to the dashboard
+      window.location = `/dashboard/${res.data.user.id}/${res.data.token}`;
     })
     .catch(err => {
-      console.log(err);
+      console.log('Error', err.message);
     });
 };
 
-// function to parse CSV using papaparse
-const parseCSV = () => {
-  const file = $('#modal-csv')[0].files[0]; // reference to the DOM file
-
-  Papa.parse(file, {
-    download: true,
-    header: true,
-    complete: res => {
-      const { data } = res;
-      const userId = parseInt(
-        window.location.href.split('/')[window.location.href.split('/').length - 2]
-      );
-
-      postCSV(userId, data);
-    }
-  });
-};
-
 $(document).ready(() => {
-  $(document).on('click', '.import-csv', () => {
-    renderModal('Import CSV');
+  // when the login button is clicked...
+  $('#login-button').click(e => {
+    e.preventDefault();
+
+    // clear any alerts
+    $('.alert ').remove();
+
+    const email = $('#email')
+      .val()
+      .trim();
+
+    const password = $('#password')
+      .val()
+      .trim();
+
+    // validate form fields
+    if (!isValidEmail(email)) {
+      e.preventDefault();
+      renderAlert('Enter in a valid Email address', '#login-form');
+    } else if (!isValidPassword(password)) {
+      e.preventDefault();
+      renderAlert('Enter in a valid Password between 10 - 30 characters', '#login-form');
+    } else {
+      login(email, password);
+    }
   });
 });
 </code></pre>
