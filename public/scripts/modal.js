@@ -363,7 +363,10 @@ const modalSubmitOn = (option, userId, data) => {
         } else if (data === 'Overview') {
           getOverviewByDate(userId, startDate, endDate);
         } else {
-          getTotalsByDate(userId, startDate, endDate);
+          // grab the jwt token from local storage
+          const token = localStorage.getItem('token');
+
+          getTotalsByDate(userId, token, startDate, endDate);
         }
       }
       break;
