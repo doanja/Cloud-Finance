@@ -26,6 +26,7 @@ module.exports = (app, path, passport, jwt) => {
     });
   });
 
+  // signing up
   app.post(
     '/signup',
     passport.authenticate('local-signup', {
@@ -35,23 +36,29 @@ module.exports = (app, path, passport, jwt) => {
     })
   );
 
+  // logging in
   app.post('/login', (req, res, next) => {
     passport.authenticate('local-login', { session: false }, (err, user, info) => {
+      // redirect if there was an issue with the login
       if (!user || err) {
         return res.redirect(403, '/login/err');
       }
+
+      // logging in the user
       req.login(user, { session: false }, err => {
         if (err) {
           res.send(err);
         }
+
         // generate a signed son web token with the contents of user object and return it in the response
-        jwt.sign({ user }, 'secret', (err, token) => {
+        jwt.sign({ user }, 'secret', { expiresIn: '30m' }, (err, token) => {
           return res.json({ user, token });
         });
       });
     })(req, res, next);
   });
 
+  // logging out
   app.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/login');
