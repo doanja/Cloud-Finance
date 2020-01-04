@@ -51,6 +51,40 @@ module.exports = (app, db, joi, passport) => {
     const { data } = req.body;
     const { id } = req.params;
 
+    // define joi schema
+    const schema = joi.object({
+      description: joi
+        .string()
+        .min(1)
+        .max(50)
+        .required(),
+      amount: joi
+        .number()
+        .positive()
+        .max(999999999)
+        .required(),
+      date: joi.date().required()
+    });
+
+    // flag to determine if there is an error validating the data
+    let errorDetected = false;
+
+    // compare schema with each row
+    data.forEach(row => {
+      let validate = schema.validate(row);
+
+      // if there are errors, send them immediately
+      if (validate.error) {
+        res.status(400).send(validate.error.details[0].message);
+        errorDetected = true;
+      }
+    });
+
+    // if there was an error
+    if (errorDetected) {
+      return;
+    }
+
     // check to see if "N/A" category already exists
     db.Category.findOne({
       where: [{ name: 'N/A' }, { UserId: id }]

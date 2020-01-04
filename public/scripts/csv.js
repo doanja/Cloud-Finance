@@ -12,7 +12,14 @@ const postCSV = (userId, data) => {
       location.reload();
     })
     .catch(err => {
-      console.log(err);
+      if (err.response) {
+        // render alert if there is an error
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
+      } else {
+        console.log('Error', err.message);
+      }
     });
 };
 
@@ -23,6 +30,10 @@ const parseCSV = () => {
   Papa.parse(file, {
     download: true,
     header: true,
+    skipEmptyLines: true,
+    error: (err, file) => {
+      renderAlert(err);
+    },
     complete: res => {
       const { data } = res;
       const userId = parseInt(
