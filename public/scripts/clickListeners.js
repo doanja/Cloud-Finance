@@ -82,8 +82,13 @@ function deleteExpenseClicked() {
 
 // function to pass current data to a modal
 function deleteCategoryClicked() {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
+  );
+
   const deleteId = parseInt($(this).attr('deleteId'));
+
   renderConfirmationModal('Are you sure you want to delete the category?', () => {
-    deleteCategory(deleteId);
+    deleteCategory(userId, deleteId);
   });
 }

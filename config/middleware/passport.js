@@ -124,8 +124,11 @@ module.exports = (passport, db) => {
         passReqToCallback: true
       },
       (req, jwtPayload, done) => {
-        console.log('req.params.id :', req.params.id);
-        console.log('jwtPayload.user.id.toString() :', jwtPayload.user.id.toString());
+        console.log('############# req.params.id #############:', req.params.id);
+        console.log(
+          '############# jwtPayload.user.id.toString() #############:',
+          jwtPayload.user.id.toString()
+        );
         // if the token id does not match the
         if (req.params.id !== jwtPayload.user.id.toString()) {
           console.log('########## id and token mismatch ##########');

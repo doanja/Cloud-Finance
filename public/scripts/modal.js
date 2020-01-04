@@ -296,7 +296,7 @@ const modalSubmitOn = (option, userId, data) => {
       const goal = $('#modal-goal')
         .val()
         .trim();
-      updateCategory(data.editId, name, goal);
+      updateCategory(userId, data.editId, name, goal);
       break;
 
     case 'Create Category':

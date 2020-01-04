@@ -1,13 +1,14 @@
 /**
  * function update a category
+ * @param {number} userId the id of the user
  * @param {number} id the id of the category
  * @param {string} name the description of the category
  * @param {number} goal the amount of the category
  */
-const updateCategory = (id, name, goal) => {
+const updateCategory = (userId, id, name, goal) => {
   // make put request to update a single category
   axios
-    .put(`/api/category/`, { id, name, goal })
+    .put(`/api/category/${userId}`, { id, name, goal })
     .then(res => {
       location.reload();
     })
@@ -25,12 +26,13 @@ const updateCategory = (id, name, goal) => {
 
 /**
  * function to delete a single category
+ * @param {number} userId the id of the user
  * @param {number} categoryId the id of the expense to be deleted
  */
-const deleteCategory = categoryId => {
+const deleteCategory = (userId, categoryId) => {
   // send delete request to delete a single expense
   axios
-    .delete(`/api/category/${categoryId}`)
+    .delete(`/api/category/${userId}/${categoryId}`)
     .then(res => {
       location.reload();
     })
