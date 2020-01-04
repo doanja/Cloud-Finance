@@ -7,6 +7,11 @@ module.exports = (app, path, passport, jwt) => {
     res.sendFile(path.join(__dirname, '../public/html/signup.html'));
   });
 
+  // used for signup failures
+  app.get('/signup/err', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/html/signup-failed.html'));
+  });
+
   app.get('/login', (req, res) => {
     // redirect user to dashboard if they're already logged in
     if (req.user) {
@@ -32,7 +37,7 @@ module.exports = (app, path, passport, jwt) => {
     passport.authenticate('local-signup', {
       session: false,
       successRedirect: '/login',
-      failureRedirect: '/signup'
+      failureRedirect: '/signup/err'
     })
   );
 
