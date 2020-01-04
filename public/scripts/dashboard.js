@@ -16,10 +16,13 @@ const renderChart = (canvas, chartType, data) => {
  * function to render a link to expenses if there is no existing expenses
  * @param {string} title the card title
  * @param {number} userId the user's id
+ * @param {string} token the user's access token
  * @param {string} canvasId the id of the canvas
  */
-const renderDashboardAlert = (title, userId, canvasId) => {
-  const cardTitle = $('<a>', { class: 'text-center', href: `/expenses/${userId}` }).text(title);
+const renderDashboardAlert = (title, userId, token, canvasId) => {
+  const cardTitle = $('<a>', { class: 'text-center', href: `/expenses/${userId}/${token}` }).text(
+    title
+  );
   $(`#${canvasId}`).remove();
   $(`#dashboard-${canvasId}`).append(cardTitle);
 };
@@ -45,10 +48,11 @@ const renderDashboardCard = (canvasId, title) => {
 /**
  * function to render the user's total expenses per category vs. goal as a graph by date
  * @param {number} userId the user's id
+ * @param {string} token the user's access token
  * @param {startDate} startDate the start date
  * @param {endDate} endDate the end date
  */
-const getTotalsByDate = (userId, startDate, endDate) => {
+const getTotalsByDate = (userId, token, startDate, endDate) => {
   $('#card-graph-0').remove();
 
   $('#modal').remove();
@@ -77,7 +81,12 @@ const getTotalsByDate = (userId, startDate, endDate) => {
     .get(`/api/category/all/${userId}/${startDate}/${endDate}`)
     .then(res => {
       if (res.data.length === 0) {
-        renderDashboardAlert('No data found. Click here to add expenses.', userId, 'graph-0');
+        renderDashboardAlert(
+          'No data found. Click here to add expenses.',
+          userId,
+          token,
+          'graph-0'
+        );
         return;
       }
 
@@ -119,7 +128,15 @@ const getTotalsByDate = (userId, startDate, endDate) => {
  * @param {object} firstDateSet the first set of dates
  * @param {object} secondDateSet the second set of dates
  */
-const getTotalsByTwoDates = (userId, canvasId, title, timeframe, firstDateSet, secondDateSet) => {
+const getTotalsByTwoDates = (
+  userId,
+  token,
+  canvasId,
+  title,
+  timeframe,
+  firstDateSet,
+  secondDateSet
+) => {
   // render a card
   renderDashboardCard(`graph-${canvasId}`, title);
 
@@ -167,6 +184,7 @@ const getTotalsByTwoDates = (userId, canvasId, title, timeframe, firstDateSet, s
           renderDashboardAlert(
             'No data found. Click here to add expenses.',
             userId,
+            token,
             `graph-${canvasId}`
           );
           return;
@@ -229,12 +247,19 @@ $(document).ready(() => {
     window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
 
+  // grab the jwt token from local storage
+  const token = localStorage.getItem('token');
+
+  // set all axios requests headers
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
   $(document).on('click', '.filter-date', () => {
     filterDateClicked('Dashboard');
   });
 
   getTotalsByTwoDates(
     userId,
+    token,
     4,
     "This Year vs. Last Year's Goal vs. Actuals",
     'Year',
@@ -244,6 +269,7 @@ $(document).ready(() => {
 
   getTotalsByTwoDates(
     userId,
+    token,
     3,
     "This Month vs. Last Month's Goal vs. Actuals",
     'Month',
@@ -253,6 +279,7 @@ $(document).ready(() => {
 
   getTotalsByTwoDates(
     userId,
+    token,
     2,
     "This Week vs. Last Week's Goal vs. Actuals",
     'Week',
@@ -262,6 +289,7 @@ $(document).ready(() => {
 
   getTotalsByTwoDates(
     userId,
+    token,
     1,
     "Today vs. Yesterday's Goal vs. Actuals",
     'Day',
