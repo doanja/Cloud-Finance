@@ -1,10 +1,15 @@
-module.exports = (app, path, passport) => {
+module.exports = (app, path, passport, jwt) => {
   app.get('/signup', (req, res) => {
     // redirect user to dashboard if they're already logged in
     if (req.user) {
       res.redirect('/dashboard/' + req.user.id);
     }
     res.sendFile(path.join(__dirname, '../public/html/signup.html'));
+  });
+
+  // used for signup failures
+  app.get('/signup/err', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/html/signup-failed.html'));
   });
 
   app.get('/login', (req, res) => {
@@ -26,31 +31,39 @@ module.exports = (app, path, passport) => {
     });
   });
 
+  // signing up
   app.post(
     '/signup',
     passport.authenticate('local-signup', {
+      session: false,
       successRedirect: '/login',
-      failureRedirect: '/signup'
+      failureRedirect: '/signup/err'
     })
   );
 
+  // logging in
   app.post('/login', (req, res, next) => {
-    passport.authenticate('local-login', (err, user, info) => {
-      if (err) {
-        return next(err);
+    passport.authenticate('local-login', { session: false }, (err, user, info) => {
+      // redirect if there was an issue with the login
+      if (!user || err) {
+        return res.redirect(403, '/login/err');
       }
-      if (!user) {
-        return res.redirect('/login/err');
-      }
-      req.login(user, err => {
+
+      // logging in the user
+      req.login(user, { session: false }, err => {
         if (err) {
-          return next(err);
+          res.send(err);
         }
-        return res.redirect('/dashboard/' + user.id);
+
+        // generate a signed son web token with the contents of user object and return it in the response
+        jwt.sign({ user }, 'secret', { expiresIn: '1d' }, (err, token) => {
+          return res.json({ user, token });
+        });
       });
     })(req, res, next);
   });
 
+  // logging out
   app.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/login');

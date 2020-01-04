@@ -18,10 +18,22 @@ const renderSettingsLink = (page, userId, parentElement) => {
 };
 
 /**
+ * function to render logout link in nav
+ * @param {string} parentElement the class or id name to append this to
+ */
+const renderLogoutLink = (parentElement = '#menu') => {
+  const a = $('<a>', {
+    class: 'dropdown-item',
+    href: '/logout'
+  }).text('Logout');
+  $(parentElement).append(a);
+};
+
+/**
  * function to render a dropdown divider
  * @param {string} parentElement the class or id name to append this to
  */
-const renderDivider = parentElement => {
+const renderDivider = (parentElement = '#menu') => {
   const divider = $('<div>', { class: 'dropdown-divider' });
 
   $(parentElement).append(divider);
@@ -34,23 +46,26 @@ const renderDivider = parentElement => {
  * @param {number} userId the user's id
  * @param {string} parentElement the class or id name to append this to
  */
-const renderNavLinks = (linkTitle, pageName, userId, parentElement) => {
+const renderNavLinks = (linkTitle, pageName, userId, token, parentElement = '#menu') => {
   const a = $('<a>', {
     class: 'dropdown-item',
-    href: `/${pageName}/${userId}`
+    href: `/${pageName}/${userId}/${token}`
   }).text(linkTitle);
   $(parentElement).append(a);
 };
 
 $(document).ready(() => {
-  const userId = window.location.href.split('/')[window.location.href.split('/').length - 1];
+  const userId = window.location.href.split('/')[window.location.href.split('/').length - 2];
 
-  $('.navbar-brand').attr('href', '/dashboard/' + userId);
+  // grab the jwt token from local storage
+  const token = localStorage.getItem('token');
 
-  renderNavLinks('Profile', 'profile', userId, '#menu');
-  renderNavLinks('Dashboard', 'dashboard', userId, '#menu');
-  renderNavLinks('Overview', 'overview', userId, '#menu');
-  renderNavLinks('Expenses', 'expenses', userId, '#menu');
-  renderDivider('#menu');
-  renderNavLinks('Logout', 'logout', '', '#menu');
+  $('.navbar-brand').attr('href', `/dashboard/${userId}/${token}`);
+
+  renderNavLinks('Profile', 'profile', userId, token);
+  renderNavLinks('Dashboard', 'dashboard', userId, token);
+  renderNavLinks('Overview', 'overview', userId, token);
+  renderNavLinks('Expenses', 'expenses', userId, token);
+  renderDivider();
+  renderLogoutLink();
 });

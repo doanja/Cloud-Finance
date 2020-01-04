@@ -1,5 +1,9 @@
 const LocalStrategy = require('passport-local').Strategy;
-const Bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt-nodejs');
+
+const passportJWT = require('passport-jwt');
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
 module.exports = (passport, db) => {
   // for sigining up new user
@@ -16,7 +20,7 @@ module.exports = (passport, db) => {
       (req, email, password, done) => {
         // function to generate hash password
         const hashPassword = password => {
-          return Bcrypt.hashSync(password, Bcrypt.genSaltSync(8), null);
+          return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
         };
 
         // check to see if user already exists
@@ -77,7 +81,7 @@ module.exports = (passport, db) => {
       },
       (req, email, password, done) => {
         const isValidPassword = (userpass, password) => {
-          return Bcrypt.compareSync(password, userpass);
+          return bcrypt.compareSync(password, userpass);
         };
 
         db.User.findOne({
@@ -112,27 +116,39 @@ module.exports = (passport, db) => {
     )
   );
 
-  // for sessions
-
-  //serialize
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
-
-  // deserialize user
-  passport.deserializeUser((id, done) => {
-    db.User.findOne({
-      where: {
-        id
-      }
-    })
-      .then(user => {
-        if (user) {
-          done(null, user.get());
+  passport.use(
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey: 'secret',
+        passReqToCallback: true
+      },
+      (req, jwtPayload, done) => {
+        // if the token id does not match the
+        if (req.params.id !== jwtPayload.user.id.toString()) {
+          return done(null, false, {
+            message: 'Token id mismatch'
+          });
         }
-      })
-      .catch(err => {
-        done(err, null);
-      });
-  });
+        // otherwise confirm the token.id exists in the Users table
+        else {
+          return db.User.findOne({
+            where: {
+              id: jwtPayload.user.id
+            }
+          })
+            .then(user => {
+              return done(null, user);
+            })
+            .catch(err => {
+              console.log('Error:', err);
+
+              return done(null, false, {
+                message: 'Something went wrong with your authorization token'
+              });
+            });
+        }
+      }
+    )
+  );
 };

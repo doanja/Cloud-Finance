@@ -285,7 +285,7 @@ const modalSubmitOn = (option, userId, data) => {
         .val()
         .trim();
       const category = $('#categories option:selected').attr('categoryId');
-      updateExpense(data.editId, description, amount, date, category);
+      updateExpense(userId, data.editId, description, amount, date, category);
       break;
 
     case 'Edit Category':
@@ -296,7 +296,7 @@ const modalSubmitOn = (option, userId, data) => {
       const goal = $('#modal-goal')
         .val()
         .trim();
-      updateCategory(data.editId, name, goal);
+      updateCategory(userId, data.editId, name, goal);
       break;
 
     case 'Create Category':
@@ -321,7 +321,7 @@ const modalSubmitOn = (option, userId, data) => {
         .val()
         .trim();
       const expenseCategory = $('#categories option:selected').attr('categoryId');
-      postExpense(expenseAmount, expenseDescription, expenseDate, expenseCategory);
+      postExpense(userId, expenseAmount, expenseDescription, expenseDate, expenseCategory);
       break;
 
     case 'Edit Income':

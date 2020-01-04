@@ -26,12 +26,17 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const renderAlert = (text, parentElement = '.modal-body') => {
+            <pre class="prettyprint source linenums"><code>/**
+ * function to render an alert in the modal
+ * @param {string} alertText the text to be displayed in the alert
+ * @param {string} parentElement the element class or id
+ */
+const renderAlert = (alertText, parentElement = '.modal-body') => {
   const alert = $('&lt;div>', {
     class: 'alert alert-danger alert-dismissible fade show',
     role: 'alert'
   });
-  const alertText = $('&lt;strong>').text(text);
+  const text = $('&lt;strong>').text(alertText);
   const dismissButton = $('&lt;button>', {
     type: 'button',
     class: 'close',
@@ -41,7 +46,7 @@
   const dismissIcon = $('&lt;span>', { 'aria-hidden': true }).text('\u{2A2F}');
 
   $(parentElement).prepend(alert);
-  alert.append(alertText, dismissButton);
+  alert.append(text, dismissButton);
   dismissButton.append(dismissIcon);
 };
 
@@ -109,6 +114,24 @@ const renderDropdown = elementId => {
     class: 'form-control w-100 mt-3 bg-primary text-white',
     id: elementId
   });
+};
+
+/**
+ * function to render an input type file
+ * @return {object} the the div containing the file input
+ */
+const renderModalFileUpload = () => {
+  const div = $('&lt;div>', { class: 'custom-file mb-3' });
+  const label = $('&lt;label>', { class: 'custom-file-label', for: 'csv' }).text('Choose File');
+  const input = $('&lt;input>', {
+    type: 'file',
+    class: 'custom-file-input',
+    id: 'modal-csv'
+  });
+
+  div.append(input, label);
+
+  return div;
 };
 
 /**
@@ -248,8 +271,10 @@ const renderModalContent = (title, userId, data, modalBody) => {
       break;
 
     case 'Import CSV':
-      // render form fields with prefilled text
-      modalBody.append(renderModalFormFields('Import CSV', 'modal-csv', '', 'file'));
+      const csvLink = $('&lt;a>', { class: 'p-1', href: '../csv/small_dataset.csv' }).text(
+        'Download sample CSV '
+      );
+      modalBody.append(renderModalFileUpload(), csvLink);
       break;
 
     default:
@@ -288,7 +313,7 @@ const modalSubmitOn = (option, userId, data) => {
         .val()
         .trim();
       const category = $('#categories option:selected').attr('categoryId');
-      updateExpense(data.editId, description, amount, date, category);
+      updateExpense(userId, data.editId, description, amount, date, category);
       break;
 
     case 'Edit Category':
@@ -299,7 +324,7 @@ const modalSubmitOn = (option, userId, data) => {
       const goal = $('#modal-goal')
         .val()
         .trim();
-      updateCategory(data.editId, name, goal);
+      updateCategory(userId, data.editId, name, goal);
       break;
 
     case 'Create Category':
@@ -324,7 +349,7 @@ const modalSubmitOn = (option, userId, data) => {
         .val()
         .trim();
       const expenseCategory = $('#categories option:selected').attr('categoryId');
-      postExpense(expenseAmount, expenseDescription, expenseDate, expenseCategory);
+      postExpense(userId, expenseAmount, expenseDescription, expenseDate, expenseCategory);
       break;
 
     case 'Edit Income':
@@ -389,13 +414,13 @@ const modalSubmitOn = (option, userId, data) => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#filterDateClicked">filterDateClicked</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategoriesAllByDate">getCategoriesAllByDate</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getOverview">getOverview</a></li><li><a href="global.html#getOverviewByDate">getOverviewByDate</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getTotalsByDate">getTotalsByDate</a></li><li><a href="global.html#getTotalsByTwoDates">getTotalsByTwoDates</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#isValidCategoryName">isValidCategoryName</a></li><li><a href="global.html#isValidDate">isValidDate</a></li><li><a href="global.html#isValidDecimal">isValidDecimal</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidExpenseDescription">isValidExpenseDescription</a></li><li><a href="global.html#isValidName">isValidName</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#modalSubmitOn">modalSubmitOn</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postCSV">postCSV</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderCard">renderCard</a></li><li><a href="global.html#renderCardAlert">renderCardAlert</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#setTextColor">setTextColor</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteExpense">deleteExpense</a></li><li><a href="global.html#filterDateClicked">filterDateClicked</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoriesAll">getCategoriesAll</a></li><li><a href="global.html#getCategoriesAllByDate">getCategoriesAllByDate</a></li><li><a href="global.html#getIncome">getIncome</a></li><li><a href="global.html#getOverview">getOverview</a></li><li><a href="global.html#getOverviewByDate">getOverviewByDate</a></li><li><a href="global.html#getRemainder">getRemainder</a></li><li><a href="global.html#getTotalsByDate">getTotalsByDate</a></li><li><a href="global.html#getTotalsByTwoDates">getTotalsByTwoDates</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#isValidCategoryName">isValidCategoryName</a></li><li><a href="global.html#isValidDate">isValidDate</a></li><li><a href="global.html#isValidDecimal">isValidDecimal</a></li><li><a href="global.html#isValidEmail">isValidEmail</a></li><li><a href="global.html#isValidExpenseDescription">isValidExpenseDescription</a></li><li><a href="global.html#isValidName">isValidName</a></li><li><a href="global.html#isValidPassword">isValidPassword</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#modalSubmitOn">modalSubmitOn</a></li><li><a href="global.html#parseFormData">parseFormData</a></li><li><a href="global.html#postCategory">postCategory</a></li><li><a href="global.html#postCSV">postCSV</a></li><li><a href="global.html#postExpense">postExpense</a></li><li><a href="global.html#renderAlert">renderAlert</a></li><li><a href="global.html#renderCategoryRow">renderCategoryRow</a></li><li><a href="global.html#renderChart">renderChart</a></li><li><a href="global.html#renderConfirmationModal">renderConfirmationModal</a></li><li><a href="global.html#renderDashboardAlert">renderDashboardAlert</a></li><li><a href="global.html#renderDashboardCard">renderDashboardCard</a></li><li><a href="global.html#renderDivider">renderDivider</a></li><li><a href="global.html#renderDropdown">renderDropdown</a></li><li><a href="global.html#renderDropdownCategories">renderDropdownCategories</a></li><li><a href="global.html#renderExpenseRow">renderExpenseRow</a></li><li><a href="global.html#renderIncome">renderIncome</a></li><li><a href="global.html#renderLogoutLink">renderLogoutLink</a></li><li><a href="global.html#renderModal">renderModal</a></li><li><a href="global.html#renderModalContent">renderModalContent</a></li><li><a href="global.html#renderModalFileUpload">renderModalFileUpload</a></li><li><a href="global.html#renderModalFormFields">renderModalFormFields</a></li><li><a href="global.html#renderNavLinks">renderNavLinks</a></li><li><a href="global.html#renderRemainderRow">renderRemainderRow</a></li><li><a href="global.html#renderSettingsLink">renderSettingsLink</a></li><li><a href="global.html#renderTotalExpenses">renderTotalExpenses</a></li><li><a href="global.html#renderTotals">renderTotals</a></li><li><a href="global.html#setTextColor">setTextColor</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateExpense">updateExpense</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserIncome">updateUserIncome</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Jan 01 2020 22:27:58 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Jan 03 2020 19:29:03 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

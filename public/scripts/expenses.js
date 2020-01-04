@@ -188,7 +188,7 @@ const setTextColor = (valueOne, valueTwo, element) => {
 
 $(document).ready(() => {
   const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
 
   // render the table
@@ -202,6 +202,6 @@ $(document).ready(() => {
   $(document).on('click', '.create-category', createCategory);
   $(document).on('click', '.create-expense', createExpense);
   $(document).on('click', '.filter-date', () => {
-    filterDateClicked('Expenses');
+    filterDateClicked('Expense');
   });
 });

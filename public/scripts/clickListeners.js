@@ -4,7 +4,7 @@
  */
 const filterDateClicked = option => {
   const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
   renderModal('Filter by Date', userId, option);
 };
@@ -15,7 +15,7 @@ function updateIncomeClicked() {
     .val()
     .trim();
   const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
   renderModal('Edit Income', userId, { income: userIncome });
 }
@@ -23,7 +23,7 @@ function updateIncomeClicked() {
 // function to create a cateogry
 const createCategory = () => {
   const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
   renderModal('Create Category', userId);
 };
@@ -31,8 +31,9 @@ const createCategory = () => {
 // function to create an expense
 const createExpense = () => {
   const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
+
   renderModal('Create Expense', userId);
 };
 
@@ -43,7 +44,7 @@ function editExpenseClicked() {
   const amount = parseFloat($(`.amount-${editId}`).attr('value')); // get the amount
   const date = $(`.date-${editId}`).attr('value'); // get the amount
   const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
   const categoryValue = $(this).attr('categoryValue'); // get the category text
   renderModal('Edit Expense', userId, {
@@ -61,23 +62,33 @@ function editCategoryClicked() {
   const categoryValue = $(this).attr('categoryValue'); // get the category text
   const goalValue = parseFloat($(this).attr('goalValue')); // get the goal value
   const userId = parseInt(
-    window.location.href.split('/')[window.location.href.split('/').length - 1]
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
   );
   renderModal('Edit Category', userId, { categoryValue, goalValue, editId });
 }
 
 // function to pass current data to a modal
 function deleteExpenseClicked() {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
+  );
+
   const deleteId = parseInt($(this).attr('deleteId'));
+
   renderConfirmationModal('Are you sure you want to delete the Expense?', () => {
-    deleteExpense(deleteId);
+    deleteExpense(userId, deleteId);
   });
 }
 
 // function to pass current data to a modal
 function deleteCategoryClicked() {
+  const userId = parseInt(
+    window.location.href.split('/')[window.location.href.split('/').length - 2]
+  );
+
   const deleteId = parseInt($(this).attr('deleteId'));
+
   renderConfirmationModal('Are you sure you want to delete the category?', () => {
-    deleteCategory(deleteId);
+    deleteCategory(userId, deleteId);
   });
 }

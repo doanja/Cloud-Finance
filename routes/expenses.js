@@ -1,6 +1,6 @@
-module.exports = (app, db, joi) => {
+module.exports = (app, db, joi, passport) => {
   // create a single expense
-  app.post('/api/expense/', (req, res) => {
+  app.post('/api/expense/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     const { amount, description, date, CategoryId } = req.body;
 
     // define joi schema
@@ -47,8 +47,9 @@ module.exports = (app, db, joi) => {
   });
 
   // post route for bulk creating expenses from a csv file
-  app.post('/api/expense/csv', (req, res) => {
-    const { id, data } = req.body;
+  app.post('/api/expense/csv/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { data } = req.body;
+    const { id } = req.params;
 
     // check to see if "N/A" category already exists
     db.Category.findOne({
@@ -110,12 +111,15 @@ module.exports = (app, db, joi) => {
   });
 
   // update a single Expense
-  app.put('/api/expense/:id', (req, res) => {
-    const { amount, description, date, CategoryId } = req.body;
-    const { id } = req.params;
+  app.put('/api/expense/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { expenseId, amount, description, date, CategoryId } = req.body;
 
     // define joi schema
     const schema = joi.object({
+      expenseId: joi
+        .number()
+        .integer()
+        .required(),
       description: joi
         .string()
         .min(1)
@@ -150,7 +154,7 @@ module.exports = (app, db, joi) => {
         CategoryId
       },
       {
-        where: { id }
+        where: { id: expenseId }
       }
     )
       .then(data => {
@@ -163,16 +167,22 @@ module.exports = (app, db, joi) => {
   });
 
   // delete a single expense
-  app.delete('/api/expense/:id', (req, res) => {
-    db.Expense.destroy({
-      where: { id: req.params.id }
-    })
-      .then(data => {
-        res.status(200).json(data);
+  app.delete(
+    '/api/expense/:id/:expenseId',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      const { expenseId } = req.params;
+
+      db.Expense.destroy({
+        where: { id: expenseId }
       })
-      .catch(err => {
-        console.log(err);
-        res.status(400).json({ error: err });
-      });
-  });
+        .then(data => {
+          res.status(200).json(data);
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(400).json({ error: err });
+        });
+    }
+  );
 };
