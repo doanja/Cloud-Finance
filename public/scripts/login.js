@@ -19,7 +19,7 @@ const login = (email, password) => {
 };
 
 $(document).ready(() => {
-  // when the login button is clicked...
+  // listen for log in button click
   $('#login-button').click(e => {
     e.preventDefault();
 
@@ -36,13 +36,17 @@ $(document).ready(() => {
 
     // validate form fields
     if (!isValidEmail(email)) {
-      e.preventDefault();
       renderAlert('Enter in a valid Email address', '#login-form');
     } else if (!isValidPassword(password)) {
-      e.preventDefault();
       renderAlert('Enter in a valid Password between 10 - 30 characters', '#login-form');
     } else {
       login(email, password);
     }
+  });
+
+  // listen for demo button click
+  $('#demo-button').click(e => {
+    e.preventDefault();
+    login('bob@gmail.com', 'CloudFinance1');
   });
 });
