@@ -16,7 +16,7 @@ a:hover {
 
 .jumbotron {
   background: url('../images/background.jpg');
-  background-size: cover;
+  background-size: 100% 100%;
   background-attachment: fixed;
   margin-bottom: 0;
   width: 100vw;
@@ -28,8 +28,8 @@ a:hover {
 .blur {
   width: 100vw;
   height: 40rem;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(2px);
+  background-color: rgba(220, 220, 220, 0.25);
+  backdrop-filter: blur(1.5px);
   margin-bottom: 0;
   min-height: 100%; /* for browsers that don't support vh */
   min-height: 100vh;
