@@ -68,13 +68,13 @@ const getTotalsByDate = (userId, token, startDate, endDate) => {
   const expenseTotals = {
     label: 'Actual Dollars Spent',
     data: [],
-    backgroundColor: '#418a66'
+    backgroundColor: '#0c434a'
   };
 
   const categoryGoals = {
     label: 'Goal Dollar Amount',
     data: [],
-    backgroundColor: '#564d48'
+    backgroundColor: '#7db3a6'
   };
 
   axios
@@ -152,25 +152,25 @@ const getTotalsByTwoDates = (
   const firstExpenseTotals = {
     label: `Total Spent Previous ${timeframe}`,
     data: [],
-    backgroundColor: '#418a66'
+    backgroundColor: '#0c434a'
   };
 
   const firstCategoryGoals = {
     label: `Goal Previous ${timeframe}`,
     data: [],
-    backgroundColor: '#564d48'
+    backgroundColor: '#7db3a6'
   };
 
   const secondExpenseTotals = {
     label: `Total Spent Current ${timeframe}`,
     data: [],
-    backgroundColor: '#88c8ba'
+    backgroundColor: '#017779'
   };
 
   const secondCategoryGoals = {
     label: `Goal Current ${timeframe}`,
     data: [],
-    backgroundColor: '#797067'
+    backgroundColor: '#509288'
   };
 
   axios
