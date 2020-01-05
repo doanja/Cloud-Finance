@@ -80,8 +80,8 @@ module.exports = (passport, db) => {
         passReqToCallback: true // allows us to pass back the entire request to the callback
       },
       (req, email, password, done) => {
-        const isValidPassword = (userpass, password) => {
-          return bcrypt.compareSync(password, userpass);
+        const isValidPassword = (hashedPassword, enteredPassword) => {
+          return bcrypt.compareSync(enteredPassword, hashedPassword);
         };
 
         db.User.findOne({

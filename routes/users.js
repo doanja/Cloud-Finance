@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt-nodejs');
+
 module.exports = (app, db, joi, passport) => {
   // get all the user's info
   app.get('/api/user/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -63,7 +65,7 @@ module.exports = (app, db, joi, passport) => {
   // update a single user's income
   app.put('/api/user/income/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     const { income } = req.body;
-    console.log('income :', income);
+
     // define joi schema
     const schema = joi.object({
       income: joi
@@ -82,14 +84,7 @@ module.exports = (app, db, joi, passport) => {
       return;
     }
 
-    db.User.update(
-      {
-        income
-      },
-      {
-        where: { id: req.params.id }
-      }
-    )
+    db.User.update({ income }, { where: { id: req.params.id } })
       .then(data => {
         res.status(200).json(data);
       })
@@ -135,4 +130,73 @@ module.exports = (app, db, joi, passport) => {
         res.status(400).json({ error: err });
       });
   });
+
+  // get all the user's info
+  app.post(
+    '/api/user/:id',
+    /* passport.authenticate('jwt', { session: false }),*/ (req, res) => {
+      const { password, newPassword } = req.body;
+
+      // define joi schema
+      const schema = joi.object({
+        newPassword: joi
+          .string()
+          .min(10)
+          .max(100)
+          .required()
+      });
+
+      // compare schema with req.body
+      const validate = schema.validate({ newPassword });
+
+      // if there are errors, send them
+      if (validate.error) {
+        res.status(400).send(validate.error.details[0].message);
+        return;
+      }
+
+      /**
+       * function to generate hash password
+       * @param {string} password the user's password
+       * @return {string} the user's new encrypted password
+       */
+      const hashPassword = password => {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+      };
+
+      /**
+       * function to check the hashed password with the user's entered password
+       * @param {string} hashedPassword the user's password from the database (hashed)
+       * @param {string} enteredPassword the user's new password from the database (unhashed)
+       * @return {boolean} true if password matches, false otherwise
+       */
+      const isValidPassword = (hashedPassword, enteredPassword) => {
+        return bcrypt.compareSync(enteredPassword, hashedPassword);
+      };
+
+      db.User.findOne({
+        where: { id: req.params.id }
+      })
+        .then(userData => {
+          if (!isValidPassword(userData.password, password)) {
+            res.status(400).json({ error: 'Incorrect password detected' });
+          } else {
+            db.User.update(
+              { password: hashPassword(newPassword) },
+              { where: { id: req.params.id } }
+            )
+              .then(data => {
+                res.status(200).json({ msg: 'Password update success' });
+              })
+              .catch(err => {
+                res.status(400).json({ error: err });
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(400).json({ error: err });
+        });
+    }
+  );
 };
