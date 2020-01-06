@@ -1,24 +1,36 @@
 // API REQUESTS
 
 /**
- * function to get the user's information
+ * function to update the user's password
  * @param {number} userId the user's id
+ * @param {string} password the user's current password
+ * @param {string} newPassword the user's new password
  */
-const getUserInfo = userId => {
+const updatePassword = (userId, password, newPassword) => {
   axios
-    .get(`/api/user/${userId}`)
+    .post(`/api/user/${userId}`, { password, newPassword })
     .then(res => {
-      renderFormField('First name', 'text', 'fname', res.data.firstName);
-      renderFormField('Last name', 'text', 'lname', res.data.lastName);
-      renderButtons();
+      $('.modal-currentPassword').val('');
+      $('.modal-newPassword1').val('');
+      $('.modal-newPassword2').val('');
+
+      renderAlert(res.data.msg, '.modal-body', 'alert-success');
     })
     .catch(err => {
-      console.log(err);
+      if (err.response.data.error) {
+        renderAlert(err.response.data.error);
+      } else if (err.response) {
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
+      } else {
+        console.log('Error', err.message);
+      }
     });
 };
 
 /**
- * function to update the user's information
+ * function to update the user's names
  * @param {number} userId the user's id
  * @param {string} firstName the user's first name
  * @param {string} lastName the user's last name
@@ -41,25 +53,50 @@ const updateUser = (userId, firstName, lastName) => {
     });
 };
 
+/**
+ * function to get the user's information
+ * @param {number} userId the user's id
+ */
+const getUserInfo = userId => {
+  axios
+    .get(`/api/user/${userId}`)
+    .then(res => {
+      renderFormField('First name', 'text', 'fname', res.data.firstName);
+      renderFormField('Last name', 'text', 'lname', res.data.lastName);
+      renderButtons();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 // RENDER FUNCTIONS
 
 // function to render the submit button
 const renderButtons = () => {
   // create html elements
   const formGroup = $('<div>', { class: 'btn-group w-100' });
+
   const resetButton = $('<button>', {
     class: 'btn btn-outline-primary',
     type: 'button',
     id: 'reset-button'
   }).text('Reset');
+
   const editButton = $('<button>', {
-    class: 'btn btn-primary',
+    class: 'btn btn-outline-primary',
     type: 'button',
     id: 'edit-button'
   }).text('Edit');
 
+  const passwordButton = $('<button>', {
+    class: 'btn btn-primary w-100 mt-2',
+    type: 'button',
+    id: 'password-button'
+  }).text('Change Password');
+
   // append and render html elements
-  $('.wrap').append(formGroup);
+  $('.wrap').append(formGroup, passwordButton);
   formGroup.append(resetButton, editButton);
 };
 
@@ -100,13 +137,20 @@ $(document).ready(() => {
   $(document).on('click', '#edit-button', () => {
     parseFormData(userId);
   });
+
   $(document).on('click', '#fname', () => {
     parseFormData(userId);
   });
+
   $(document).on('click', '#lname', () => {
     parseFormData(userId);
   });
+
   $(document).on('click', '#reset-button', () => {
     location.reload();
+  });
+
+  $(document).on('click', '#password-button', () => {
+    renderModal('Change Password', userId);
   });
 });

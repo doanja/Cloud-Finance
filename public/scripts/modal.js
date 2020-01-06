@@ -3,9 +3,9 @@
  * @param {string} alertText the text to be displayed in the alert
  * @param {string} parentElement the element class or id
  */
-const renderAlert = (alertText, parentElement = '.modal-body') => {
+const renderAlert = (alertText, parentElement = '.modal-body', alertType = 'alert-danger') => {
   const alert = $('<div>', {
-    class: 'alert alert-danger alert-dismissible fade show',
+    class: `alert alert-dismissible fade show ${alertType}`,
     role: 'alert'
   });
   const text = $('<strong>').text(alertText);
@@ -249,6 +249,15 @@ const renderModalContent = (title, userId, data, modalBody) => {
       modalBody.append(renderModalFileUpload(), csvLink);
       break;
 
+    case 'Change Password':
+      // render form fields with prefilled text
+      modalBody.append(
+        renderModalFormFields('Current Password', 'modal-currentPassword'),
+        renderModalFormFields('New Password', 'modal-newPassword1'),
+        renderModalFormFields('Confirm New Password', 'modal-newPassword2')
+      );
+      break;
+
     default:
       break;
   }
@@ -373,6 +382,24 @@ const modalSubmitOn = (option, userId, data) => {
 
     case 'Import CSV':
       parseCSV();
+      break;
+
+    case 'Change Password':
+      // grab the form fields from the modal
+      const currentPassword = $('#modal-currentPassword')
+        .val()
+        .trim();
+      const newPassword1 = $('#modal-newPassword1')
+        .val()
+        .trim();
+      const newPassword2 = $('#modal-newPassword2')
+        .val()
+        .trim();
+
+      newPassword1 === newPassword2
+        ? updatePassword(userId, currentPassword, newPassword1)
+        : renderAlert('Passwords must match');
+
       break;
 
     default:
