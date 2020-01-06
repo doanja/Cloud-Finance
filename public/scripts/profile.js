@@ -10,20 +10,25 @@ const updatePassword = (userId, password, newPassword) => {
   axios
     .post(`/api/user/${userId}`, { password, newPassword })
     .then(res => {
-      $('.modal-currentPassword').val('');
-      $('.modal-newPassword1').val('');
-      $('.modal-newPassword2').val('');
+      // clear modal fields
+      $('.modal-body')
+        .find('input:password')
+        .val('');
 
+      // render success message
       renderAlert(res.data.msg, '.modal-body', 'alert-success');
     })
     .catch(err => {
+      // render errors from the route (if they exist)
       if (err.response.data.error) {
         renderAlert(err.response.data.error);
-      } else if (err.response) {
+      }
+      // render errors from validation (if they exist)
+      else if (err.response) {
         renderAlert(err.response.data);
-      } else if (err.request) {
-        console.log(err.request);
-      } else {
+      }
+      // else, log any errors to the console
+      else {
         console.log('Error', err.message);
       }
     });

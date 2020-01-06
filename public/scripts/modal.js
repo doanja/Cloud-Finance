@@ -252,9 +252,9 @@ const renderModalContent = (title, userId, data, modalBody) => {
     case 'Change Password':
       // render form fields with prefilled text
       modalBody.append(
-        renderModalFormFields('Current Password', 'modal-currentPassword'),
-        renderModalFormFields('New Password', 'modal-newPassword1'),
-        renderModalFormFields('Confirm New Password', 'modal-newPassword2')
+        renderModalFormFields('Current Password', 'modal-currentPassword', '', 'password'),
+        renderModalFormFields('New Password', 'modal-newPassword1', '', 'password'),
+        renderModalFormFields('Confirm New Password', 'modal-newPassword2', '', 'password')
       );
       break;
 
