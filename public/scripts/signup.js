@@ -10,6 +10,10 @@ $(document).ready(() => {
       .val()
       .trim();
 
+    const confirmPassword = $('#confirmPassword')
+      .val()
+      .trim();
+
     const firstName = $('#firstName')
       .val()
       .trim();
@@ -25,6 +29,9 @@ $(document).ready(() => {
     } else if (!isValidPassword(password)) {
       e.preventDefault();
       renderAlert('Enter in a valid Password between 10 - 30 characters', '#signup-form');
+    } else if (!(password === confirmPassword)) {
+      e.preventDefault();
+      renderAlert('Passwords must match', '#signup-form');
     } else if (!isValidName(firstName)) {
       e.preventDefault();
       renderAlert('Enter in a valid First name', '#signup-form');
