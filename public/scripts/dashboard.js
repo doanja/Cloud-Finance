@@ -252,7 +252,7 @@ $(document).ready(() => {
   const token = localStorage.getItem('token');
 
   $(document).on('click', '.filter-date', () => {
-    filterDateClicked('Dashboard');
+    filterDateClicked(userId, 'Dashboard');
   });
 
   getTotalsByTwoDates(

@@ -237,9 +237,9 @@ $(document).ready(() => {
   getIncome(userId);
   getOverview(userId);
 
-  $(document).on('click', '#income', updateIncomeClicked);
+  $(document).on('click', '#income', editIncomeClicked);
   $(document).on('click', '.edit-category-button', editCategoryClicked);
   $(document).on('click', '.filter-date', () => {
-    filterDateClicked('Overview');
+    filterDateClicked(userId, 'Overview');
   });
 });

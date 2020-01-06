@@ -202,6 +202,6 @@ $(document).ready(() => {
   $(document).on('click', '.create-category', createCategory);
   $(document).on('click', '.create-expense', createExpense);
   $(document).on('click', '.filter-date', () => {
-    filterDateClicked('Expense');
+    filterDateClicked(userId, 'Expense');
   });
 });
