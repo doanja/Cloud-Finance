@@ -122,6 +122,7 @@ const getTotalsByDate = (userId, token, startDate, endDate) => {
 /**
  * function to render the user's total expenses per category vs. goal as a graph by date
  * @param {number} userId the user's id
+ * @param {string} token the user's token
  * @param {integer} canvasId the id of the canvas
  * @param {string} title the graph title
  * @param {string} timeframe the time frame of the dates
@@ -249,9 +250,6 @@ $(document).ready(() => {
 
   // grab the jwt token from local storage
   const token = localStorage.getItem('token');
-
-  // set all axios requests headers
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
   $(document).on('click', '.filter-date', () => {
     filterDateClicked('Dashboard');
