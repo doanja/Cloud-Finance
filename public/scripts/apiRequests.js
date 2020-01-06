@@ -1,89 +1,4 @@
 /**
- * function update a category
- * @param {number} userId the id of the user
- * @param {number} id the id of the category
- * @param {string} name the description of the category
- * @param {number} goal the amount of the category
- */
-const updateCategory = (userId, id, name, goal) => {
-  // make put request to update a single category
-  axios
-    .put(`/api/category/${userId}`, { id, name, goal })
-    .then(res => {
-      location.reload();
-    })
-    .catch(err => {
-      if (err.response) {
-        // render alert if there is an error
-        renderAlert(err.response.data);
-      } else if (err.request) {
-        console.log(err.request);
-      } else {
-        console.log('Error', err.message);
-      }
-    });
-};
-
-/**
- * function to delete a single category
- * @param {number} userId the id of the user
- * @param {number} categoryId the id of the expense to be deleted
- */
-const deleteCategory = (userId, categoryId) => {
-  // send delete request to delete a single expense
-  axios
-    .delete(`/api/category/${userId}/${categoryId}`)
-    .then(res => {
-      location.reload();
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
-/**
- * function to create a new category
- * @param {number} userId the id of the user
- * @param {string} name the name of the category
- * @param {string} goal the goal of the category
- */
-const postCategory = (userId, name, goal) => {
-  // send post request to create a single category
-  axios
-    .post(`/api/category/${userId}`, { name, goal })
-    .then(res => {
-      location.reload();
-    })
-    .catch(err => {
-      if (err.response) {
-        // render alert if there is an error
-        renderAlert(err.response.data);
-      } else if (err.request) {
-        console.log(err.request);
-      } else {
-        console.log('Error', err.message);
-      }
-    });
-};
-
-/**
- * function to delete a single expense
- * @param {number} userId the id of the user
- * @param {number} expenseId the id of the expense to be deleted
- */
-const deleteExpense = (userId, expenseId) => {
-  // send delete request to delete a single expense
-  axios
-    .delete(`/api/expense/${userId}/${expenseId}`)
-    .then(res => {
-      location.reload();
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
-/**
  * function to get all categories and append a dropdown the the parent element
  * @param {number} userId the id of the user
  * @param {string} parentElement the element to append this to
@@ -116,6 +31,32 @@ const getCategories = (userId, parentElement, defaultValue) => {
 };
 
 /**
+ * function update a category
+ * @param {number} userId the id of the user
+ * @param {number} id the id of the category
+ * @param {string} name the description of the category
+ * @param {number} goal the amount of the category
+ */
+const updateCategory = (userId, id, name, goal) => {
+  // make put request to update a single category
+  axios
+    .put(`/api/category/${userId}`, { id, name, goal })
+    .then(res => {
+      location.reload();
+    })
+    .catch(err => {
+      if (err.response) {
+        // render alert if there is an error
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
+      } else {
+        console.log('Error', err.message);
+      }
+    });
+};
+
+/**
  * function to update the expense by sending a put request
  * @param {number} userId the id of the user
  * @param {number} expenseId the id of the expense
@@ -127,6 +68,31 @@ const updateExpense = (userId, expenseId, description, amount, date, CategoryId)
   // make put request to update a single expense
   axios
     .put(`/api/expense/${userId}`, { expenseId, description, amount, date, CategoryId })
+    .then(res => {
+      location.reload();
+    })
+    .catch(err => {
+      if (err.response) {
+        // render alert if there is an error
+        renderAlert(err.response.data);
+      } else if (err.request) {
+        console.log(err.request);
+      } else {
+        console.log('Error', err.message);
+      }
+    });
+};
+
+/**
+ * function to create a new category
+ * @param {number} userId the id of the user
+ * @param {string} name the name of the category
+ * @param {string} goal the goal of the category
+ */
+const postCategory = (userId, name, goal) => {
+  // send post request to create a single category
+  axios
+    .post(`/api/category/${userId}`, { name, goal })
     .then(res => {
       location.reload();
     })
@@ -165,5 +131,39 @@ const postExpense = (userId, amount, description, date, CategoryId) => {
       } else {
         console.log('Error', err.message);
       }
+    });
+};
+
+/**
+ * function to delete a single category
+ * @param {number} userId the id of the user
+ * @param {number} categoryId the id of the expense to be deleted
+ */
+const deleteCategory = (userId, categoryId) => {
+  // send delete request to delete a single expense
+  axios
+    .delete(`/api/category/${userId}/${categoryId}`)
+    .then(res => {
+      location.reload();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+/**
+ * function to delete a single expense
+ * @param {number} userId the id of the user
+ * @param {number} expenseId the id of the expense to be deleted
+ */
+const deleteExpense = (userId, expenseId) => {
+  // send delete request to delete a single expense
+  axios
+    .delete(`/api/expense/${userId}/${expenseId}`)
+    .then(res => {
+      location.reload();
+    })
+    .catch(err => {
+      console.log(err);
     });
 };
