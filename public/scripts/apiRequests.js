@@ -10,7 +10,11 @@ const getCategories = (userId, parentElement, defaultValue) => {
     .get(`/api/category/${userId}`)
     .then(res => {
       // render dropdown button
+      const formGroup = $('<div>', { class: 'form-group' });
+      const label = $('<label>', { for: 'Categories' }).text('Categories');
       const dropdown = renderDropdown('categories');
+
+      formGroup.append(label, dropdown);
 
       // for each category, create a dropdown option
       res.data.forEach(row => {
@@ -23,7 +27,7 @@ const getCategories = (userId, parentElement, defaultValue) => {
       }
 
       // append it to the modal
-      $(parentElement).append(dropdown);
+      $(parentElement).append(formGroup);
     })
     .catch(err => {
       console.log(err);

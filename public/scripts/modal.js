@@ -82,10 +82,13 @@ const renderDropdownCategories = (text, elementId) => {
  */
 const renderDropdown = elementId => {
   // create the element
-  return $('<select>', {
-    class: 'form-control w-100 mt-3 bg-primary text-white',
+
+  const select = $('<select>', {
+    class: 'form-control w-100 bg-primary text-white',
     id: elementId
   });
+
+  return select;
 };
 
 /**
@@ -98,7 +101,8 @@ const renderModalFileUpload = () => {
   const input = $('<input>', {
     type: 'file',
     class: 'custom-file-input',
-    id: 'modal-csv'
+    id: 'modal-csv',
+    accept: '.csv'
   });
 
   div.append(input, label);
@@ -124,9 +128,7 @@ const renderModalFormFields = (labelType, elementId, inputText, inputType) => {
   }).val(inputText);
 
   // append elements
-  formGroup.append(label, input);
-
-  return formGroup;
+  return formGroup.append(label, input);
 };
 
 /**
@@ -244,7 +246,7 @@ const renderModalContent = (title, userId, data, modalBody) => {
 
     case 'Import CSV':
       const csvLink = $('<a>', { class: 'p-1', href: '../csv/small_dataset.csv' }).text(
-        'Download sample CSV '
+        'Download template CSV '
       );
       modalBody.append(renderModalFileUpload(), csvLink);
       break;
