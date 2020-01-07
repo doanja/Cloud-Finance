@@ -3,7 +3,8 @@ module.exports = (app, db, joi, passport) => {
   app.get('/api/category/all/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     db.Category.findAll({
       include: [db.Expense],
-      where: { UserId: req.params.id }
+      where: { UserId: req.params.id },
+      order: [[db.Expense, 'date', 'desc']]
     })
       .then(data => {
         res.status(200).json(data);
@@ -46,7 +47,8 @@ module.exports = (app, db, joi, passport) => {
               date: {
                 [db.Op.between]: [startDate, endDate]
               }
-            }
+            },
+            order: [[db.Expense, 'date', 'desc']]
           }
         ],
         where: {
