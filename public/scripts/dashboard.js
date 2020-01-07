@@ -112,7 +112,7 @@ const getTotalsByDate = (userId, token, startDate, endDate) => {
       };
 
       // render the chart
-      renderChart(canvas, 'doughnut', dataset);
+      renderChart(canvas, 'bar', dataset);
     })
     .catch(err => {
       console.log(err);
@@ -235,7 +235,7 @@ const getTotalsByTwoDates = (
         };
 
         // render the chart
-        renderChart(canvas, 'doughnut', dataset);
+        renderChart(canvas, 'bar', dataset);
       })
     )
     .catch(err => {
