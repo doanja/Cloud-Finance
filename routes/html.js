@@ -12,7 +12,8 @@ module.exports = (app, path, jwt) => {
       if (
         req.params.userId === 'styles' ||
         req.params.userId === 'scripts' ||
-        req.params.userId === 'images'
+        req.params.userId === 'images' ||
+        req.params.userId === 'csv'
       ) {
         // send the requested file
         res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.token}`));
@@ -36,7 +37,8 @@ module.exports = (app, path, jwt) => {
       if (
         req.params.userId === 'styles' ||
         req.params.userId === 'scripts' ||
-        req.params.userId === 'images'
+        req.params.userId === 'images' ||
+        req.params.userId === 'csv'
       ) {
         // send the requested file
         res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.token}`));
@@ -60,7 +62,8 @@ module.exports = (app, path, jwt) => {
       if (
         req.params.userId === 'styles' ||
         req.params.userId === 'scripts' ||
-        req.params.userId === 'images'
+        req.params.userId === 'images' ||
+        req.params.userId === 'csv'
       ) {
         // send the requested file
         res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.token}`));
@@ -84,7 +87,8 @@ module.exports = (app, path, jwt) => {
       if (
         req.params.userId === 'styles' ||
         req.params.userId === 'scripts' ||
-        req.params.userId === 'images'
+        req.params.userId === 'images' ||
+        req.params.userId === 'csv'
       ) {
         // send the requested file
         res.sendFile(path.join(__dirname, `../public/${req.params.userId}/${req.token}`));
