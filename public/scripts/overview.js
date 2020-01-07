@@ -194,7 +194,7 @@ const renderRemainderRow = remainderData => {
   const tdBlank0 = $('<td>').text('');
   const tdRemainder = $('<td>').text(
     remainderData.remainder === null
-      ? 'N/A'
+      ? 'Default'
       : remainder < 0
       ? '-$' + Math.abs(remainder).toFixed(2)
       : '$' + remainder

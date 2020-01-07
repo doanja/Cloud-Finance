@@ -3,12 +3,20 @@
  * @param {string} alertText the text to be displayed in the alert
  * @param {string} parentElement the element class or id
  */
-const renderAlert = (alertText, parentElement = '.modal-body', alertType = 'alert-danger') => {
+const renderAlert = (
+  alertText,
+  parentElement = '.modal-body',
+  alertType = 'alert-danger',
+  linkText
+) => {
   const alert = $('<div>', {
     class: `alert alert-dismissible fade show ${alertType}`,
     role: 'alert'
   });
   const text = $('<strong>').text(alertText);
+  const link = $('<div>', { class: 'btn btn-link m-0 p-0 text-red', id: 'alert-link' }).text(
+    linkText
+  );
   const dismissButton = $('<button>', {
     type: 'button',
     class: 'close',
@@ -18,8 +26,13 @@ const renderAlert = (alertText, parentElement = '.modal-body', alertType = 'aler
   const dismissIcon = $('<span>', { 'aria-hidden': true }).text('\u{2A2F}');
 
   $(parentElement).prepend(alert);
-  alert.append(text, dismissButton);
+  alert.append(text, link, dismissButton);
   dismissButton.append(dismissIcon);
+
+  $(document).on('click', '#alert-link', () => {
+    $('#modal').remove();
+    createCategory();
+  });
 };
 
 /**
@@ -84,7 +97,7 @@ const renderDropdown = elementId => {
   // create the element
 
   const select = $('<select>', {
-    class: 'form-control w-100 bg-primary text-white',
+    class: 'form-control w-100 bg-white text-primary',
     id: elementId
   });
 

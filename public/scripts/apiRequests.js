@@ -11,19 +11,28 @@ const getCategories = (userId, parentElement, defaultValue) => {
     .then(res => {
       // render dropdown button
       const formGroup = $('<div>', { class: 'form-group' });
-      const label = $('<label>', { for: 'Categories' }).text('Categories');
+      const label = $('<label>', { for: 'Category' }).text('Category');
       const dropdown = renderDropdown('categories');
 
       formGroup.append(label, dropdown);
 
-      // for each category, create a dropdown option
-      res.data.forEach(row => {
-        dropdown.append(renderDropdownCategories(row.name, row.id));
-      });
+      if (res.data.length === 0) {
+        renderAlert(
+          'You must create a category before creating an expense.',
+          '.modal-body',
+          'alert-danger',
+          'Click here to create a category.'
+        );
+      } else {
+        // for each category, create a dropdown option
+        res.data.forEach(row => {
+          dropdown.append(renderDropdownCategories(row.name, row.id));
+        });
 
-      // set defaults for the value if one is defined
-      if (defaultValue !== undefined) {
-        dropdown.val(defaultValue);
+        // set defaults for the value if one is defined
+        if (defaultValue !== undefined) {
+          dropdown.val(defaultValue);
+        }
       }
 
       // append it to the modal

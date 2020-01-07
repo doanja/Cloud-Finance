@@ -87,7 +87,7 @@ module.exports = (app, db, joi, passport) => {
 
     // check to see if "N/A" category already exists
     db.Category.findOne({
-      where: [{ name: 'N/A' }, { UserId: id }]
+      where: [{ name: 'Default' }, { UserId: id }]
     })
       .then(category => {
         // "N/A" category was found
@@ -115,7 +115,7 @@ module.exports = (app, db, joi, passport) => {
         else {
           // create the "N/A" category
           db.Category.create({
-            name: 'N/A',
+            name: 'Default',
             goal: 0,
             UserId: id
           }).then(newCategory => {
