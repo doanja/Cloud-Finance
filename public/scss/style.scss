@@ -18,15 +18,12 @@ a:hover {
   background: url('../images/background.jpg');
   background-size: 100% 100%;
   background-attachment: fixed;
-  margin-bottom: 0;
-  width: 100vw;
   border-radius: 0px;
   border-top: 3px solid $tertiary-color;
   border-bottom: 3px solid $tertiary-color;
 }
 
 .blur {
-  width: 100vw;
   height: 40rem;
   background-color: rgba(220, 220, 220, 0.25);
   backdrop-filter: blur(1.5px);
