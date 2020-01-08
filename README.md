@@ -1,6 +1,6 @@
 # Cloud Finance
 
-Cloud Finance is a full stack application that allows users track their expenses and goals. Users can create categories and expenses. Categories can be assigned a goal amount. Expenses can be assigned an amount, date, and assigned to a category. Users can view their expensees in a tabular view or barchart. With date filters, the data can be summarized in a variety of different ways.
+Cloud Finance is a full stack application that allows users to track their expenses and goals. Users can create categories and expenses. Categories can be assigned a goal amount. Expenses can be assigned an amount, date and assigned to a category. Ussr can view their expenses in a tabular view or bar charts. Using date filters, the user’s data can be summarized in a multitude of ways.
 
 ## Usage
 
