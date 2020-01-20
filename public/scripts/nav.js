@@ -24,7 +24,8 @@ const renderSettingsLink = (page, userId, parentElement) => {
 const renderLogoutLink = (parentElement = '#menu') => {
   const a = $('<a>', {
     class: 'dropdown-item',
-    href: '/logout'
+    href: '/logout',
+    id: 'logout-button'
   }).text('Logout');
   $(parentElement).append(a);
 };
@@ -61,6 +62,11 @@ $(document).ready(() => {
   const token = localStorage.getItem('token');
 
   $('.navbar-brand').attr('href', `/dashboard/${userId}/${token}`);
+
+  $(document).on('click', '#logout-button', () => {
+    console.log('hello');
+    localStorage.removeItem('token');
+  });
 
   renderNavLinks('Profile', 'profile', userId, token);
   renderNavLinks('Dashboard', 'dashboard', userId, token);
