@@ -15,6 +15,7 @@ const login = (email, password) => {
     })
     .catch(err => {
       console.log('Error', err.message);
+      renderAlert('Emaill Address or Password Incorrect');
     });
 };
 
