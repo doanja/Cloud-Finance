@@ -14,7 +14,7 @@ View live demo [here](https://cloud-finance.herokuapp.com/).
 - Back End: Node.js / Express.js
 - Front End: jQuery, Bootstrap / CSS / Sass
 - Database: Sequelize / MySQL
-- Authentication: Passport.js / Bcrypt.js
+- Authentication: Passport.js / Bcrypt.js / JWT
 
 ## License
 
