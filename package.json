@@ -34,7 +34,7 @@
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-prettier": "^3.1.0",
     "jsdoc": "^3.6.3",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.2"
   }
 }
